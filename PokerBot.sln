@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards", "BitesHelper\Cards.csproj", "{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerBot", "PokerBot\PokerBot.csproj", "{89F159B7-12BE-48B6-9247-CF30EBA6A381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsUnitTests", "PokerBotUnitTests\CardsUnitTests.csproj", "{C95A228F-8583-4F4E-95CD-C04041B061A7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F159B7-12BE-48B6-9247-CF30EBA6A381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F159B7-12BE-48B6-9247-CF30EBA6A381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F159B7-12BE-48B6-9247-CF30EBA6A381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F159B7-12BE-48B6-9247-CF30EBA6A381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95A228F-8583-4F4E-95CD-C04041B061A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95A228F-8583-4F4E-95CD-C04041B061A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95A228F-8583-4F4E-95CD-C04041B061A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95A228F-8583-4F4E-95CD-C04041B061A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
