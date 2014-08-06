@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cards.Suits
+namespace Nicomputer.PokerBot.Cards.Suits
 {
     /// <summary>
     /// 00000000 00000000 00000000 00000000 00000000 00000000 00011111 11111111 (0x0000000000001FFF) clubs mask

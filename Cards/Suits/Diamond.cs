@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cards.Suits
+namespace Nicomputer.PokerBot.Cards.Suits
 {
     /// <summary>
     /// 00000000 00000000 00000000 00000000 00000000 00000000 00011111 11111111 (0x0000000000001FFF) clubs mask
@@ -15,10 +15,10 @@ namespace Cards.Suits
     /// 00000000 00001111 11111111 10000000 00000000 00000000 00000000 00000000 (0x000FFF8000000000) hearts mask
     /// 00000000 00001111 11111111 11111111 11111111 11111111 11111111 11111111 (0x000FFFFFFFFFFFFF) 52 cards mask 
     /// </remarks>
-    public class Club : AbstractSuit
+    public class Diamond : AbstractSuit
     {
-        public Club(long cards)
-            : base(13, 0x0000000000001FFF, 0)
+        public Diamond(long cards)
+            : base(13, 0x0000000003FFE000, 13)
         {
             Cards = cards;
         }

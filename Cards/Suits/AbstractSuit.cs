@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cards.Suits
+namespace Nicomputer.PokerBot.Cards.Suits
 {
     public abstract class AbstractSuit : ISuit
     {

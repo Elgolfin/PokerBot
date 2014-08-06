@@ -4,11 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cards.Suits
+namespace Nicomputer.PokerBot.Cards
 {
-    public interface ISuit
+    public class Hand
     {
-        string ToBinaryString();
-        long ToLong();
     }
 }

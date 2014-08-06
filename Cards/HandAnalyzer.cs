@@ -1,4 +1,4 @@
-﻿using Cards.Suits;
+﻿using Nicomputer.PokerBot.Cards.Suits;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cards
+namespace Nicomputer.PokerBot.Cards
 {
     public class HandAnalyzer
     {

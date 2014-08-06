@@ -6,8 +6,8 @@
     <ProjectGuid>{C95A228F-8583-4F4E-95CD-C04041B061A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CardsUnitTests</RootNamespace>
-    <AssemblyName>CardsUnitTests</AssemblyName>
+    <RootNamespace>Nicomputer.PokerBot.CardsUnitTests</RootNamespace>
+    <AssemblyName>Nicomputer.PokerBot.CardsUnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -54,7 +54,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BitesHelper\Cards.csproj">
+    <ProjectReference Include="..\Cards\Cards.csproj">
       <Project>{01a73eb8-0a39-4bfc-96b6-0af21e40da6c}</Project>
       <Name>Cards</Name>
     </ProjectReference>

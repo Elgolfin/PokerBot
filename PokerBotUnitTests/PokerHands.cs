@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Cards;
-using Cards.Suits;
+using Nicomputer.PokerBot.Cards;
+using Nicomputer.PokerBot.Cards.Suits;
 
-namespace PokerBotUnitTests
+namespace Nicomputer.PokerBot.CardsUnitTests
 {
     [TestClass]
     public class PokerHands

@@ -7,8 +7,8 @@
     <ProjectGuid>{89F159B7-12BE-48B6-9247-CF30EBA6A381}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PokerBot</RootNamespace>
-    <AssemblyName>PokerBot</AssemblyName>
+    <RootNamespace>Nicomputer.PokerBot</RootNamespace>
+    <AssemblyName>Nicomputer.PokerBot</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

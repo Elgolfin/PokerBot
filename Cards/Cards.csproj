@@ -7,8 +7,8 @@
     <ProjectGuid>{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cards</RootNamespace>
-    <AssemblyName>BitesHelper</AssemblyName>
+    <RootNamespace>Nicomputer.PokerBot.Cards</RootNamespace>
+    <AssemblyName>Nicomputer.PokerBot.Cards</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
