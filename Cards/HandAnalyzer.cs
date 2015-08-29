@@ -10,6 +10,11 @@ namespace Nicomputer.PokerBot.Cards
 {
     public class HandAnalyzer
     {
+        static Club clubs;
+        static Diamond diamonds;
+        static Spade spades;
+        static Heart hearts;
+
         public static bool IsFourOfAKind(long hand)
         {
             return IsNOfAKind(hand, 4);
@@ -25,31 +30,75 @@ namespace Nicomputer.PokerBot.Cards
             return IsNOfAKind(hand, 2);
         }
 
-        public static bool IsStraightFlush(long hand)
+        public static bool IsStraight(long hand)
         {
-            bool isStraightFlush = false;
-            long lowerBitStraightFlushMask = 0x1F;
+            bool isStraight = false;
+            long lowerBitStraightMask = 0x1F;
+            long exceptionStraightMask = 0x100F; // 1 0000 0000 1111
 
-            Club clubs = new Club(hand);
-            Diamond diamonds = new Diamond(hand);
-            Spade spades = new Spade(hand);
-            Heart hearts = new Heart(hand);
+            CreateSuitsFromHand(hand);
 
             long combinedHand = clubs.ToLong() | diamonds.ToLong() | spades.ToLong() | hearts.ToLong();
+
+            // Special Straight (ace is the bit of the highest weight and could match a straight with the four lowest bits
+            if (exceptionStraightMask == (combinedHand & exceptionStraightMask))
+            {
+                isStraight = true;
+            }
 
             for (int i = 0; i < (clubs.MaxSuitCards - 4); i++)
             {
                 Debug.WriteLine(AbstractSuit.LongToBinaryString(combinedHand, 13));
-                long total = combinedHand & lowerBitStraightFlushMask;
-                if (lowerBitStraightFlushMask == total)
+                long total = combinedHand & lowerBitStraightMask;
+                if (lowerBitStraightMask == total)
                 {
-                    isStraightFlush = true;
+                    isStraight = true;
                     break;
                 }
                 combinedHand >>= 1;
             }
 
-            return isStraightFlush;
+            return isStraight;
+        }
+
+        public static bool IsFlush(long hand)
+        {
+            bool isFlush = false;
+            int numberOfCardsToMakeAFlush = 5;
+
+            CreateSuitsFromHand(hand);
+
+            int numberOfClubs = CountSetBits(clubs.ToLong());
+            int numberOfDiamonds = CountSetBits(diamonds.ToLong());
+            int numberOfSpades = CountSetBits(spades.ToLong());
+            int numberOfHearts = CountSetBits(hearts.ToLong());
+
+            isFlush =  (numberOfClubs >= numberOfCardsToMakeAFlush)
+                    || (numberOfDiamonds >= numberOfCardsToMakeAFlush)
+                    || (numberOfSpades >= numberOfCardsToMakeAFlush)
+                    || (numberOfHearts >= numberOfCardsToMakeAFlush);
+
+            return isFlush;
+        }
+
+        public static int CountSetBits(long hand)
+        {
+            int cpt = 0;
+            while (hand > 0) {
+                Debug.WriteLine(AbstractSuit.LongToBinaryString(hand, 13));
+                if ((hand & 0x1) == 1) { cpt++; }
+                Debug.WriteLine(cpt);
+                hand >>= 1;
+            }
+            return cpt;
+        }
+
+        private static void CreateSuitsFromHand(long hand)
+        {
+            clubs = new Club(hand);
+            diamonds = new Diamond(hand);
+            spades = new Spade(hand);
+            hearts = new Heart(hand);
         }
 
         private static bool IsNOfAKind(long hand, short nCards)
@@ -57,10 +106,7 @@ namespace Nicomputer.PokerBot.Cards
             bool isNOfAKind = false;
             long lowerBitMask = 0x1;
 
-            Club clubs = new Club(hand);
-            Diamond diamonds = new Diamond(hand);
-            Spade spades = new Spade(hand);
-            Heart hearts = new Heart(hand);
+            CreateSuitsFromHand(hand);
 
             long cl = clubs.ToLong();
             long di = diamonds.ToLong();
