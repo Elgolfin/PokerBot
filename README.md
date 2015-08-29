@@ -24,7 +24,7 @@ None
 
 ## Roadmap
 
-* [See here](https://github.com/Elgolfin/PokerBud/blob/master/Roadmap.md)
+* [See here](https://github.com/Elgolfin/PokerBot/blob/master/Roadmap.md)
 
 ## Release History
 
