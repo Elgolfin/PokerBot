@@ -8,7 +8,42 @@ namespace Nicomputer.PokerBot.CardsUnitTests
     [TestClass]
     public class PokerHands
     {
-        
+
+        [TestCategory("Count Cards")]
+        [TestMethod]
+        public void CountAllCardsInAHand()
+        {
+            /// 00000000 0000//0000 0000.0000 1/000.0000 0000.01/00 0000.0000 001/0.0000 0000.0001
+            long hand = 0x0000008004002001;
+            HandAnalyzer.CountCards(hand);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_2]);
+            /// 00000000 000//0.0000 0000.0000 0/000.0000 0000.00/00 0000.0000 001/0.0010 0001.1111
+            hand = 0x000000000000331F;
+            HandAnalyzer.CountCards(hand);
+            Assert.AreEqual(2, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_2]);
+            Assert.AreEqual(1, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_3]);
+            Assert.AreEqual(1, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_4]);
+            Assert.AreEqual(1, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_5]);
+            Assert.AreEqual(1, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_6]);
+            Assert.AreEqual(1, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_Jack]);
+
+            hand = 0x000FFFFFFFFFFFFF;
+            HandAnalyzer.CountCards(hand);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_2]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_3]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_4]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_5]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_6]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_7]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_8]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_9]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_10]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_Jack]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_Queen]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_King]);
+            Assert.AreEqual(4, HandAnalyzer.cardsCount[(long)HandAnalyzer.CardName.Card_Ace]);
+        }
+
         [TestCategory("Miscelleneaous")]
         [TestMethod]
         public void TwoClubs()

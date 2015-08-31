@@ -1,11 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cards", "Cards\Cards.csproj", "{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokerBot", "PokerBot\PokerBot.csproj", "{89F159B7-12BE-48B6-9247-CF30EBA6A381}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardsUnitTests", "PokerBotUnitTests\CardsUnitTests.csproj", "{C95A228F-8583-4F4E-95CD-C04041B061A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DB59D7A-180B-4F29-A48D-A92E47D8BF70}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		Roadmap.md = Roadmap.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

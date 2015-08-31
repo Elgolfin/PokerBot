@@ -2,6 +2,7 @@ PokerBot
 ========
 
 A small standalone console application to build a Poker Bot.
+I am building it from scratch during my free time with TDD in mind.
 
 ## Installation
 
