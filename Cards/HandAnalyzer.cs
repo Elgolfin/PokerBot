@@ -49,38 +49,48 @@ namespace Nicomputer.PokerBot.Cards
             return IsNOfAKind(hand, 2);
         }
 
-        /// <summary>
-        /// This method is working. However there is not yet a possiblity to know what the straight is
-        /// TODO We should not shift throughout the combinedHand but shift throughout the straightMask instead
-        /// </summary>
-        /// <param name="hand"></param>
-        /// <returns></returns>
         public static bool IsStraight(long hand)
         {
+            CreateSuitsFromHand(hand);
+            long combinedHand = clubs.ToLong() | diamonds.ToLong() | spades.ToLong() | hearts.ToLong(); 
+            return IsStraightFoundation(combinedHand);
+        }
+
+        public static bool IsStraightFlush(long hand)
+        {
+            CreateSuitsFromHand(hand);
+            
+            return IsStraightFoundation(clubs.ToLong()) 
+                || IsStraightFoundation(diamonds.ToLong()) 
+                || IsStraightFoundation(spades.ToLong()) 
+                || IsStraightFoundation(hearts.ToLong());
+        }
+
+        private static bool IsStraightFoundation(long hand)
+        {
             bool isStraight = false;
-            long lowerBitStraightMask = 0x1F;
+            long straightMask = 0x1F; // 1 1111 0000 0000
             long exceptionStraightMask = 0x100F; // 1 0000 0000 1111
 
-            CreateSuitsFromHand(hand);
-
-            long combinedHand = clubs.ToLong() | diamonds.ToLong() | spades.ToLong() | hearts.ToLong();
-
-            // Special Straight (ace is the bit of the highest weight and could match a straight with the four lowest bits
-            if (exceptionStraightMask == (combinedHand & exceptionStraightMask))
-            {
-                isStraight = true;
-            }
+            Club clubs = new Club(hand); 
 
             for (int i = 0; i < (clubs.MaxSuitCards - 4); i++)
             {
-                Debug.WriteLine(AbstractSuit.LongToBinaryString(combinedHand, 13));
-                long total = combinedHand & lowerBitStraightMask;
-                if (lowerBitStraightMask == total)
+                Debug.WriteLine(AbstractSuit.LongToBinaryString(hand, 13));
+                Debug.WriteLine(AbstractSuit.LongToBinaryString(straightMask, 13));
+                long total = hand & straightMask;
+                if (straightMask == total)
                 {
                     isStraight = true;
                     break;
                 }
-                combinedHand >>= 1;
+                straightMask >>= 1;
+            }
+
+            // Special Straight (ace is the bit of the highest weight and could match a straight with the four lowest bits
+            if (!isStraight && exceptionStraightMask == (hand & exceptionStraightMask))
+            {
+                isStraight = true;
             }
 
             return isStraight;
@@ -126,13 +136,13 @@ namespace Nicomputer.PokerBot.Cards
             hearts = new Heart(hand);
         }
 
-        private static bool IsNOfAKind(long hand, short nCards)
+        private static bool IsNOfAKind(long hand, short numCards)
         {
             CountCards(hand);
 
             foreach (KeyValuePair<long, int> entry in cardsCount)
             {
-                if(entry.Value == nCards)
+                if(entry.Value == numCards)
                 {
                     return true;
                 }
@@ -141,7 +151,36 @@ namespace Nicomputer.PokerBot.Cards
             return false;
         }
 
-        //public bool IsFullHouse
+        public static bool IsFullHouse(long hand)
+        {
+            return IsTwoSetsNOfAKind(hand, 3, 2);
+        }
+
+        public static bool IsTwoPairs(long hand)
+        {
+            return IsTwoSetsNOfAKind(hand, 2, 2);
+        }
+
+        private static bool IsTwoSetsNOfAKind (long hand, int numCardsSet1, int numCardsSet2)
+        {
+            CountCards(hand);
+            long set1 = 0;
+            long set2 = 0;
+
+            foreach (KeyValuePair<long, int> entry in cardsCount)
+            {
+                if (set1 == 0 && entry.Value == numCardsSet1)
+                {
+                    set1 = entry.Key;
+                }
+                if (set2 == 0 && entry.Value == numCardsSet2)
+                {
+                    set2 = entry.Key;
+                }
+            }
+
+            return set1 > 0 && set2 > 0;
+        }
 
         public static void CountCards(long hand)
         {

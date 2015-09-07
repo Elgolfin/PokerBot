@@ -146,22 +146,22 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.IsFalse(HandAnalyzer.IsAPair(aPair), "Hand got four of a kind, pair not expected");
         }
 
-        //[TestMethod]
-        //public void StraightFlush()
-        //{
-        //    /// 00000000 00000000 00000000 00000000 00000000 01000000 00100000 00011111
-        //    long straightFlushHand = 0x000000000040201F;
-        //    Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand)); 
-        //    straightFlushHand = 0x00000000004020F8;
-        //    Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
-        //    straightFlushHand = 0x00000F8000000000;
-        //    Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
-        //    straightFlushHand = 0x000F800000000000;
-        //    Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
-        //    /// 00000000 0000//0000 0000.0000 0/000.0000 0000.00/00 0100.0000 001/1.0000 0000.1111
-        //    straightFlushHand = 0x000000000040300F;
-        //    Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand), "Hand got a `petite` straight flush i.e. 12345 ");
-        //}
+        [TestMethod]
+        public void StraightFlush()
+        {
+            /// 00000000 00000000 00000000 00000000 00000000 01000000 00100000 00011111
+            long straightFlushHand = 0x000000000040201F;
+            Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
+            straightFlushHand = 0x00000000004020F8;
+            Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
+            straightFlushHand = 0x00000F8000000000;
+            Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
+            straightFlushHand = 0x000F800000000000;
+            Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand));
+            /// 00000000 0000//0000 0000.0000 0/000.0000 0000.00/00 0100.0000 001/1.0000 0000.1111
+            straightFlushHand = 0x000000000040300F;
+            Assert.IsTrue(HandAnalyzer.IsStraightFlush(straightFlushHand), "Hand got a `petite` straight flush i.e. 12345 ");
+        }
 
         [TestMethod]
         [TestCategory("Count Bits")]
@@ -206,10 +206,10 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         {
             /// 00000000 000//0.0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/1.0001 0001.1111
             long hand = 0x000000000000111F;
-            Assert.IsTrue(HandAnalyzer.IsStraight(hand), "Hand got a straight, straight expected");
+            Assert.IsTrue(HandAnalyzer.IsStraight_Old(hand), "Hand got a straight, straight expected");
             /// 00000000 000//0.0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/1.1001 0000.1111
             hand = 0x000000000000190F;
-            Assert.IsTrue(HandAnalyzer.IsStraight(hand), "Hand got a special straight (12345), straight expected");
+            Assert.IsTrue(HandAnalyzer.IsStraight_Old(hand), "Hand got a special straight (12345), straight expected");
         }
 
         [TestCategory("Straight")]
@@ -218,29 +218,50 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         {
             /// 00000000 000//0.0000 0000.0000 0/000.0000 0001.00/01 0001.0001 000/1.0001 0001.0001
             long hand = 0x0000000001111111;
-            Assert.IsFalse(HandAnalyzer.IsStraight(hand), "Hand did not got a straight, straight not expected");
+            Assert.IsFalse(HandAnalyzer.IsStraight_Old(hand), "Hand did not got a straight, straight not expected");
         }
 
-        //[TestMethod]
-        //public void FullHouse()
-        //{
-        //    /// 00000000 00000000 00000000 00000000 00000000 00000000 00100000 00000001
-        //    long aPair = 0x0000000000002001;
-        //    Assert.IsTrue(HandAnalyzer.IsAPair(aPair), "Hand got a pair, pair expected");
-        //    /// 00000000 00000000 00000000 10000000 00000101 00000000 00100000 00000111
-        //    aPair = 0x0000008005002007;
-        //    Assert.IsFalse(HandAnalyzer.IsAPair(aPair), "Hand got four of a kind, pair not expected");
-        //}
+        [TestCategory("FullHouse")]
+        [TestMethod]
+        public void IsFullHouse()
+        {
+            /// 00000000 0000//0000 0000.0000 1/000.0110 0000.00/10 0000.0000 001/1.0000 0000.0001
+            long fullHouse = 0x0000008602003001;
+            Assert.IsTrue(HandAnalyzer.IsFullHouse(fullHouse), "Hand did got a full house, full house is expected");
+        }
 
-        //[TestMethod]
-        //public void TwoPair()
-        //{
-        //    /// 00000000 00000000 00000000 00000000 00000000 00000000 00100000 00000001
-        //    long aPair = 0x0000000000002001;
-        //    Assert.IsTrue(HandAnalyzer.IsAPair(aPair), "Hand got a pair, pair expected");
-        //    /// 00000000 00000000 00000000 10000000 00000101 00000000 00100000 00000111
-        //    aPair = 0x0000008005002007;
-        //    Assert.IsFalse(HandAnalyzer.IsAPair(aPair), "Hand got four of a kind, pair not expected");
-        //}
+        [TestCategory("FullHouse")]
+        [TestMethod]
+        public void IsNotFullHouse()
+        {
+            /// 00000000 0000//0000 0000.0000 1/000.0000 0000.00/11 0000.0000 001/0.0000 0000.0111
+            long notFullHouse = 0x0000008003002007;
+            Assert.IsFalse(HandAnalyzer.IsFullHouse(notFullHouse), "Hand did not got a full house, full house is not expected");
+            /// 00000000 0000//1000 0000.0000 0/100.0000 0000.01/10 0000.0000 001/1.0000 0000.0001
+            notFullHouse = 0x0008004006003001;
+            Assert.IsFalse(HandAnalyzer.IsFullHouse(notFullHouse), "Hand got four of a kind, full house is not expected");
+        }
+
+        [TestCategory("TwoPairs")]
+        [TestMethod]
+        public void IsTwoPairs()
+        {
+            /// 00000000 0000//0000 0000.0000 0/000.0010 0000.00/10 0100.0000 001/1.0010 0000.0001
+            long twoPairs = 0x0000000602003001;
+            Assert.IsTrue(HandAnalyzer.IsTwoPairs(twoPairs), "Hand did got two pairs, two pairs are expected");
+        }
+
+        [TestCategory("TwoPairs")]
+        [TestMethod]
+        public void IsNotTwoPairs()
+        {
+            /// 00000000 0000//0000 0000.0000 1/000.0000 0000.00/11 0000.0000 001/0.0000 0000.0001
+            long notTwoPairs = 0x0000008003002001;
+            Assert.IsFalse(HandAnalyzer.IsTwoPairs(notTwoPairs), "Hand did not got a full house, full house is not expected");
+            /// Four of a kind + three of a kind
+            /// 00000000 0000//1000 0000.0000 0/100.0000 0000.01/10 0000.0000 001/1.0000 0000.0001
+            notTwoPairs = 0x0008004006003001;
+            Assert.IsFalse(HandAnalyzer.IsTwoPairs(notTwoPairs), "Hand did not got a full house, full house is not expected");
+        }
     }
 }

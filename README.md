@@ -21,7 +21,7 @@ Unit Tests direclty accessible within the solution
 TBD
 
 ## Useful Links
-None
+* https://rip94550.wordpress.com/2011/03/14/poker-hands-%E2%80%93-5-card-draw/
 
 ## Roadmap
 
