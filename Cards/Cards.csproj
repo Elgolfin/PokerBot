@@ -42,6 +42,7 @@
     <Compile Include="Hand.cs" />
     <Compile Include="HandAnalyzer.cs" />
     <Compile Include="Suits\AbstractSuit.cs" />
+    <Compile Include="Suits\Deck52Cards.cs" />
     <Compile Include="Suits\Club.cs" />
     <Compile Include="Suits\Diamond.cs" />
     <Compile Include="Suits\Heart.cs" />

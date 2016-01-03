@@ -202,14 +202,14 @@ namespace Nicomputer.PokerBot.CardsUnitTests
 
         [TestCategory("Straight")]
         [TestMethod]
-        public void IsStraight()
+        public void IsStraightAndSpecialStraight()
         {
             /// 00000000 000//0.0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/1.0001 0001.1111
             long hand = 0x000000000000111F;
-            Assert.IsTrue(HandAnalyzer.IsStraight_Old(hand), "Hand got a straight, straight expected");
+            Assert.IsTrue(HandAnalyzer.IsStraight(hand), "Hand got a straight, straight expected");
             /// 00000000 000//0.0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/1.1001 0000.1111
             hand = 0x000000000000190F;
-            Assert.IsTrue(HandAnalyzer.IsStraight_Old(hand), "Hand got a special straight (12345), straight expected");
+            Assert.IsTrue(HandAnalyzer.IsStraight(hand), "Hand got a special straight (12345), straight expected");
         }
 
         [TestCategory("Straight")]
@@ -218,7 +218,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         {
             /// 00000000 000//0.0000 0000.0000 0/000.0000 0001.00/01 0001.0001 000/1.0001 0001.0001
             long hand = 0x0000000001111111;
-            Assert.IsFalse(HandAnalyzer.IsStraight_Old(hand), "Hand did not got a straight, straight not expected");
+            Assert.IsFalse(HandAnalyzer.IsStraight(hand), "Hand did not got a straight, straight not expected");
         }
 
         [TestCategory("FullHouse")]

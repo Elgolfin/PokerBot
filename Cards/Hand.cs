@@ -9,4 +9,9 @@ namespace Nicomputer.PokerBot.Cards
     public class Hand
     {
     }
+
+    public static class HandConvert
+    {
+
+    }
 }

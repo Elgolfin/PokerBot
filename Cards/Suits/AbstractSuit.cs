@@ -42,7 +42,7 @@ namespace Nicomputer.PokerBot.Cards.Suits
             return Convert.ToString(u, 2).PadLeft(MaxSuitCards, '0'); 
         }
 
-        static public string LongToBinaryString(long u, short maxSuitCards)
+        public static string LongToBinaryString(long u, short maxSuitCards)
         {
             return Convert.ToString(u, 2).PadLeft(maxSuitCards, '0');
         }

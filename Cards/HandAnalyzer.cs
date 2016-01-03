@@ -69,16 +69,17 @@ namespace Nicomputer.PokerBot.Cards
         private static bool IsStraightFoundation(long hand)
         {
             bool isStraight = false;
-            long straightMask = 0x1F; // 1 1111 0000 0000
+            long straightMask = 0x1F00; // 1 1111 0000 0000
             long exceptionStraightMask = 0x100F; // 1 0000 0000 1111
 
             Club clubs = new Club(hand); 
 
             for (int i = 0; i < (clubs.MaxSuitCards - 4); i++)
             {
+                long total = hand & straightMask;
                 Debug.WriteLine(AbstractSuit.LongToBinaryString(hand, 13));
                 Debug.WriteLine(AbstractSuit.LongToBinaryString(straightMask, 13));
-                long total = hand & straightMask;
+                Debug.WriteLine(AbstractSuit.LongToBinaryString(total, 13));
                 if (straightMask == total)
                 {
                     isStraight = true;
@@ -88,6 +89,9 @@ namespace Nicomputer.PokerBot.Cards
             }
 
             // Special Straight (ace is the bit of the highest weight and could match a straight with the four lowest bits
+            Debug.WriteLine(AbstractSuit.LongToBinaryString(hand, 13));
+            Debug.WriteLine(AbstractSuit.LongToBinaryString(exceptionStraightMask, 13));
+            Debug.WriteLine(AbstractSuit.LongToBinaryString(hand & exceptionStraightMask, 13));
             if (!isStraight && exceptionStraightMask == (hand & exceptionStraightMask))
             {
                 isStraight = true;
