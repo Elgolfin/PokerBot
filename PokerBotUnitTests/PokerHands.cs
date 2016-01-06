@@ -146,6 +146,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.IsFalse(HandAnalyzer.IsAPair(aPair), "Hand got four of a kind, pair not expected");
         }
 
+        [TestCategory("StraightFlush")]
         [TestMethod]
         public void StraightFlush()
         {
