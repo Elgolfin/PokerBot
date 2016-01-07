@@ -16,8 +16,9 @@ namespace Nicomputer.PokerBot.Cards.Helper
             ulong to = SetBitsFromToRight(1, combinations);
             ulong leftMask = SetBitsFromToRight(maxBits + 1, 64 - maxBits + 1);
             ulong currentFromMask = leftMask & 0x0;
-            ulong[] origShiftingMaskBits = GetCombinationsMaskBits(8, 2); // We will use this array to handle the shifting of the bits
-            ulong[] actualShiftingMaskBits;
+            MaskBits origShiftingMaskBits = new MaskBits(maxBits, combinations);
+            //ulong[] origShiftingMaskBits = GetCombinationsMaskBits(8, 2); // We will use this array to handle the shifting of the bits
+            //ulong[] actualShiftingMaskBits;
 
             //int actualBitShifting;
             // shifting logic : lower bit done shifting, then shift one parent of lower bit and reset lower bit shifting (minus 1)
@@ -108,25 +109,30 @@ namespace Nicomputer.PokerBot.Cards.Helper
             return numerator / denominator;
         }
 
-
-        public static ulong[] GetCombinationsMaskBits(int maxBits, int combinations)
+        /// <summary>
+        /// i.e. 0101 1100 will become 0011 1010
+        /// </summary>
+        /// <param name="bitsToReverse"></param>
+        /// <returns></returns>
+        public static ulong ReverseBits (ulong bitsToReverse)
         {
-            ulong[] maskBits = new ulong[64];
-            Array.Resize(ref maskBits, combinations);
-            for (int i = 0; i < combinations; i++)
+            ulong reversed = 0x0;
+            ulong msbMask = 0x8000000000000000;     // msb = MSB = Most Significant Bit
+            ulong lsbMask = 0x0;                    // lsb = LSB = Least Significant Bit
+            for (int i = 1; i < 64; i++)
             {
-                maskBits[i] = Convert.ToUInt64(Math.Pow(Convert.ToDouble(2), (Convert.ToDouble(maxBits) - Convert.ToDouble(i) - Convert.ToDouble(1))));
-            }
-            return maskBits.Reverse().ToArray();
-        }
+                lsbMask = 0x0;
+                if ((bitsToReverse & msbMask) > 0) // MSB set to 1
+                {
+                    lsbMask = msbMask;
+                }
 
-        public static void ResetMaskBits (ref ulong[] maskBits)
-        {
-            int index = 0;
-            while (index < maskBits.Length)
-            {
-                //maskBits[index] = 
+                reversed = reversed | lsbMask; // The MSB will become the LSB
+                reversed = reversed >>= 1;
+                bitsToReverse <<= 1;
+
             }
+            return reversed;
         }
 
     }
@@ -138,38 +144,57 @@ namespace Nicomputer.PokerBot.Cards.Helper
         {
             get
             {
-                return _mask.Reverse().ToArray();
+                return _mask;//.Reverse().ToArray();
             }
             protected set { }
         }
         private int _maxBits = 52;
         private int _combinations = 7;
 
-        private int _actuaIndex = 0;
+        private int _actualIndex = 0;
+
+        public bool IsParsingComplete = false;
 
         public MaskBits (int maxBits, int combinations)
         {
             _mask = new ulong[64];
             _maxBits = maxBits;
             _combinations = combinations;
-            Array.Resize(ref _mask, combinations);
-            for (int i = 0; i < combinations; i++)
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            Array.Resize(ref _mask, _combinations);
+            for (int i = _combinations - 1, j =0 ; i >= 0; i--)
             {
-                _mask[i] = Convert.ToUInt64(Math.Pow(Convert.ToDouble(2), (Convert.ToDouble(maxBits) - Convert.ToDouble(i) - Convert.ToDouble(1))));
+                _mask[i] = Convert.ToUInt64(Math.Pow(Convert.ToDouble(2), (Convert.ToDouble(_maxBits - 1 - j++))));
             }
+        }
+
+        public void Reset()
+        {
+            Initialize();
         }
 
         // TODO Unit test decrement
         public void Decrement()
         {
-            if (_mask[_actuaIndex] - 1 == Convert.ToUInt64(_actuaIndex))
+            if (_mask[_actualIndex] >> 1 < Convert.ToUInt64(Math.Pow(Convert.ToDouble(2), Convert.ToDouble(_actualIndex))))
             {
-                _actuaIndex++;
-                Decrement();
+                _actualIndex++;
+                if (_actualIndex < _mask.Length)
+                {
+                    Decrement();
+                    _mask[_actualIndex - 1] = _mask[_actualIndex] >> 1;
+                } else
+                {
+                    IsParsingComplete = true;
+                }
+                _actualIndex--;
             } else
             {
-                _mask[_actuaIndex]--;
-                _mask[_actuaIndex - 1] = _mask[_actuaIndex] - 1;
+                _mask[_actualIndex] >>= 1 ;
             }
         }
 

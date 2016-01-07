@@ -177,7 +177,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void GetCombinationsMaskBits_8_1()
         {
             ulong[] result = { 0x80 };
-            MaskBits mask = new MaskBits(8, 1);
+            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 1);
             Assert.AreEqual(true, mask.Equals(result));
         }
 
@@ -186,7 +186,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void GetCombinationsMaskBits_8_2()
         {
             ulong[] result = { 0x40, 0x80 };
-            MaskBits mask = new MaskBits(8, 2);
+            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
             Assert.AreEqual(true, mask.Equals(result));
         }
 
@@ -208,7 +208,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
                                0x2000000000000,
                                0x4000000000000,
                                0x8000000000000 };
-            MaskBits mask = new MaskBits(52, 7);
+            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(52, 7);
             Assert.AreEqual(true, mask.Equals(result));
         }
 
@@ -229,6 +229,15 @@ namespace Nicomputer.PokerBot.CardsUnitTests
                 if (!comparer.Equals(a1[i], a2[i])) return false;
             }
             return true;
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void ReverseBits_0x8000000000000000_Is_0x1()
+        {
+            ulong input = 0x8000000000000000;
+            ulong result = 0x01;
+            Assert.AreEqual(result, BinaryOperations.ReverseBits(input));
         }
     }
 }
