@@ -4,22 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Nicomputer.PokerBot.Cards.Suits;
+using Nicomputer.PokerBot;
 
 namespace Nicomputer.PokerBot.Cards.Helper
 {
     public static class BinaryOperations
     {
 
-        public static int GenerateAllCombinations (int maxBits, int combinations)
+        public static int GenerateAllCombinations(int maxBits, int combinations)
         {
             MaskBits mask = new MaskBits(maxBits, combinations);
             int numCombinations = 0;
+
             while (!mask.IsParsingComplete)
             {
-                Console.WriteLine(mask.ToString());
                 mask.Decrement();
                 numCombinations++;
             }
+
             return numCombinations;
         }
 
@@ -188,14 +190,19 @@ namespace Nicomputer.PokerBot.Cards.Helper
             }
         }
 
-        public override string ToString()
+        public ulong ToUint64()
         {
-            ulong binary = 0x0;
+            ulong ulMask = 0x0;
             foreach (ulong ul in _mask)
             {
-                binary |= ul;
+                ulMask |= ul;
             }
-            return Convert.ToString(Convert.ToInt64(binary), 2).PadLeft(_maxBits, '0');
+            return ulMask;
+        }
+
+        public override string ToString()
+        {
+            return Convert.ToString(Convert.ToInt64(ToUint64()), 2).PadLeft(_maxBits, '0');
         }
 
         public override bool Equals(object obj)
