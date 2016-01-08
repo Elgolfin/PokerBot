@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nicomputer.PokerBot.Cards.Suits;
 
 namespace Nicomputer.PokerBot.Cards.Helper
 {
@@ -11,22 +12,12 @@ namespace Nicomputer.PokerBot.Cards.Helper
 
         public static int GenerateAllCombinations (int maxBits, int combinations)
         {
-            
-            ulong from = SetBitsFromToLeft(maxBits, combinations);
-            ulong to = SetBitsFromToRight(1, combinations);
-            ulong leftMask = SetBitsFromToRight(maxBits + 1, 64 - maxBits + 1);
-            ulong currentFromMask = leftMask & 0x0;
-            MaskBits origShiftingMaskBits = new MaskBits(maxBits, combinations);
-            //ulong[] origShiftingMaskBits = GetCombinationsMaskBits(8, 2); // We will use this array to handle the shifting of the bits
-            //ulong[] actualShiftingMaskBits;
-
-            //int actualBitShifting;
-            // shifting logic : lower bit done shifting, then shift one parent of lower bit and reset lower bit shifting (minus 1)
-            // higher bit done shifting = end;
-            int numCombinations = 1;
-            while (from != to)
+            MaskBits mask = new MaskBits(maxBits, combinations);
+            int numCombinations = 0;
+            while (!mask.IsParsingComplete)
             {
-                from >>= 1;
+                Console.WriteLine(mask.ToString());
+                mask.Decrement();
                 numCombinations++;
             }
             return numCombinations;
@@ -92,7 +83,7 @@ namespace Nicomputer.PokerBot.Cards.Helper
         /// </summary>
         /// <param name="n">The number of element in the set</param>
         /// <param name="k">The number of combinations</param>
-        public static ulong GetNumberOfCombinations (ulong n, ulong k) {
+        public static int GetNumberOfCombinations (ulong n, ulong k) {
 
             ulong numerator = 1;
             for (ulong i = n; i > n - k; i--)
@@ -106,7 +97,7 @@ namespace Nicomputer.PokerBot.Cards.Helper
                 denominator *= i;
             }
 
-            return numerator / denominator;
+            return Convert.ToInt32(numerator / denominator);
         }
 
         /// <summary>
@@ -177,7 +168,6 @@ namespace Nicomputer.PokerBot.Cards.Helper
             Initialize();
         }
 
-        // TODO Unit test decrement
         public void Decrement()
         {
             if (_mask[_actualIndex] >> 1 < Convert.ToUInt64(Math.Pow(Convert.ToDouble(2), Convert.ToDouble(_actualIndex))))
@@ -196,6 +186,16 @@ namespace Nicomputer.PokerBot.Cards.Helper
             {
                 _mask[_actualIndex] >>= 1 ;
             }
+        }
+
+        public override string ToString()
+        {
+            ulong binary = 0x0;
+            foreach (ulong ul in _mask)
+            {
+                binary |= ul;
+            }
+            return Convert.ToString(Convert.ToInt64(binary), 2).PadLeft(_maxBits, '0');
         }
 
         public override bool Equals(object obj)

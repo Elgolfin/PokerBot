@@ -16,13 +16,26 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(8, BinaryOperations.GenerateAllCombinations(8, 1));
         }
 
-        // TODO: now make it works for more than 1 combination :)
-        //[TestCategory("BinaryOperations")]
-        //[TestMethod]
-        //public void GenerateAllCombinations_8bits_2combination()
-        //{
-        //    Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(8, 2), BinaryOperations.GenerateAllCombinations(8, 2));
-        //}
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void GenerateAllCombinations_8bits_2combinations()
+        {
+            Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(8, 2), BinaryOperations.GenerateAllCombinations(8, 2));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void GenerateAllCombinations_8bits_3combinations()
+        {
+            Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(8, 3), BinaryOperations.GenerateAllCombinations(8, 3));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void GenerateAllCombinations_52bits_7combinations()
+        {
+            Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(52, 7), BinaryOperations.GenerateAllCombinations(52, 7));
+        }
 
         [TestCategory("BinaryOperations")]
         [TestMethod]
@@ -128,7 +141,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetNumberOfCombinations_8_2()
         {
-            ulong result = 28;
+            int result = 28;
             Assert.AreEqual(result, BinaryOperations.GetNumberOfCombinations(8, 2));
         }
 
@@ -136,7 +149,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetNumberOfCombinations_8_1()
         {
-            ulong result = 8;
+            int result = 8;
             Assert.AreEqual(result, BinaryOperations.GetNumberOfCombinations(8, 1));
         }
 
@@ -144,7 +157,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetNumberOfCombinations_8_0()
         {
-            ulong result = 1;
+            int result = 1;
             Assert.AreEqual(result, BinaryOperations.GetNumberOfCombinations(8, 0));
         }
 
@@ -152,7 +165,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetNumberOfCombinations_8_8()
         {
-            ulong result = 1;
+            int result = 1;
             Assert.AreEqual(result, BinaryOperations.GetNumberOfCombinations(8, 8));
         }
 
@@ -160,7 +173,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetNumberOfCombinations_52_7()
         {
-            ulong result = 133784560;
+            int result = 133784560;
             Assert.AreEqual(result, BinaryOperations.GetNumberOfCombinations(52, 7));
         }
 
@@ -168,7 +181,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetNumberOfCombinations_0_0()
         {
-            ulong result = 1;
+            int result = 1;
             Assert.AreEqual(result, BinaryOperations.GetNumberOfCombinations(0, 0));
         }
 
