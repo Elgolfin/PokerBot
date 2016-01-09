@@ -13,7 +13,7 @@ namespace Nicomputer.PokerBot
     {
         public static void Main(string[] args)
         {
-            GenerateAllHandsInAFile(5); 
+            GenerateAllHandsInAFile(2); 
             //FindAllStraightFlush();
             Console.ReadKey();
         }
@@ -33,7 +33,7 @@ namespace Nicomputer.PokerBot
                 while (sr.Peek() >= 0)
                 {
                     long hand = Convert.ToInt64(sr.ReadLine());
-                    if (HandAnalyzer.IsStraightFlush(hand))
+                    if (CardsAnalyzer.IsStraightFlush(hand))
                     {
                         num++;
                     }

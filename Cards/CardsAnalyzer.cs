@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Nicomputer.PokerBot.Cards
 {
-    public class HandAnalyzer
+    public class CardsAnalyzer
     {
         static Club clubs;
         static Diamond diamonds;
@@ -19,19 +19,19 @@ namespace Nicomputer.PokerBot.Cards
 
         public enum CardName : long
         {
-            Card_2 =        0x0001, // 0 0000 0000 0001
-            Card_3 =        0x0002, // 0 0000 0000 0010 
-            Card_4 =        0x0004, // 0 0000 0000 0100
-            Card_5 =        0x0008, // 0 0000 0000 1000
-            Card_6 =        0x0010, // 0 0000 0001 0000
-            Card_7 =        0x0020, // 0 0000 0010 0000
-            Card_8 =        0x0040, // 0 0000 0100 0000
-            Card_9 =        0x0080, // 0 0000 1000 0000
-            Card_10 =       0x0100, // 0 0001 0000 0000
-            Card_Jack =     0x0200, // 0 0010 0000 0000
-            Card_Queen =    0x0400, // 0 0100 0000 0000
-            Card_King =     0x0800, // 0 1000 0000 0000
-            Card_Ace =      0x1000  // 1 0000 0000 0000
+            _2 =        0x0001, // 0 0000 0000 0001
+            _3 =        0x0002, // 0 0000 0000 0010 
+            _4 =        0x0004, // 0 0000 0000 0100
+            _5 =        0x0008, // 0 0000 0000 1000
+            _6 =        0x0010, // 0 0000 0001 0000
+            _7 =        0x0020, // 0 0000 0010 0000
+            _8 =        0x0040, // 0 0000 0100 0000
+            _9 =        0x0080, // 0 0000 1000 0000
+            _10 =       0x0100, // 0 0001 0000 0000
+            _Jack =     0x0200, // 0 0010 0000 0000
+            _Queen =    0x0400, // 0 0100 0000 0000
+            _King =     0x0800, // 0 1000 0000 0000
+            _Ace =      0x1000  // 1 0000 0000 0000
         };
 
         public static bool IsFourOfAKind(long hand)

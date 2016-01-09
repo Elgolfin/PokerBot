@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{01A73EB8-0A39-4BFC-96B6-0AF21E40DA6C}</ProjectGuid>
+    <ProjectGuid>{C66E5D28-C8F0-4365-A143-34697E6044D7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nicomputer.PokerBot.Cards</RootNamespace>
-    <AssemblyName>Nicomputer.PokerBot.Cards</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>PokerGame</RootNamespace>
+    <AssemblyName>PokerGame</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,21 +36,12 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Card.cs" />
-    <Compile Include="Hand.cs" />
-    <Compile Include="CardsAnalyzer.cs" />
-    <Compile Include="Helper\BinaryOperations.cs" />
-    <Compile Include="Suits\AbstractSuit.cs" />
-    <Compile Include="Deck52Cards.cs" />
-    <Compile Include="Suits\Club.cs" />
-    <Compile Include="Suits\Diamond.cs" />
-    <Compile Include="Suits\Heart.cs" />
-    <Compile Include="Suits\ISuit.cs" />
+    <Compile Include="Table.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Suits\Spade.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
