@@ -18,11 +18,15 @@ namespace Nicomputer.PokerBot.Cards
     /// </remarks>
     public class Deck52cards : AbstractSuit
     {
+        private List<Card> _cards = new List<Card>(52);
+
         public Deck52cards(long cards)
             : base(52, 0x000FFFFFFFFFFFFF, 0)
         {
             Cards = cards;
+            InitDeck();
         }
+
         public enum CardName : ulong
         {
             _2 = 0x0001,        // 0 0000 0000 0001
@@ -51,6 +55,68 @@ namespace Nicomputer.PokerBot.Cards
         public List<Card> GetSuitCards(SuitName suit)
         {
             return new List<Card>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        static Random r = new Random();
+        /// <summary>
+        /// Shuffle the deck
+        /// Based on Fisher-Yates Shuffle
+        /// http://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+        /// </summary>
+        public void Shuffle()
+        {
+            InitDeck();
+            for (int n = _cards.Count - 1; n > 0; --n)
+            {
+                int k = r.Next(n + 1);
+                Card temp = _cards[n];
+                _cards[n] = _cards[k];
+                _cards[k] = temp;
+            }
+        }
+
+        /// <summary>
+        /// Deal next card in the deck (and remove it from the deck)
+        /// </summary>
+        /// <returns></returns>
+        public Card Deal()
+        {
+            Card ret = _cards[0];
+            _cards.RemoveAt(0);
+            return ret;
+        }
+
+        /// <summary>
+        /// Burn next card in the deck (actually, this method is an alias for the Deal method)
+        /// </summary>
+        /// <returns></returns>
+
+        public Card Burn()
+        {
+            return Deal();
+        }
+
+        /// <summary>
+        /// Reset the deck
+        /// </summary>
+        private void InitDeck()
+        {
+            _cards = new List<Card>(52);
+            InitFamilyCards(SuitName.Clubs);
+            InitFamilyCards(SuitName.Diamonds);
+            InitFamilyCards(SuitName.Hearts);
+            InitFamilyCards(SuitName.Spades);
+        }
+
+        private void InitFamilyCards(SuitName family)
+        {
+            for (int i = 2; i <= 14; i++)
+            {
+                _cards.Add(new Card(i, family));
+            }
         }
 
     }
