@@ -18,7 +18,7 @@ namespace Nicomputer.PokerBot.Cards
         public ulong AbsoluteValue { get; set; }
         // 2 = 2, 3= 3, ..., T = 10, J = 11, Q = 12, K = 13, A = 14
         public int RelativeValue { get; set; }
-        public Deck52cards.SuitName Suit { get; set; }
+        public Deck52Cards.SuitName Suit { get; set; }
 
         /// <summary>
         /// Return the short name of the card
@@ -26,46 +26,46 @@ namespace Nicomputer.PokerBot.Cards
         /// </summary>
         public override string ToString()
         {
-            string _shortName = String.Empty;
+            string shortName;
             switch (AbsoluteValue)
             {
                 case 10:
-                    _shortName = "T";
+                    shortName = "T";
                     break;
                 case 11:
-                    _shortName = "J";
+                    shortName = "J";
                     break;
                 case 12:
-                    _shortName = "Q";
+                    shortName = "Q";
                     break;
                 case 13:
-                    _shortName = "K";
+                    shortName = "K";
                     break;
                 case 14:
-                    _shortName = "A";
+                    shortName = "A";
                     break;
                 default:
-                    _shortName = AbsoluteValue.ToString();
+                    shortName = AbsoluteValue.ToString();
                     break;
             }
 
             switch (Suit)
             {
-                case Deck52cards.SuitName.Clubs:
-                    _shortName += "c";
+                case Deck52Cards.SuitName.Clubs:
+                    shortName += "c";
                     break;
-                case Deck52cards.SuitName.Diamonds:
-                    _shortName += "d";
+                case Deck52Cards.SuitName.Diamonds:
+                    shortName += "d";
                     break;
-                case Deck52cards.SuitName.Hearts:
-                    _shortName += "h";
+                case Deck52Cards.SuitName.Hearts:
+                    shortName += "h";
                     break;
-                case Deck52cards.SuitName.Spades:
-                    _shortName += "s";
+                case Deck52Cards.SuitName.Spades:
+                    shortName += "s";
                     break;
             }
 
-            return _shortName;
+            return shortName;
 
         }
 
@@ -89,7 +89,7 @@ namespace Nicomputer.PokerBot.Cards
             }
         }
 
-        public Card(int relativeValue, Deck52cards.SuitName suit)
+        public Card(int relativeValue, Deck52Cards.SuitName suit)
         {
             SetValue(Convert.ToString(relativeValue - 2));
             Suit = suit;
@@ -138,7 +138,7 @@ namespace Nicomputer.PokerBot.Cards
                     }
                     else
                     {
-                        throw new Exception(String.Format("Unknown Card Value [{0}]", value.ToUpper()));
+                        throw new Exception($"Unknown Card Value [{(value.ToUpper())}]");
                     }
                     break;
             }
@@ -149,23 +149,23 @@ namespace Nicomputer.PokerBot.Cards
             switch (familyAbbr.ToUpper())
             {
                 case "C":
-                    Suit = Deck52cards.SuitName.Clubs;
+                    Suit = Deck52Cards.SuitName.Clubs;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 case "D":
-                    Suit = Deck52cards.SuitName.Diamonds;
+                    Suit = Deck52Cards.SuitName.Diamonds;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 case "H":
-                    Suit = Deck52cards.SuitName.Hearts;
+                    Suit = Deck52Cards.SuitName.Hearts;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 case "S":
-                    Suit = Deck52cards.SuitName.Spades;
+                    Suit = Deck52Cards.SuitName.Spades;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 default:
-                    throw new Exception(String.Format("Unknown Card Family [{0}]", familyAbbr.ToLower()));
+                    throw new Exception($"Unknown Card Family [{(familyAbbr.ToLower())}]");
             }
         }
 

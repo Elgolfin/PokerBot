@@ -14,7 +14,7 @@ namespace Nicomputer.PokerBot.Cards
         private int _billChenValue = 0;
         private int _billChenGroupValue = 0;
 
-        public List<Card> _cards = null;
+        private List<Card> _cards = null;
         public List<Card> Cards
         {
             get
@@ -34,7 +34,7 @@ namespace Nicomputer.PokerBot.Cards
             {
                 if (String.IsNullOrEmpty(_shortName))
                 {
-                    _shortName = String.Format("{0}{1}", HighCard.ToString().Substring(0, 1), LowCard.ToString().Substring(0, 1));
+                    _shortName = $"{(HighCard.ToString().Substring(0, 1))}{(LowCard.ToString().Substring(0, 1))}";
                     if (SameSuit)
                     {
                         _shortName += "s";
@@ -51,7 +51,7 @@ namespace Nicomputer.PokerBot.Cards
             {
                 if (String.IsNullOrEmpty(_longName))
                 {
-                    _longName = String.Format("{0}{1}", HighCard.ToString(), LowCard.ToString());
+                    _longName = $"{(HighCard.ToString())}{(LowCard.ToString())}";
                 }
                 return _longName;
             }

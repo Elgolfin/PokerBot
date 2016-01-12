@@ -16,11 +16,11 @@ namespace Nicomputer.PokerBot.Cards
     /// 00000000 00001111 11111111 10000000 00000000 00000000 00000000 00000000 (0x000FFF8000000000) hearts mask
     /// 00000000 00001111 11111111 11111111 11111111 11111111 11111111 11111111 (0x000FFFFFFFFFFFFF) 52 cards mask 
     /// </remarks>
-    public class Deck52cards : AbstractSuit
+    public class Deck52Cards : AbstractSuit
     {
         private List<Card> _cards = new List<Card>(52);
 
-        public Deck52cards(long cards)
+        public Deck52Cards(long cards)
             : base(52, 0x000FFFFFFFFFFFFF, 0)
         {
             Cards = cards;
