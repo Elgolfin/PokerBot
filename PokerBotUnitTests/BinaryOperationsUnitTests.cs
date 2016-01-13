@@ -206,6 +206,17 @@ namespace Nicomputer.PokerBot.CardsUnitTests
 
         [TestCategory("BinaryOperations")]
         [TestMethod]
+        public void GetCombinationsMaskBits_8_2_Decrement_1_Reset()
+        {
+            ulong[] result = { 0x40, 0x80 };
+            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            mask.Decrement();
+            mask.Reset();
+            Assert.AreEqual(true, mask.Equals(result));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
         public void GetCombinationsMaskBits_52_7()
         {
             /// 0000 0000 0000//1000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
@@ -222,27 +233,8 @@ namespace Nicomputer.PokerBot.CardsUnitTests
                                0x2000000000000,
                                0x4000000000000,
                                0x8000000000000 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(52, 7);
+            MaskBits mask = new MaskBits(52, 7);
             Assert.AreEqual(true, mask.Equals(result));
-        }
-
-        static bool ArraysEqual<T>(T[] a1, T[] a2)
-        {
-            if (ReferenceEquals(a1, a2))
-                return true;
-
-            if (a1 == null || a2 == null)
-                return false;
-
-            if (a1.Length != a2.Length)
-                return false;
-
-            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
-            for (int i = 0; i < a1.Length; i++)
-            {
-                if (!comparer.Equals(a1[i], a2[i])) return false;
-            }
-            return true;
         }
 
         [TestCategory("BinaryOperations")]
@@ -252,6 +244,51 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             ulong input = 0x8000000000000000;
             ulong result = 0x01;
             Assert.AreEqual(result, BinaryOperations.ReverseBits(input));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void MaskBits_8_2_ToString_Is_11000000()
+        {
+            var mask = new MaskBits(8, 2);
+            Assert.AreEqual("11000000", mask.ToString());
+
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void CompareArrays_SameReferences_True()
+        {
+            var mask1 = new MaskBits(8, 2);
+            var mask2 = mask1.Mask;
+            Assert.AreEqual(true, mask1.Equals(mask2));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void CompareArrays_Null_False()
+        {
+            var mask1 = new MaskBits(8, 2);
+            MaskBits mask2 = null;
+            Assert.AreEqual(false, mask1.Equals(mask2));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void CompareArrays_DifferentLength_False()
+        {
+            var mask1 = new MaskBits(8, 2);
+            var mask2 = new MaskBits(8, 3);
+            Assert.AreEqual(false, mask1.Equals(mask2.Mask));
+        }
+
+        [TestCategory("BinaryOperations")]
+        [TestMethod]
+        public void CompareArrays_DifferentMask_False()
+        {
+            var mask1 = new MaskBits(8, 2);
+            var mask2 = new MaskBits(9, 2);
+            Assert.AreEqual(false, mask1.Equals(mask2.Mask));
         }
     }
 }

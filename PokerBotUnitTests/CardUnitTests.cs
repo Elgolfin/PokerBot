@@ -146,5 +146,8 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(result, card.AbsoluteValue);
             Assert.AreEqual(10, card.RelativeValue);
         }
+
+
+
     }
 }

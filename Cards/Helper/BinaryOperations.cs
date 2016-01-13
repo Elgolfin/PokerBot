@@ -70,16 +70,6 @@ namespace Nicomputer.PokerBot.Cards.Helper
         }
 
         /// <summary>
-        /// Gets the complement of the starting binary sequence
-        /// </summary>
-        /// <param name="getFrom"></param>
-        /// <returns></returns>
-        public static ulong GetMask(ulong getFrom)
-        {
-            return ~getFrom;
-        }
-
-        /// <summary>
         /// Return the number of possible k combinations from a set of n elements
         /// Result = n! / (k!(n-k)!)
         /// </summary>
@@ -137,9 +127,8 @@ namespace Nicomputer.PokerBot.Cards.Helper
         {
             get
             {
-                return _mask;//.Reverse().ToArray();
+                return _mask;
             }
-            protected set { }
         }
         private int _maxBits = 52;
         private int _combinations = 7;
@@ -208,7 +197,7 @@ namespace Nicomputer.PokerBot.Cards.Helper
         public override bool Equals(object obj)
         {
             ulong[] array = obj as ulong[];
-            if (array == null) { return false; }
+            //if (array == null) { return false; }
             return ArraysEqual(Mask, array);
         }
 
