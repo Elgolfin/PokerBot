@@ -91,7 +91,7 @@ namespace Nicomputer.PokerBot.Cards
 
         public Card(int relativeValue, Deck52Cards.SuitName suit)
         {
-            SetValue(Convert.ToString(relativeValue - 2));
+            SetValue(Convert.ToString(relativeValue));
             Suit = suit;
             AbsoluteValue <<= (int)Suit;
         }
@@ -104,10 +104,10 @@ namespace Nicomputer.PokerBot.Cards
         /// Format: Value(ulong) = Card(string)
         /// 0=2, 1=3, 2=4, 3=5, 4=6, 5=7, 6=8, 7=9, 8=T, 9=J, 10=Q, 11=K, 12=A
         /// </summary>
-        /// <param name="value"></param>
-        private void SetValue(string value)
+        /// <param name="relativeValue"></param>
+        private void SetValue(string relativeValue)
         {
-            switch (value.ToUpper())
+            switch (relativeValue.ToUpper())
             {
                 case "T":
                     AbsoluteValue = Convert.ToUInt64(Math.Pow(2,8));
@@ -130,15 +130,15 @@ namespace Nicomputer.PokerBot.Cards
                     RelativeValue = 14;
                     break;
                 default:
-                    double cardValue = Convert.ToDouble(value) - 2;
-                    if (cardValue < 8 && cardValue >= 0)
+                    double cardValue = Convert.ToDouble(relativeValue) - 2;
+                    if (cardValue <=14  && cardValue >= 0)
                     {
                         AbsoluteValue = Convert.ToUInt64(Math.Pow(2, cardValue));
-                        RelativeValue = Convert.ToInt32(value);
+                        RelativeValue = Convert.ToInt32(relativeValue);
                     }
                     else
                     {
-                        throw new Exception($"Unknown Card Value [{(value.ToUpper())}]");
+                        throw new Exception($"Unknown Card Relative Value [{(relativeValue.ToUpper())}]");
                     }
                     break;
             }

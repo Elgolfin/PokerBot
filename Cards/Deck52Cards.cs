@@ -20,10 +20,10 @@ namespace Nicomputer.PokerBot.Cards
     {
         private List<Card> _cards = new List<Card>(52);
 
-        public Deck52Cards(long cards)
+        public Deck52Cards()
             : base(52, 0x000FFFFFFFFFFFFF, 0)
         {
-            Cards = cards;
+            Cards = 0x000FFFFFFFFFFFFF;
             InitDeck();
         }
 
@@ -51,10 +51,9 @@ namespace Nicomputer.PokerBot.Cards
             Hearts = 39
         };
 
-        //TODO Return the 13 cards of a same suit
-        public List<Card> GetSuitCards(SuitName suit)
+        public List<Card> GetCards()
         {
-            return new List<Card>();
+            return _cards;
         }
 
         /// <summary>

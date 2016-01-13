@@ -32,6 +32,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
 
         [TestCategory("BinaryOperations")]
         [TestMethod]
+        [Ignore]
         public void GenerateAllCombinations_52bits_7combinations()
         {
             Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(52, 7), BinaryOperations.GenerateAllCombinations(52, 7));

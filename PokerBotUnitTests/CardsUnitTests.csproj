@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nicomputer.PokerBot.CardsUnitTests</RootNamespace>
     <AssemblyName>Nicomputer.PokerBot.CardsUnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,11 +58,21 @@
     <Compile Include="BinaryOperationsUnitTests.cs" />
     <Compile Include="MaskBitsUnitTests.cs" />
     <Compile Include="CardUnitTests.cs" />
+    <Compile Include="TableUnitTests.cs" />
+    <Compile Include="Deck52CardsUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cards\Cards.csproj">
       <Project>{01a73eb8-0a39-4bfc-96b6-0af21e40da6c}</Project>
       <Name>Cards</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokerBot\PokerBot.csproj">
+      <Project>{89f159b7-12be-48b6-9247-cf30eba6a381}</Project>
+      <Name>PokerBot</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PokerGame\PokerGame.csproj">
+      <Project>{c66e5d28-c8f0-4365-a143-34697e6044d7}</Project>
+      <Name>PokerGame</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -14,6 +14,7 @@ namespace Nicomputer.PokerBot.PokerGame
         private int turn = 0;
         public bool IsOpened = true;
         public Dictionary<int, List<string>> Logs = new Dictionary<int, List<string>>(); // Will log all actions that will happen during the lifecycle of the table, player after player, turn after turn
+        private int numberOfSeats;
 
         public Dealer Dealer { get; set; }
         public List<Card> Board { get; set; }
@@ -22,18 +23,18 @@ namespace Nicomputer.PokerBot.PokerGame
             private set { }
         }
 
-        public Table(int numberOfSeats, Dealer dealer, Deck52Cards deck)
+        public Table(int numberOfSeats)
         {
-            OpenTable(numberOfSeats, dealer, deck);
+            this.numberOfSeats = numberOfSeats;
         }
 
-        public void OpenTable(int size, Dealer dealer, Deck52Cards deck)
+        public void OpenTable(Dealer dealer)
         {
-            Dealer = dealer;
+            
             dealer.Table = this;
             turn = 0;
             ShufflePlayers();
-            for (int i = 0 ; i < size ; i++)
+            for (int i = 0 ; i < numberOfSeats; i++)
             {
                 Seats.Add(new Seat(i, Players[i]));
             }
