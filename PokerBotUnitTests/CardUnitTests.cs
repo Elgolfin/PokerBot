@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.Cards;
 
@@ -148,6 +149,107 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         }
 
 
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Th_Js()
+        {
+            Card card1 = new Card("Th");
+            Card card2 = new Card("Js");
+            Assert.AreEqual(-1, card1.CompareTo(card2));
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Js_Th()
+        {
+            Card card1 = new Card("Jh");
+            Card card2 = new Card("Ts");
+            Assert.AreEqual(1, card1.CompareTo(card2));
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Js_Jh()
+        {
+            Card card1 = new Card("Jh");
+            Card card2 = new Card("Js");
+            Assert.AreEqual(0, card2.CompareTo(card1));
+        }
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Th_Jh()
+        {
+            Card card1 = new Card("Th");
+            Card card2 = new Card("Jh");
+            Assert.AreEqual(-1, card1.CompareTo(card2));
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Jh_Th()
+        {
+            Card card1 = new Card("Jh");
+            Card card2 = new Card("Th");
+            Assert.AreEqual(1, card1.CompareTo(card2));
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Jh_Jh()
+        {
+            Card card1 = new Card("Jh");
+            Card card2 = new Card("Jh");
+            Assert.AreEqual(0, card2.CompareTo(card1));
+        }
+
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void ToString_Kh()
+        {
+            Card card = new Card("kh");
+            Assert.AreEqual("Kh", card.ToString());
+
+        }
+
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void ToString_Qs()
+        {
+            Card card = new Card("qs");
+            Assert.AreEqual("Qs", card.ToString());
+        }
+
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void ToString_Jc()
+        {
+            Card card = new Card("jc");
+            Assert.AreEqual("Jc", card.ToString());
+        }
+
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void ToString_Td()
+        {
+            Card card = new Card("td");
+            Assert.AreEqual("Td", card.ToString());
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void ToString_As()
+        {
+            Card card = new Card("aS");
+            Assert.AreEqual("As", card.ToString());
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void ToString_9h()
+        {
+            Card card = new Card("9h");
+            Assert.AreEqual("9h", card.ToString());
+        }
 
     }
 }

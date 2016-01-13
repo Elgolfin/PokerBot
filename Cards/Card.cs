@@ -9,7 +9,7 @@ namespace Nicomputer.PokerBot.Cards
     /// <summary>
     /// The Card Object
     /// </summary>
-    public class Card : IComparable, IComparable<Card>
+    public class Card : IComparable<Card>
     {
 
         #region Properties
@@ -27,7 +27,7 @@ namespace Nicomputer.PokerBot.Cards
         public override string ToString()
         {
             string shortName;
-            switch (AbsoluteValue)
+            switch (RelativeValue)
             {
                 case 10:
                     shortName = "T";
@@ -45,7 +45,7 @@ namespace Nicomputer.PokerBot.Cards
                     shortName = "A";
                     break;
                 default:
-                    shortName = AbsoluteValue.ToString();
+                    shortName = RelativeValue.ToString();
                     break;
             }
 
@@ -131,14 +131,10 @@ namespace Nicomputer.PokerBot.Cards
                     break;
                 default:
                     double cardValue = Convert.ToDouble(relativeValue) - 2;
-                    if (cardValue <=14  && cardValue >= 0)
+                    if (cardValue <10  && cardValue >= 0)
                     {
                         AbsoluteValue = Convert.ToUInt64(Math.Pow(2, cardValue));
                         RelativeValue = Convert.ToInt32(relativeValue);
-                    }
-                    else
-                    {
-                        throw new Exception($"Unknown Card Relative Value [{(relativeValue.ToUpper())}]");
                     }
                     break;
             }
@@ -164,25 +160,6 @@ namespace Nicomputer.PokerBot.Cards
                     Suit = Deck52Cards.SuitName.Spades;
                     AbsoluteValue <<= (int)Suit;
                     break;
-                default:
-                    throw new Exception($"Unknown Card Family [{(familyAbbr.ToLower())}]");
-            }
-        }
-
-        #endregion
-
-        #region IComparable Members
-
-        int IComparable.CompareTo(object obj)
-        {
-            if (obj is Card)
-            {
-                Card otherCard = (Card)obj;
-                return AbsoluteValue.CompareTo(otherCard.AbsoluteValue);
-            }
-            else
-            {
-                throw new ArgumentException("Object is not a Card");
             }
         }
 
@@ -190,9 +167,9 @@ namespace Nicomputer.PokerBot.Cards
 
         #region IComparable<Card> Members
 
-        int IComparable<Card>.CompareTo(Card other)
+        public int CompareTo(Card other)
         {
-            return AbsoluteValue.CompareTo(other.AbsoluteValue);
+            return RelativeValue.CompareTo(other.RelativeValue);
         }
 
         #endregion
