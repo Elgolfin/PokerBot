@@ -12,7 +12,7 @@ namespace Nicomputer.PokerBot.Cards
     public class Card : IComparable<Card>
     {
 
-        #region Properties
+        
 
         // Represent the value of the bit in the 52 cards bits sequence (see CardUnitTests for example)
         public ulong AbsoluteValue { get; set; }
@@ -68,10 +68,6 @@ namespace Nicomputer.PokerBot.Cards
             return shortName;
 
         }
-
-        #endregion
-
-        #region Constructors
         /// <summary>
         /// Instanciate a Card object from its abbreviated form (the abbreviated form is case insensitive)
         /// i.e. Qs, QS, qS or qs for the Queen of Spades
@@ -95,10 +91,6 @@ namespace Nicomputer.PokerBot.Cards
             Suit = suit;
             AbsoluteValue <<= (int)Suit;
         }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>
         /// Format: Value(ulong) = Card(string)
@@ -163,15 +155,24 @@ namespace Nicomputer.PokerBot.Cards
             }
         }
 
-        #endregion
-
-        #region IComparable<Card> Members
-
-        public int CompareTo(Card other)
+       public int CompareTo(Card other)
         {
             return RelativeValue.CompareTo(other.RelativeValue);
         }
 
-        #endregion
+        public override bool Equals(Object o)
+        {
+            var c = o as Card;
+            if (c == null)
+            {
+                return false;
+            }
+            if (c.RelativeValue == RelativeValue && c.Suit == Suit)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

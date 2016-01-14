@@ -251,5 +251,29 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual("9h", card.ToString());
         }
 
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Jh_Equals_Jd_Returns_False()
+        {
+            Card card1 = new Card("Jh");
+            Card card2 = new Card("Jd");
+            Assert.AreEqual(false, card1.Equals(card2));
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Jh_Equals_Jh_Returns_True()
+        {
+            Card card1 = new Card("Jh");
+            Card card2 = new Card("Jh");
+            Assert.AreEqual(true, card1.Equals(card2));
+        }
+        [TestCategory("Card")]
+        [TestMethod]
+        public void CompareCards_Jh_Equals_null_Returns_False()
+        {
+            Card card1 = new Card("Jh");
+            Assert.AreEqual(false, card1.Equals(null));
+        }
+
     }
 }

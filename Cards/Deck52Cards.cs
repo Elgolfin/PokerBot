@@ -93,9 +93,9 @@ namespace Nicomputer.PokerBot.Cards
         /// </summary>
         /// <returns></returns>
 
-        public Card Burn()
+        public void Burn()
         {
-            return Deal();
+            Deal();
         }
 
         /// <summary>
@@ -116,6 +116,30 @@ namespace Nicomputer.PokerBot.Cards
             {
                 _cards.Add(new Card(i, family));
             }
+        }
+
+        public override bool Equals(Object o)
+        {
+            var deck = o as Deck52Cards;
+            if (deck == null)
+            {
+                return false;
+            }
+
+            if (deck._cards.Count != _cards.Count)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < _cards.Count; i++)
+            {
+                if (!deck._cards[i].Equals(_cards[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+
         }
 
     }
