@@ -87,7 +87,8 @@ namespace Nicomputer.PokerBot.Cards
 
         public Card(int relativeValue, Deck52Cards.SuitName suit)
         {
-            SetValue(Convert.ToString(relativeValue));
+            RelativeValue = relativeValue;
+            AbsoluteValue = Convert.ToUInt64(Math.Pow(2, relativeValue - 2));
             Suit = suit;
             AbsoluteValue <<= (int)Suit;
         }

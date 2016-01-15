@@ -60,6 +60,7 @@
     <Compile Include="CardUnitTests.cs" />
     <Compile Include="TableUnitTests.cs" />
     <Compile Include="Deck52CardsUnitTests.cs" />
+    <Compile Include="HandUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cards\Cards.csproj">

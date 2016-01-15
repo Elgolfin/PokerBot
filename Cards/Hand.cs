@@ -8,24 +8,11 @@ namespace Nicomputer.PokerBot.Cards
     // TODO add unit tests for Hand
     public class Hand
     {
-        public Card FirstCard;
-        public Card SecondCard;
+        public Card FirstCard { get; set; }
+        public Card SecondCard { get; set; }
 
         private int _billChenValue = 0;
         private int _billChenGroupValue = 0;
-
-        private List<Card> _cards = null;
-        public List<Card> Cards
-        {
-            get
-            {
-                _cards = new List<Card>(2);
-                _cards.Add(FirstCard);
-                _cards.Add(SecondCard);
-                return _cards;
-            }
-            set { }
-        }
 
         private string _shortName = String.Empty;
         public string ShortName
@@ -88,7 +75,7 @@ namespace Nicomputer.PokerBot.Cards
         /// </summary>
         private void GetHighNLowCard()
         {
-            if (FirstCard.AbsoluteValue == 1 || (SecondCard.AbsoluteValue > 1 && FirstCard.AbsoluteValue >= SecondCard.AbsoluteValue))
+            if (FirstCard.CompareTo(SecondCard) >= 0)
             {
                 _highCard = FirstCard;
                 _lowCard = SecondCard;
@@ -112,12 +99,22 @@ namespace Nicomputer.PokerBot.Cards
         {
             get
             {
-                return (FirstCard.AbsoluteValue == SecondCard.AbsoluteValue);
+                return (FirstCard.RelativeValue == SecondCard.RelativeValue);
             }
         }
 
         /// <summary>
         /// Calculate the Bill Chen value of the hand (hand value are classified in 5 tiers)
+        /// Group 	Hands
+        /// 1 	    AA, AKs, KK, QQ, JJ
+        /// 2 	    AK, AQs, AJs, KQs, TT
+        /// 3 	    AQ, ATs, KJs, QJs, JTs, 99
+        /// 4 	    AJ, KQ, KTs, QTs, J9s, T9s, 98s, 88
+        /// 5 	    A9s - A2s, KJ, QJ, JT, Q9s, T8s, 97s, 87s, 77, 76s, 66
+        /// 6 	    AT, KT, QT, J8s, 86s, 75s, 65s, 55, 54s
+        /// 7 	    K9s - K2s, J9, T9, 98, 64s, 53s, 44, 43s, 33, 22
+        /// 8 	    A9, K9, Q9, J8, J7s, T8, 96s, 87, 85s, 76, 74s, 65, 54, 42s, 32s
+        /// 9 	    All other hands not required above.
         /// </summary>
         /// <returns></returns>
         public int BillChenGroupValue
@@ -127,32 +124,32 @@ namespace Nicomputer.PokerBot.Cards
                 if (_billChenGroupValue == 0)
                 {
                     _billChenGroupValue = 9;
-                    if (_billChenValue == 5)
+                    if (BillChenValue == 5)
                     {
                         _billChenGroupValue = 7;
                     }
 
-                    if (_billChenValue >= 6)
+                    if (BillChenValue >= 6)
                     {
                         _billChenGroupValue = 5;
                     }
 
-                    if (_billChenValue == 8)
+                    if (BillChenValue == 8)
                     {
                         _billChenGroupValue = 4;
                     }
 
-                    if (_billChenValue == 9)
+                    if (BillChenValue == 9)
                     {
                         _billChenGroupValue = 3;
                     }
 
-                    if (_billChenValue >= 10)
+                    if (BillChenValue >= 10)
                     {
                         _billChenGroupValue = 2;
                     }
 
-                    if (_billChenValue >= 12)
+                    if (BillChenValue >= 12)
                     {
                         _billChenGroupValue = 1;
                     }
@@ -189,49 +186,83 @@ namespace Nicomputer.PokerBot.Cards
             }
         }
 
+        /// <summary>
+        /// 
+        /// 1. Score your highest card only.Do not add any points for your lower card.
+        ///     A = 10 points.
+        ///     K = 8 points.
+        ///     Q = 7 points.
+        ///     J = 6 points.
+        ///     10 to 2 = 1/2 of card value. (e.g.a 6 would be worth 3 points)
+        /// 
+        /// 2. Multiply pairs by 2 of one card’s value.However, minimum score for a pair is 5.
+        /// (e.g.KK = 16 points, 77 = 7 points, 22 = 5 points)
+        /// 
+        /// 3. Add 2 points if cards are suited.
+        /// 
+        /// 4. Subtract points if their is a gap between the two cards.
+        ///     No gap = -0 points.
+        ///     1 card gap = -1 points.
+        ///     2 card gap = -2 points.
+        ///     3 card gap = -4 points.
+        ///     4 card gap or more = -5 points. (Aces are high this step, so hands like A2, A3 etc. have a 4+ gap.)
+        /// 
+        /// 5. Add 1 point if there is a 0 or 1 card gap and both cards are lower than a Q. (e.g.JT, 75, 32 etc, this bonus point does not apply to pocket pairs)
+        /// 
+        /// 6. Round half point scores up. (e.g. 7.5 rounds up to 8)
+        ///
+        /// </summary>
         public int BillChenValue
         {
             get
             {
+                double billChenValue = 0;
                 if (_billChenValue == 0)
                 {
 
-                    int gapPenalty = 0;
-                    _billChenValue = ScoresHighCard();
+                    // 1. Score Highest Card
+                    billChenValue = ScoresHighCard();
+                    
+                    // 2. Pair
                     if (Pair)
                     {
-                        _billChenValue *= 2;
+                        billChenValue *= 2;
+                        if (billChenValue < 5)
+                        {
+                            billChenValue = 5;
+                        }
                     }
                     else
                     {
-                        // Calculate the gap penalty
-                        gapPenalty = HighCard.RelativeValue - LowCard.RelativeValue - 1;
-                        if (HighCard.AbsoluteValue == 1)
-                        {
-                            gapPenalty = 14 - LowCard.RelativeValue + 1;
-                        }
-                        if (gapPenalty > 3)
-                        {
-                            gapPenalty = 4;
-                            if (gapPenalty >= 4)
-                            {
-                                gapPenalty = 5;
-                            }
-                        }
-                        _billChenValue -= gapPenalty;
 
-                        // Gap Bonus for straight (Hich Card is Jack or lower and gapPenalty equals 0 or 1)
-                        if (HighCard.AbsoluteValue <= 11 && gapPenalty <= 1)
-                        {
-                            _billChenValue += 1;
-                        }
-
-                        // Flush Bonus
+                        // 3. Suited Bonus
                         if (SameSuit)
                         {
-                            _billChenValue += 2;
+                            billChenValue += 2;
+                        }
+
+                        // 4. Calculate the gap penalty
+                        var gapPenalty = HighCard.RelativeValue - LowCard.RelativeValue - 1;
+                        if (gapPenalty >= 4)
+                        {
+                            gapPenalty = 5;
+                        }
+                        if (gapPenalty == 3)
+                        {
+                            gapPenalty = 4;
+                        }
+                        billChenValue -= gapPenalty;
+
+                        // 5. Straight Bonus (under Queen, not a pair)
+                        if (HighCard.RelativeValue <= 11 &&
+                            gapPenalty <= 1)
+                        {
+                            billChenValue += 1;
                         }
                     }
+
+                    // 6. Round up
+                    _billChenValue = (int) Math.Ceiling(billChenValue);
                 }
                 return _billChenValue;
             }
@@ -239,7 +270,7 @@ namespace Nicomputer.PokerBot.Cards
 
         public Hand()
         {
-
+            
         }
 
         public Hand(Card firstCard, Card secondCard)
@@ -269,11 +300,11 @@ namespace Nicomputer.PokerBot.Cards
         /// Set the score for the high card of the hand
         /// </summary>
         /// <returns></returns>
-        private int ScoresHighCard()
+        private double ScoresHighCard()
         {
-            int score = 0;
+            double score = 0;
             // As is worth 10
-            if (HighCard.AbsoluteValue == 14)
+            if (HighCard.RelativeValue == 14)
             {
                 score = 10;
             }
@@ -281,9 +312,9 @@ namespace Nicomputer.PokerBot.Cards
                 // King, Queen and Jack are respectively worth 8, 7, 6
                 score = HighCard.RelativeValue - 5;
                 // 10 and lower cards are worth to half their current score (round up)
-                if (HighCard.AbsoluteValue < 10)
+                if (HighCard.RelativeValue < 10)
                 {
-                    score = Convert.ToInt16(Math.Ceiling(Convert.ToDecimal(HighCard.AbsoluteValue / 2)));
+                    score = (double)HighCard.RelativeValue / 2;
                 }
             }
             return score;
