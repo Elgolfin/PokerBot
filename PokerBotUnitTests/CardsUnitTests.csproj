@@ -58,9 +58,12 @@
     <Compile Include="BinaryOperationsUnitTests.cs" />
     <Compile Include="MaskBitsUnitTests.cs" />
     <Compile Include="CardUnitTests.cs" />
-    <Compile Include="TableUnitTests.cs" />
     <Compile Include="Deck52CardsUnitTests.cs" />
     <Compile Include="HandUnitTests.cs" />
+    <Compile Include="PlayerUnitTests.cs" />
+    <Compile Include="SeatUnitTests.cs" />
+    <Compile Include="DealerUnitTests.cs" />
+    <Compile Include="TableUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cards\Cards.csproj">

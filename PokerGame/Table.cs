@@ -14,34 +14,48 @@ namespace Nicomputer.PokerBot.PokerGame
         private int turn = 0;
         public bool IsOpened = true;
         public Dictionary<int, List<string>> Logs = new Dictionary<int, List<string>>(); // Will log all actions that will happen during the lifecycle of the table, player after player, turn after turn
-        private int numberOfSeats;
+        public int Capacity;
 
         public Dealer Dealer { get; set; }
         public List<Card> Board { get; set; }
-        public int Size {
-            get { return Seats.Count; }
-            private set { }
+        public int NumberOfPlayers {
+            get { return Players.Count; }
         }
-
-        public Table(int numberOfSeats)
+        public int OccupiedSeats
         {
-            this.numberOfSeats = numberOfSeats;
+            get { return (from seat in Seats where seat.IsEmpty == false select seat).Count(); }
         }
 
-        public void OpenTable(Dealer dealer)
+        public Table(int capacity)
+        {
+            this.Capacity = capacity;
+            Players = new List<Player>(capacity);
+            Seats = new List<Seat>(capacity);
+            Board = new List<Card>(5);
+        }
+
+        public void Open(Dealer dealer)
         {
             
             dealer.Table = this;
+            Dealer = dealer;
             turn = 0;
             ShufflePlayers();
-            for (int i = 0 ; i < numberOfSeats; i++)
+            for (int i = 0; i < Capacity; i++)
             {
-                Seats.Add(new Seat(i, Players[i]));
+                if (i < Players.Count)
+                {
+                    Seats.Add(new Seat(i + 1, Players[i]));
+                }
+                else
+                {
+                    Seats.Add(new Seat(i));
+                }
             }
             IsOpened = true;
         }
 
-        public void CloseTable()
+        public void Close()
         {
             Dealer.Table = null;
             Dealer.Deck = null;
@@ -50,6 +64,8 @@ namespace Nicomputer.PokerBot.PokerGame
             {
                 seat.RemovePlayer();
             }
+            Players = new List<Player>(Capacity);
+            Board = new List<Card>(5);
             IsOpened = false;
         }
 

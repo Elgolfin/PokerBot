@@ -19,6 +19,11 @@ namespace Nicomputer.PokerBot.PokerGame
             AssignPlayer(player);
         }
 
+        public Seat(int number)
+        {
+            Number = number;
+        }
+
         public void AssignPlayer(Player player)
         {
             Player = player;
@@ -43,7 +48,6 @@ namespace Nicomputer.PokerBot.PokerGame
                     return false;
                 }
             }
-            private set { }
         }
     }
 }

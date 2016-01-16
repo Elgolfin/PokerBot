@@ -13,7 +13,9 @@ namespace Nicomputer.PokerBot
     {
         public static void Main(string[] args)
         {
-            GenerateAllHandsInAFile(2); 
+            //GenerateAllHandsInAFile(2);
+            int totalCombinations = BinaryOperations.GetNumberOfCombinations(13ul, 2ul);
+            Console.WriteLine(String.Format("Done. {0} combinations have been generated.", totalCombinations));
             //FindAllStraightFlush();
             Console.ReadKey();
         }

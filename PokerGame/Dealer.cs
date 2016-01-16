@@ -16,10 +16,11 @@ namespace Nicomputer.PokerBot.PokerGame
         public Dealer(Table t, Deck52Cards deck)
         {
             Deck = deck;
+            Table = t;
         }
 
         /// <summary>
-        /// TODO Check if the Seat is empty or not
+        /// 
         /// </summary>
         public void DealHands()
         {
@@ -29,7 +30,7 @@ namespace Nicomputer.PokerBot.PokerGame
             // First Card
             for (int i = 0; i < Table.Seats.Count; i++)
             {
-                if (Table.Seats[i] != null)
+                if (Table.Seats[i] != null && !Table.Seats[i].IsEmpty)
                 {
                     Table.Seats[i].Hand = new Hand();
                     Table.Seats[i].Hand.FirstCard = Deck.Deal();
@@ -38,7 +39,7 @@ namespace Nicomputer.PokerBot.PokerGame
             // Second Card
             for (int i = 0; i < Table.Seats.Count; i++)
             {
-                if (Table.Seats[i] != null)
+                if (Table.Seats[i] != null && !Table.Seats[i].IsEmpty)
                 {
                     Table.Seats[i].Hand.SecondCard = Deck.Deal();
                 }

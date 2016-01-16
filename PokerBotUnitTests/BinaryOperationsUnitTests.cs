@@ -30,13 +30,12 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(8, 3), BinaryOperations.GenerateAllCombinations(8, 3));
         }
 
-        [TestCategory("BinaryOperations")]
-        [TestMethod]
-        [Ignore]
-        public void GenerateAllCombinations_52bits_7combinations()
-        {
-            Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(52, 7), BinaryOperations.GenerateAllCombinations(52, 7));
-        }
+        //[TestCategory("BinaryOperations")]
+        //[TestMethod]
+        //public void GenerateAllCombinations_52bits_7combinations()
+        //{
+        //    Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(52, 7), BinaryOperations.GenerateAllCombinations(52, 7));
+        //}
 
         [TestCategory("BinaryOperations")]
         [TestMethod]
