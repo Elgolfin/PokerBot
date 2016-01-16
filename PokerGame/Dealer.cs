@@ -27,6 +27,7 @@ namespace Nicomputer.PokerBot.PokerGame
             Deck.Shuffle();
 
             // Dealer... deals
+            // TODO Button must be the last the receive cards
             // First Card
             for (int i = 0; i < Table.Seats.Count; i++)
             {
