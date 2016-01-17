@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.Cards;
 
-namespace Nicomputer.PokerBot.CardsUnitTests
+namespace Nicomputer.PokerBot.UnitTests
 {
     [TestClass]
     public class HandUnitTests

@@ -12,8 +12,8 @@ namespace Nicomputer.PokerBot.PokerGame
     {
         public List<Player> Players { get; private set; }
         public List<Seat> Seats;
-        private int turn = 0;
-        public bool IsOpened = true;
+        public int Turn { get; private set; }
+        public bool IsOpened = false;
         public Dictionary<int, List<string>> Logs = new Dictionary<int, List<string>>(); // Will log all actions that will happen during the lifecycle of the table, player after player, turn after turn
         public int Capacity { get; private set; }
         public int ButtonPosition { get; private set; }
@@ -41,6 +41,7 @@ namespace Nicomputer.PokerBot.PokerGame
                 Seats.Add(new Seat(i));
             }
             Board = new List<Card>(5);
+            Turn = 0;
         }
 
         public void Open(Dealer dealer)
@@ -48,23 +49,15 @@ namespace Nicomputer.PokerBot.PokerGame
             
             dealer.Table = this;
             Dealer = dealer;
-            turn = 0;
+            Turn = 1;
             InitializePositions();
             IsOpened = true;
         }
 
-        static Random r = new Random();
         private void InitializePositions(int startingPosition = 0)
         {
             ButtonPosition = FindPosition(startingPosition);
-            if (NumberOfPlayers > 2)
-            {
-                SmallBlindPosition = FindPosition(ButtonPosition + 1); 
-            }
-            else
-            {
-                SmallBlindPosition = ButtonPosition;
-            }
+            SmallBlindPosition = (NumberOfPlayers > 2) ? FindPosition(ButtonPosition + 1) : ButtonPosition;
             BigBlindPosition = FindPosition(SmallBlindPosition + 1);
         }
 
@@ -75,8 +68,8 @@ namespace Nicomputer.PokerBot.PokerGame
 
         private int FindPosition(int startingSeat)
         {
-            int currentIdx = startingSeat;
-            for (int i = 0; i < Seats.Count; i++)
+            var currentIdx = startingSeat;
+            foreach(var seat in Seats)
             {
                 if (!Seats[currentIdx].IsEmpty)
                 {
@@ -122,6 +115,11 @@ namespace Nicomputer.PokerBot.PokerGame
         private Seat GetEmptySeat()
         {
             return (from seat in Seats where seat.IsEmpty == true select seat).FirstOrDefault();
+        }
+
+        public void UpdateTurn()
+        {
+            Turn++;
         }
     }
 }

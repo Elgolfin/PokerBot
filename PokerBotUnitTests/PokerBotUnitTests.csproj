@@ -53,17 +53,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PokerHandsUnitTests.cs" />
+    <Compile Include="Common\PokerGameUnitTestsHelper.cs" />
+    <Compile Include="PokerGame\PokerHandsUnitTests.cs" />
+    <Compile Include="PokerGame\HandPlayEngineUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BinaryOperationsUnitTests.cs" />
-    <Compile Include="MaskBitsUnitTests.cs" />
-    <Compile Include="CardUnitTests.cs" />
-    <Compile Include="Deck52CardsUnitTests.cs" />
-    <Compile Include="HandUnitTests.cs" />
-    <Compile Include="PlayerUnitTests.cs" />
-    <Compile Include="SeatUnitTests.cs" />
-    <Compile Include="DealerUnitTests.cs" />
-    <Compile Include="TableUnitTests.cs" />
+    <Compile Include="Cards\BinaryOperationsUnitTests.cs" />
+    <Compile Include="Cards\MaskBitsUnitTests.cs" />
+    <Compile Include="Cards\CardUnitTests.cs" />
+    <Compile Include="Cards\Deck52CardsUnitTests.cs" />
+    <Compile Include="PokerGame\HandUnitTests.cs" />
+    <Compile Include="PokerGame\PlayerUnitTests.cs" />
+    <Compile Include="PokerGame\SeatUnitTests.cs" />
+    <Compile Include="PokerGame\DealerUnitTests.cs" />
+    <Compile Include="PokerGame\TableUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cards\Cards.csproj">

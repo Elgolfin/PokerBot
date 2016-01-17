@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dealer.cs" />
-    <Compile Include="HandPlay.cs" />
+    <Compile Include="HandPlayEngine.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Seat.cs" />
     <Compile Include="Table.cs" />

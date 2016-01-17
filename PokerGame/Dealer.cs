@@ -46,5 +46,29 @@ namespace Nicomputer.PokerBot.PokerGame
                 }
             }
         }
+
+        private void DealCards(int numCards)
+        {
+            Deck.Burn();
+            for (int i = 0; i < numCards; i++)
+            {
+                Table.Board.Add(Deck.Deal());
+            }
+        }
+
+        public void DealFlop()
+        {
+            DealCards(3);
+        }
+
+        public void DealTurn()
+        {
+            DealCards(1);
+        }
+
+        public void DealRiver()
+        {
+            DealCards(1);
+        }
     }
 }
