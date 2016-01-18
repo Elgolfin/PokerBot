@@ -1,10 +1,8 @@
-﻿using System;
+﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.Cards.Helper;
-using System.Collections.Generic;
-using System.Collections;
 
-namespace Nicomputer.PokerBot.CardsUnitTests
+namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
     public class BinaryOperationsUnitTests
@@ -30,12 +28,12 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(8, 3), BinaryOperations.GenerateAllCombinations(8, 3));
         }
 
-        //[TestCategory("BinaryOperations")]
-        //[TestMethod]
-        //public void GenerateAllCombinations_52bits_7combinations()
-        //{
-        //    Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(52, 7), BinaryOperations.GenerateAllCombinations(52, 7));
-        //}
+        [TestCategory("BinaryOperations")]
+        [TestMethod][Ignore]
+        public void GenerateAllCombinations_52bits_7combinations()
+        {
+            Assert.AreEqual(BinaryOperations.GetNumberOfCombinations(52, 7), BinaryOperations.GenerateAllCombinations(52, 7));
+        }
 
         [TestCategory("BinaryOperations")]
         [TestMethod]
@@ -73,7 +71,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void SetBitsFromToLeft_52_1()
         {
-            /// 00000000 0000//1000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 00000000 0000//1000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
             ulong result = 0x8000000000000;
             Assert.AreEqual(result, BinaryOperations.SetBitsFromToLeft(52, 1));
         }
@@ -82,7 +80,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void SetBitsFromToLeft_52_7()
         {
-            /// 00000000 0000//1111 1110.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 00000000 0000//1111 1110.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
             ulong result = 0xFE00000000000;
             Assert.AreEqual(result, BinaryOperations.SetBitsFromToLeft(52, 7));
         }
@@ -123,7 +121,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void SetBitsFromToRight_53_12()
         {
-            /// 1111 1111 1111//0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 1111 1111 1111//0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
             ulong result = 0xFFF0000000000000;
             Assert.AreEqual(result, BinaryOperations.SetBitsFromToRight(53, 12));
         }
@@ -132,7 +130,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void SetBitsFromToRight_1_7()
         {
-            /// 0000 0000 0000//0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0111.1111
+            // 0000 0000 0000//0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0111.1111
             ulong result = 0x000000000000007F;
             Assert.AreEqual(result, BinaryOperations.SetBitsFromToRight(1, 7));
         }
@@ -190,7 +188,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void GetCombinationsMaskBits_8_1()
         {
             ulong[] result = { 0x80 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 1);
+            MaskBits mask = new MaskBits(8, 1);
             Assert.AreEqual(true, mask.Equals(result));
         }
 
@@ -199,7 +197,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void GetCombinationsMaskBits_8_2()
         {
             ulong[] result = { 0x40, 0x80 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            MaskBits mask = new MaskBits(8, 2);
             Assert.AreEqual(true, mask.Equals(result));
         }
 
@@ -208,7 +206,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void GetCombinationsMaskBits_8_2_Decrement_1_Reset()
         {
             ulong[] result = { 0x40, 0x80 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            MaskBits mask = new MaskBits(8, 2);
             mask.Decrement();
             mask.Reset();
             Assert.AreEqual(true, mask.Equals(result));
@@ -218,13 +216,13 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         [TestMethod]
         public void GetCombinationsMaskBits_52_7()
         {
-            /// 0000 0000 0000//1000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
-            /// 0000 0000 0000//0100 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
-            /// 0000 0000 0000//0010 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
-            /// 0000 0000 0000//0001 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
-            /// 0000 0000 0000//0000 1000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
-            /// 0000 0000 0000//0000 0100.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
-            /// 0000 0000 0000//0000 0010.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//1000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//0100 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//0010 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//0001 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//0000 1000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//0000 0100.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
+            // 0000 0000 0000//0000 0010.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0000.0000
             ulong[] result = { 0x200000000000,
                                0x400000000000,
                                0x800000000000,
@@ -268,8 +266,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void CompareArrays_Null_False()
         {
             var mask1 = new MaskBits(8, 2);
-            MaskBits mask2 = null;
-            Assert.AreEqual(false, mask1.Equals(mask2));
+            Assert.AreEqual(false, mask1.Equals(null));
         }
 
         [TestCategory("BinaryOperations")]

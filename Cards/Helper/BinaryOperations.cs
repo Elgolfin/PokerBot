@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nicomputer.PokerBot.Cards.Suits;
-using Nicomputer.PokerBot;
 
 namespace Nicomputer.PokerBot.Cards.Helper
 {
@@ -13,8 +8,8 @@ namespace Nicomputer.PokerBot.Cards.Helper
 
         public static int GenerateAllCombinations(int maxBits, int combinations)
         {
-            MaskBits mask = new MaskBits(maxBits, combinations);
-            int numCombinations = 0;
+            var mask = new MaskBits(maxBits, combinations);
+            var numCombinations = 0;
 
             while (!mask.IsParsingComplete)
             {
@@ -35,7 +30,7 @@ namespace Nicomputer.PokerBot.Cards.Helper
         {
             ulong result = 0x1;
             ulong mask = 0x1;
-            for (int i = 1; i < bitNumber; i++)
+            for (var i = 1; i < bitNumber; i++)
             {
                 result <<= 1;
                 if (i < n)
@@ -53,14 +48,13 @@ namespace Nicomputer.PokerBot.Cards.Helper
         public static ulong SetBitsFromToRight(int bitNumber, int n)
         {
             ulong result = 0x1;
-            ulong mask;
             // Find the bit number where to start the sequence
-            for (int i = 1; i < bitNumber; i++)
+            for (var i = 1; i < bitNumber; i++)
             {
                 result <<= 1;
             }
-            mask = result;
-            for (int i = 1; i < n; i++)
+            ulong mask = result;
+            for (var i = 1; i < n; i++)
             {
                 result <<= 1;
                 result |= mask;
@@ -78,13 +72,13 @@ namespace Nicomputer.PokerBot.Cards.Helper
         public static int GetNumberOfCombinations (ulong n, ulong k) {
 
             ulong numerator = 1;
-            for (ulong i = n; i > n - k; i--)
+            for (var i = n; i > n - k; i--)
             {
                 numerator *= i; 
             }
 
             ulong denominator = 1;
-            for (ulong i = k; i >= 1 ; i--)
+            for (var i = k; i >= 1 ; i--)
             {
                 denominator *= i;
             }
@@ -100,19 +94,19 @@ namespace Nicomputer.PokerBot.Cards.Helper
         public static ulong ReverseBits (ulong bitsToReverse)
         {
             ulong reversed = 0x0;
-            ulong msbMask = 0x8000000000000000;     // msb = MSB = Most Significant Bit
-            ulong lsbMask = 0x0;                    // lsb = LSB = Least Significant Bit
-            for (int i = 1; i < 64; i++)
+            var original = bitsToReverse;
+            const ulong msbMask = 0x8000000000000000;       // msb = MSB = Most Significant Bit                   
+            for (var i = 1; i < 64; i++)
             {
-                lsbMask = 0x0;
-                if ((bitsToReverse & msbMask) > 0) // MSB set to 1
+                ulong lsbMask = 0x0;                        // lsb = LSB = Least Significant Bit
+                if ((original & msbMask) > 0)               // MSB set to 1
                 {
                     lsbMask = msbMask;
                 }
 
-                reversed = reversed | lsbMask; // The MSB will become the LSB
-                reversed = reversed >>= 1;
-                bitsToReverse <<= 1;
+                reversed = reversed | lsbMask;              // The MSB will become the LSB
+                reversed >>= 1;
+                original <<= 1;
 
             }
             return reversed;
@@ -130,12 +124,12 @@ namespace Nicomputer.PokerBot.Cards.Helper
                 return _mask;
             }
         }
-        private int _maxBits = 52;
-        private int _combinations = 7;
+        private readonly int _maxBits;
+        private readonly int _combinations;
 
-        private int _actualIndex = 0;
+        private int _actualIndex;
 
-        public bool IsParsingComplete = false;
+        public bool IsParsingComplete;
 
         public MaskBits (int maxBits, int combinations)
         {
@@ -148,7 +142,8 @@ namespace Nicomputer.PokerBot.Cards.Helper
         private void Initialize()
         {
             Array.Resize(ref _mask, _combinations);
-            for (int i = _combinations - 1, j =0 ; i >= 0; i--)
+            int j = 0;
+            for (int i = _combinations - 1 ; i >= 0; i--)
             {
                 _mask[i] = Convert.ToUInt64(Math.Pow(Convert.ToDouble(2), (Convert.ToDouble(_maxBits - 1 - j++))));
             }
@@ -182,7 +177,7 @@ namespace Nicomputer.PokerBot.Cards.Helper
         public ulong ToUint64()
         {
             ulong ulMask = 0x0;
-            foreach (ulong ul in _mask)
+            foreach (var ul in _mask)
             {
                 ulMask |= ul;
             }
@@ -197,12 +192,12 @@ namespace Nicomputer.PokerBot.Cards.Helper
         public override bool Equals(object obj)
         {
             ulong[] array = obj as ulong[];
-            //if (array == null) { return false; }
             return ArraysEqual(Mask, array);
         }
 
         private static bool ArraysEqual<T>(T[] a1, T[] a2)
         {
+            
             if (ReferenceEquals(a1, a2))
                 return true;
 
@@ -212,12 +207,22 @@ namespace Nicomputer.PokerBot.Cards.Helper
             if (a1.Length != a2.Length)
                 return false;
 
-            EqualityComparer<T> comparer = EqualityComparer<T>.Default;
-            for (int i = 0; i < a1.Length; i++)
+            return ArraysEqualMechanism(a1, a2);
+
+        }
+
+        private static bool ArraysEqualMechanism<T>(T[] a1, T[] a2)
+        {
+            var comparer = EqualityComparer<T>.Default;
+            for (var i = 0; i < a1.Length; i++)
             {
-                if (!comparer.Equals(a1[i], a2[i])) return false;
+                if (!comparer.Equals(a1[i], a2[i]))
+                {
+                    return false;
+                }
             }
             return true;
         }
+
     }
 }

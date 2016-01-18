@@ -6,8 +6,8 @@
     <ProjectGuid>{C95A228F-8583-4F4E-95CD-C04041B061A7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nicomputer.PokerBot.CardsUnitTests</RootNamespace>
-    <AssemblyName>Nicomputer.PokerBot.CardsUnitTests</AssemblyName>
+    <RootNamespace>Nicomputer.PokerBot.UnitTests</RootNamespace>
+    <AssemblyName>Nicomputer.PokerBot.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -26,6 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>PokerBotUnitTests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -34,6 +35,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>PokerBotUnitTests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -61,7 +63,7 @@
     <Compile Include="Cards\MaskBitsUnitTests.cs" />
     <Compile Include="Cards\CardUnitTests.cs" />
     <Compile Include="Cards\Deck52CardsUnitTests.cs" />
-    <Compile Include="PokerGame\HandUnitTests.cs" />
+    <Compile Include="Cards\HandUnitTests.cs" />
     <Compile Include="PokerGame\PlayerUnitTests.cs" />
     <Compile Include="PokerGame\SeatUnitTests.cs" />
     <Compile Include="PokerGame\DealerUnitTests.cs" />
@@ -80,6 +82,9 @@
       <Project>{c66e5d28-c8f0-4365-a143-34697e6044d7}</Project>
       <Name>PokerGame</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PokerBotUnitTests.ruleset" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

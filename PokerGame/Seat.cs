@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nicomputer.PokerBot.Cards;
+﻿using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.PokerGame
 {
@@ -39,14 +34,7 @@ namespace Nicomputer.PokerBot.PokerGame
         {
             get
             {
-                if (Player == null)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                return (Player == null);
             }
         }
     }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.Cards;
 
-namespace Nicomputer.PokerBot.UnitTests
+namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
     public class HandUnitTests
@@ -184,7 +183,7 @@ namespace Nicomputer.PokerBot.UnitTests
         [TestCategory("Hand")]
         public void BillChenValue_AA_Is_20()
         {
-            var hand = new Hand(new Card(14, Deck52Cards.SuitName.Hearts), new Card(14, Deck52Cards.SuitName.Diamonds));
+            var hand = new Hand(new Card(14, Card.SuitName.Hearts), new Card(14, Card.SuitName.Diamonds));
             Assert.AreEqual(20, hand.BillChenValue);
         }
 
@@ -414,6 +413,27 @@ namespace Nicomputer.PokerBot.UnitTests
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(9, hand.BillChenGroupValue);
             }
+        }
+
+
+        [TestMethod]
+        [TestCategory("Hand")]
+        public void Initialize_Hand_Two_Times()
+        {
+            var hand = new Hand("AA");
+            Assert.AreEqual(20, hand.BillChenValue);
+            hand.FirstCard = new Card(7, Card.SuitName.Clubs);
+            hand.SecondCard = new Card(2, Card.SuitName.Diamonds);
+            Assert.AreEqual(-1, hand.BillChenValue);
+        }
+
+
+        [TestMethod]
+        [TestCategory("Hand")]
+        public void Hand_ToString_Is_LongName()
+        {
+            var hand = new Hand("Ah", "Ad");
+            Assert.AreEqual("AhAd", hand.ToString());
         }
 
     }

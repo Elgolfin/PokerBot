@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nicomputer.PokerBot.Cards;
-using Nicomputer.PokerBot.PokerGame;
+﻿using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.PokerGame
 {
@@ -47,7 +41,7 @@ namespace Nicomputer.PokerBot.PokerGame
             }
         }
 
-        private void DealCards(int numCards)
+        private void DealBoardCards(int numCards)
         {
             Deck.Burn();
             for (int i = 0; i < numCards; i++)
@@ -58,17 +52,17 @@ namespace Nicomputer.PokerBot.PokerGame
 
         public void DealFlop()
         {
-            DealCards(3);
+            DealBoardCards(3);
         }
 
         public void DealTurn()
         {
-            DealCards(1);
+            DealBoardCards(1);
         }
 
         public void DealRiver()
         {
-            DealCards(1);
+            DealBoardCards(1);
         }
     }
 }

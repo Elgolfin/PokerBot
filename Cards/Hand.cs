@@ -1,18 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace Nicomputer.PokerBot.Cards
 {
-    // TODO add unit tests for Hand
+
     public class Hand
     {
-        public Card FirstCard { get; set; }
-        public Card SecondCard { get; set; }
+        private readonly int _billChenDefaultValue = -99;
 
-        private int _billChenValue = 0;
-        private int _billChenGroupValue = 0;
+        private Card _firstCard;
+        public Card FirstCard
+        {
+            get { return _firstCard; }
+            set
+            {
+                Initialize();
+                _firstCard = value;
+            }
+        }
+        private Card _secondCard;
+        public Card SecondCard
+        {
+            get { return _secondCard; }
+            set
+            {
+                Initialize();
+                _secondCard = value;
+            }
+        }
+
+        private void Initialize()
+        {
+            _billChenValue = _billChenDefaultValue;
+            _billChenGroupValue = _billChenDefaultValue;
+            _shortName = String.Empty;
+            _longName = String.Empty;
+            _highCard = null;
+            _lowCard = null;
+        }
+
+        private int _billChenValue;
+        private int _billChenGroupValue;
 
         private string _shortName = String.Empty;
         public string ShortName
@@ -31,21 +60,21 @@ namespace Nicomputer.PokerBot.Cards
             }
         }
 
-        private string _longName = String.Empty;
+        private string _longName = string.Empty;
         public string LongName
         {
             get
             {
-                if (String.IsNullOrEmpty(_longName))
+                if (string.IsNullOrEmpty(_longName))
                 {
-                    _longName = $"{(HighCard.ToString())}{(LowCard.ToString())}";
+                    _longName = $"{(HighCard)}{(LowCard)}";
                 }
                 return _longName;
             }
         }
 
-        private Card _highCard = null;
-        private Card _lowCard = null;
+        private Card _highCard;
+        private Card _lowCard;
         public Card HighCard
         {
             get
@@ -121,68 +150,76 @@ namespace Nicomputer.PokerBot.Cards
         {
             get
             {
-                if (_billChenGroupValue == 0)
+                if (_billChenGroupValue == _billChenDefaultValue)
                 {
                     _billChenGroupValue = 9;
-                    if (BillChenValue == 5)
-                    {
-                        _billChenGroupValue = 7;
-                    }
-
-                    if (BillChenValue >= 6)
-                    {
-                        _billChenGroupValue = 5;
-                    }
-
-                    if (BillChenValue == 8)
-                    {
-                        _billChenGroupValue = 4;
-                    }
-
-                    if (BillChenValue == 9)
-                    {
-                        _billChenGroupValue = 3;
-                    }
-
-                    if (BillChenValue >= 10)
-                    {
-                        _billChenGroupValue = 2;
-                    }
-
-                    if (BillChenValue >= 12)
-                    {
-                        _billChenGroupValue = 1;
-                    }
-
-                    // Exceptions
-                    string[] addOne = { "J8s", "96s", "86s", "75s", "65s", "54s", "32s", "AT", "A9", "KT", "QT", "Q9", "T8", "87", "76" };
-                    string[] substractOne = { "ATs", "J7s", "85s", "74s", "42s", "65", "55", "54" };
-                    string[] setTo7 = { "K9s", "J9", "T9", "98" };
-                    string[] setTo8 = { "K9", "J8" };
-                    string[] setTo9 = { "A8", "A7", "A6", "A5", "A4", "A3", "A2", "97" };
-                    if (addOne.Contains<string>(ShortName))
-                    {
-                        _billChenGroupValue++;
-                    }
-                    if (substractOne.Contains<string>(ShortName))
-                    {
-                        _billChenGroupValue--;
-                    }
-                    if (setTo7.Contains<string>(ShortName))
-                    {
-                        _billChenGroupValue = 7;
-                    }
-                    if (setTo8.Contains<string>(ShortName))
-                    {
-                        _billChenGroupValue = 8;
-                    }
-                    if (setTo9.Contains<string>(ShortName))
-                    {
-                        _billChenGroupValue = 9;
-                    }
-
+                    AssignDefaultBillChenGroupValue();
+                    HandleBillChenGroupValueExceptions();
                 }
                 return _billChenGroupValue;
+            }
+        }
+
+        private void HandleBillChenGroupValueExceptions()
+        {
+            string[] addOne = {"J8s", "96s", "86s", "75s", "65s", "54s", "32s", "AT", "A9", "KT", "QT", "Q9", "T8", "87", "76"};
+            string[] substractOne = {"ATs", "J7s", "85s", "74s", "42s", "65", "55", "54"};
+            string[] setTo7 = {"K9s", "J9", "T9", "98"};
+            string[] setTo8 = {"K9", "J8"};
+            string[] setTo9 = {"A8", "A7", "A6", "A5", "A4", "A3", "A2", "97"};
+
+            if (addOne.Contains(ShortName))
+            {
+                _billChenGroupValue++;
+            }
+            if (substractOne.Contains(ShortName))
+            {
+                _billChenGroupValue--;
+            }
+            if (setTo7.Contains(ShortName))
+            {
+                _billChenGroupValue = 7;
+            }
+            if (setTo8.Contains(ShortName))
+            {
+                _billChenGroupValue = 8;
+            }
+            if (setTo9.Contains(ShortName))
+            {
+                _billChenGroupValue = 9;
+            }
+        }
+
+        private void AssignDefaultBillChenGroupValue()
+        {
+            if (BillChenValue == 5)
+            {
+                _billChenGroupValue = 7;
+            }
+
+            if (BillChenValue >= 6)
+            {
+                _billChenGroupValue = 5;
+            }
+
+            if (BillChenValue == 8)
+            {
+                _billChenGroupValue = 4;
+            }
+
+            if (BillChenValue == 9)
+            {
+                _billChenGroupValue = 3;
+            }
+
+            if (BillChenValue >= 10)
+            {
+                _billChenGroupValue = 2;
+            }
+
+            if (BillChenValue >= 12)
+            {
+                _billChenGroupValue = 1;
             }
         }
 
@@ -216,12 +253,12 @@ namespace Nicomputer.PokerBot.Cards
         {
             get
             {
-                double billChenValue = 0;
-                if (_billChenValue == 0)
+                
+                if (_billChenValue == _billChenDefaultValue)
                 {
 
                     // 1. Score Highest Card
-                    billChenValue = ScoresHighCard();
+                    var billChenValue = ScoresHighCard();
                     
                     // 2. Pair
                     if (Pair)
@@ -275,25 +312,25 @@ namespace Nicomputer.PokerBot.Cards
 
         public Hand(Card firstCard, Card secondCard)
         {
-            this.FirstCard = firstCard;
-            this.SecondCard = secondCard;
+            FirstCard = firstCard;
+            SecondCard = secondCard;
         }
 
         public Hand(string firstCard, string secondCard)
         {
-            this.FirstCard = new Card(firstCard);
-            this.SecondCard = new Card(secondCard);
+            FirstCard = new Card(firstCard);
+            SecondCard = new Card(secondCard);
         }
 
         public Hand(string shortName)
         {
             string s = "h";
-            if (shortName.ToUpper().Length < 3)
+            if (shortName.ToUpper(CultureInfo.InvariantCulture).Length < 3)
             {
                 s = "c";
             }
-            this.FirstCard = new Card(shortName.Substring(0, 1) + s);
-            this.SecondCard = new Card(shortName.Substring(1, 1) + "h");
+            FirstCard = new Card(shortName.Substring(0, 1) + s);
+            SecondCard = new Card(shortName.Substring(1, 1) + "h");
         }
 
         /// <summary>
@@ -302,7 +339,7 @@ namespace Nicomputer.PokerBot.Cards
         /// <returns></returns>
         private double ScoresHighCard()
         {
-            double score = 0;
+            double score;
             // As is worth 10
             if (HighCard.RelativeValue == 14)
             {
@@ -318,6 +355,11 @@ namespace Nicomputer.PokerBot.Cards
                 }
             }
             return score;
+        }
+
+        public override string ToString()
+        {
+            return LongName;
         }
 
     }

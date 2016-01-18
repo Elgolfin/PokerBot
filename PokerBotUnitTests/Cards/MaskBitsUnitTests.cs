@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Nicomputer.PokerBot.Cards.Helper;
 
-namespace Nicomputer.PokerBot.CardsUnitTests
+namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
     public class MaskBitsUnitTests
@@ -12,7 +12,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void Decrement_8_7_Is_8_6()
         {
             ulong[] result = { 0x20, 0x80 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            MaskBits mask = new MaskBits(8, 2);
             mask.Decrement();
             Assert.AreEqual(true, mask.Equals(result));
         }
@@ -22,7 +22,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void Decrement_8_1_Is_7_6()
         {
             ulong[] result = { 0x20, 0x40 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            MaskBits mask = new MaskBits(8, 2);
             Decrement(mask, 7);
             Assert.AreEqual(true, mask.Equals(result));
         }
@@ -32,7 +32,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void Decrement_7_6_Is_7_5()
         {
             ulong[] result = { 0x10, 0x40 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            MaskBits mask = new MaskBits(8, 2);
             Decrement(mask, 7);
             mask.Decrement();
             Assert.AreEqual(true, mask.Equals(result));
@@ -43,7 +43,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void Decrement_2_1_Is_2_1()
         {
             ulong[] result = { 0x1, 0x2 };
-            Cards.Helper.MaskBits mask = new Cards.Helper.MaskBits(8, 2);
+            MaskBits mask = new MaskBits(8, 2);
             Decrement(mask, 7);
             Decrement(mask, 6);
             Decrement(mask, 5);
@@ -55,7 +55,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(true, mask.IsParsingComplete);
         }
 
-        private void Decrement(Cards.Helper.MaskBits mask, int j)
+        private void Decrement(MaskBits mask, int j)
         {
             for (int i = 0; i < j; i++)
             {

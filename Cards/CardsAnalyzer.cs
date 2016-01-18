@@ -1,82 +1,62 @@
 ﻿using Nicomputer.PokerBot.Cards.Suits;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nicomputer.PokerBot.Cards
 {
-    public class CardsAnalyzer
+    public static class CardsAnalyzer
     {
-        static Club clubs;
-        static Diamond diamonds;
-        static Spade spades;
-        static Heart hearts;
+        private static Club _clubs;
+        private static Diamond _diamonds;
+        private static Spade _spades;
+        private static Heart _hearts;
 
-        public static Dictionary<long, int> cardsCount = new Dictionary<long, int>();
-
-        public enum CardName : long
-        {
-            _2 =        0x0001, // 0 0000 0000 0001
-            _3 =        0x0002, // 0 0000 0000 0010 
-            _4 =        0x0004, // 0 0000 0000 0100
-            _5 =        0x0008, // 0 0000 0000 1000
-            _6 =        0x0010, // 0 0000 0001 0000
-            _7 =        0x0020, // 0 0000 0010 0000
-            _8 =        0x0040, // 0 0000 0100 0000
-            _9 =        0x0080, // 0 0000 1000 0000
-            _10 =       0x0100, // 0 0001 0000 0000
-            _Jack =     0x0200, // 0 0010 0000 0000
-            _Queen =    0x0400, // 0 0100 0000 0000
-            _King =     0x0800, // 0 1000 0000 0000
-            _Ace =      0x1000  // 1 0000 0000 0000
-        };
+        public static readonly Dictionary<long, int> CardsCount = new Dictionary<long, int>();
 
         public static bool IsFourOfAKind(long hand)
         {
-            return IsNOfAKind(hand, 4);
+            return IsNofAKind(hand, 4);
         }
 
         public static bool IsThreeOfAKind(long hand)
         {
-            return IsNOfAKind(hand, 3);
+            return IsNofAKind(hand, 3);
         }
 
         public static bool IsAPair(long hand)
         {
-            return IsNOfAKind(hand, 2);
+            return IsNofAKind(hand, 2);
         }
 
         public static bool IsStraight(long hand)
         {
             CreateSuitsFromHand(hand);
-            long combinedHand = clubs.ToLong() | diamonds.ToLong() | spades.ToLong() | hearts.ToLong(); 
+            var combinedHand = _clubs.ToLong() | _diamonds.ToLong() | _spades.ToLong() | _hearts.ToLong();
             return IsStraightFoundation(combinedHand);
         }
 
         public static bool IsStraightFlush(long hand)
         {
             CreateSuitsFromHand(hand);
-            
-            return IsStraightFoundation(clubs.ToLong()) 
-                || IsStraightFoundation(diamonds.ToLong()) 
-                || IsStraightFoundation(spades.ToLong()) 
-                || IsStraightFoundation(hearts.ToLong());
+
+            return IsStraightFoundation(_clubs.ToLong())
+                   || IsStraightFoundation(_diamonds.ToLong())
+                   || IsStraightFoundation(_spades.ToLong())
+                   || IsStraightFoundation(_hearts.ToLong());
         }
 
         private static bool IsStraightFoundation(long hand)
         {
-            bool isStraight = false;
+            var isStraight = false;
             long straightMask = 0x1F00; // 1 1111 0000 0000
             long exceptionStraightMask = 0x100F; // 1 0000 0000 1111
 
-            Club clubs = new Club(hand); 
+            var clubs = new Club(hand);
 
-            for (int i = 0; i < (clubs.MaxSuitCards - 4); i++)
+            for (var i = 0; i < (clubs.MaxSuitCards - 4); i++)
             {
-                long total = hand & straightMask;
+                var total = hand & straightMask;
                 Debug.WriteLine(AbstractSuit.LongToBinaryString(hand, 13));
                 Debug.WriteLine(AbstractSuit.LongToBinaryString(straightMask, 13));
                 Debug.WriteLine(AbstractSuit.LongToBinaryString(total, 13));
@@ -102,76 +82,71 @@ namespace Nicomputer.PokerBot.Cards
 
         public static bool IsFlush(long hand)
         {
-            bool isFlush = false;
-            int numberOfCardsToMakeAFlush = 5;
+            const int numberOfCardsToMakeAFlush = 5;
 
             CreateSuitsFromHand(hand);
 
-            int numberOfClubs = CountSetBits(clubs.ToLong());
-            int numberOfDiamonds = CountSetBits(diamonds.ToLong());
-            int numberOfSpades = CountSetBits(spades.ToLong());
-            int numberOfHearts = CountSetBits(hearts.ToLong());
+            var numberOfClubs = CountSetBits(_clubs.ToLong());
+            var numberOfDiamonds = CountSetBits(_diamonds.ToLong());
+            var numberOfSpades = CountSetBits(_spades.ToLong());
+            var numberOfHearts = CountSetBits(_hearts.ToLong());
 
-            isFlush =  (numberOfClubs >= numberOfCardsToMakeAFlush)
-                    || (numberOfDiamonds >= numberOfCardsToMakeAFlush)
-                    || (numberOfSpades >= numberOfCardsToMakeAFlush)
-                    || (numberOfHearts >= numberOfCardsToMakeAFlush);
+            var isFlush = (numberOfClubs >= numberOfCardsToMakeAFlush)
+                      || (numberOfDiamonds >= numberOfCardsToMakeAFlush)
+                      || (numberOfSpades >= numberOfCardsToMakeAFlush)
+                      || (numberOfHearts >= numberOfCardsToMakeAFlush);
 
             return isFlush;
         }
 
         public static int CountSetBits(long hand)
         {
-            int cpt = 0;
-            while (hand > 0) {
-                Debug.WriteLine(AbstractSuit.LongToBinaryString(hand, 13));
-                if ((hand & 0x1) == 1) { cpt++; }
+            var tmpHand = hand;
+            var cpt = 0;
+            while (tmpHand > 0)
+            {
+                Debug.WriteLine(AbstractSuit.LongToBinaryString(tmpHand, 13));
+                if ((tmpHand & 0x1) == 1)
+                {
+                    cpt++;
+                }
                 Debug.WriteLine(cpt);
-                hand >>= 1;
+                tmpHand >>= 1;
             }
             return cpt;
         }
 
         private static void CreateSuitsFromHand(long hand)
         {
-            clubs = new Club(hand);
-            diamonds = new Diamond(hand);
-            spades = new Spade(hand);
-            hearts = new Heart(hand);
+            _clubs = new Club(hand);
+            _diamonds = new Diamond(hand);
+            _spades = new Spade(hand);
+            _hearts = new Heart(hand);
         }
 
-        private static bool IsNOfAKind(long hand, short numCards)
+        private static bool IsNofAKind(long hand, short numCards)
         {
             CountCards(hand);
-
-            foreach (KeyValuePair<long, int> entry in cardsCount)
-            {
-                if(entry.Value == numCards)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return (from count in CardsCount where count.Value == numCards select count).Any();
         }
 
         public static bool IsFullHouse(long hand)
         {
-            return IsTwoSetsNOfAKind(hand, 3, 2);
+            return AreTwoSetsNofAKind(hand, 3, 2);
         }
 
         public static bool IsTwoPairs(long hand)
         {
-            return IsTwoSetsNOfAKind(hand, 2, 2);
+            return AreTwoSetsNofAKind(hand, 2, 2);
         }
 
-        private static bool IsTwoSetsNOfAKind (long hand, int numCardsSet1, int numCardsSet2)
+        private static bool AreTwoSetsNofAKind(long hand, int numCardsSet1, int numCardsSet2)
         {
             CountCards(hand);
             long set1 = 0;
             long set2 = 0;
 
-            foreach (KeyValuePair<long, int> entry in cardsCount)
+            foreach (var entry in CardsCount)
             {
                 if (set1 == 0 && entry.Value == numCardsSet1)
                 {
@@ -192,18 +167,18 @@ namespace Nicomputer.PokerBot.Cards
 
             CreateSuitsFromHand(hand);
 
-            long cl = clubs.ToLong();
-            long di = diamonds.ToLong();
-            long sp = spades.ToLong();
-            long he = hearts.ToLong();
+            var cl = _clubs.ToLong();
+            var di = _diamonds.ToLong();
+            var sp = _spades.ToLong();
+            var he = _hearts.ToLong();
 
-            for (int i = 0; i < clubs.MaxSuitCards; i++)
+            for (var i = 0; i < _clubs.MaxSuitCards; i++)
             {
-                cardsCount[cardsMask] = 0;
-                cardsCount[cardsMask] += CountSetBits(cl & cardsMask);
-                cardsCount[cardsMask] += CountSetBits(di & cardsMask);
-                cardsCount[cardsMask] += CountSetBits(sp & cardsMask);
-                cardsCount[cardsMask] += CountSetBits(he & cardsMask);
+                CardsCount[cardsMask] = 0;
+                CardsCount[cardsMask] += CountSetBits(cl & cardsMask);
+                CardsCount[cardsMask] += CountSetBits(di & cardsMask);
+                CardsCount[cardsMask] += CountSetBits(sp & cardsMask);
+                CardsCount[cardsMask] += CountSetBits(he & cardsMask);
 
                 cardsMask >>= 1;
             }

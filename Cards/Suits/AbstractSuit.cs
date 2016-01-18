@@ -10,25 +10,11 @@ namespace Nicomputer.PokerBot.Cards.Suits
     {
         public long Cards { get; set; }
 
-        private short _maxSuitCards;
-        public short MaxSuitCards
-        {
-            get { return _maxSuitCards; }
-            protected set { _maxSuitCards = value; }
-        }
+        public short MaxSuitCards { get; protected set; }
         
-        private long _mask;
-        public long Mask {
-            get { return _mask; } 
-            protected set { _mask = value; } 
-        }
+        public long Mask { get; protected set; }
 
-        private short _shift;
-        public short Shift
-        {
-            get { return _shift; }
-            protected set { _shift = value; }
-        }
+        public short Shift { get; protected set; }
 
         protected AbstractSuit(short totalCards, long mask, short shift)
         {

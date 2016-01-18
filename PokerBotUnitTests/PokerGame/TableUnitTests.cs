@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nicomputer.PokerBot.Cards;
 using Nicomputer.PokerBot.PokerGame;
 using Nicomputer.PokerBot.UnitTests.Common;
 
-namespace Nicomputer.PokerBot.UnitTests
+namespace Nicomputer.PokerBot.UnitTests.PokerGame
 {
     [TestClass]
     public class TableUnitTests
@@ -90,7 +89,7 @@ namespace Nicomputer.PokerBot.UnitTests
             var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 2);
             Assert.AreEqual(2, table.OccupiedSeats);
             Assert.AreEqual(2, table.NumberOfPlayers);
-            table.AddPlayer(new Player("Miles Starck"));
+            table.AddPlayer(new Player { Name = "Miles Starck" });
             Assert.AreEqual(3, table.OccupiedSeats);
             Assert.AreEqual(3, table.NumberOfPlayers);
         }
@@ -102,7 +101,7 @@ namespace Nicomputer.PokerBot.UnitTests
             var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 9);
             Assert.AreEqual(9, table.OccupiedSeats);
             Assert.AreEqual(9, table.NumberOfPlayers);
-            table.AddPlayer(new Player("Miles Starck"));
+            table.AddPlayer(new Player { Name = "Miles Starck" });
         }
 
         

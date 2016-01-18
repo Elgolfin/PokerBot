@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Nicomputer.PokerBot.PokerGame;
+﻿using Nicomputer.PokerBot.PokerGame;
 using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.UnitTests.Common
 {
-    public class PokerGameUnitTestsHelper
+    public static class PokerGameUnitTestsHelper
     {
         /// <summary>
         /// Create a table of capacity with numOfPlayers actual players
@@ -22,15 +17,15 @@ namespace Nicomputer.PokerBot.UnitTests.Common
             var table = new Table(capacity);
             Player[] players =
             {
-                new Player("John Doe") ,
-                new Player("Lori White"),
-                new Player("Steve Bennett"),
-                new Player("Dennis Rogers"),
-                new Player("Billy King"),
-                new Player("Jonathan Wood"),
-                new Player("Harry Brooks"),
-                new Player("Jesse Patterson"),
-                new Player("Frank Evans")
+                new Player {Name = "John Doe"} ,
+                new Player {Name = "Lori White"},
+                new Player {Name = "Steve Bennett"},
+                new Player {Name = "Dennis Rogers"},
+                new Player {Name = "Billy King"},
+                new Player {Name = "Jonathan Wood"},
+                new Player {Name = "Harry Brooks"},
+                new Player {Name = "Jesse Patterson"},
+                new Player {Name = "Frank Evans"}
             };
             for (int i = 0; i < numOfPlayers; i++)
             {

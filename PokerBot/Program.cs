@@ -9,12 +9,12 @@ using System.IO;
 
 namespace Nicomputer.PokerBot
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
             //GenerateAllHandsInAFile(2);
-            int totalCombinations = BinaryOperations.GetNumberOfCombinations(13ul, 2ul);
+            var totalCombinations = BinaryOperations.GetNumberOfCombinations(13UL, 2UL);
             Console.WriteLine(String.Format("Done. {0} combinations have been generated.", totalCombinations));
             //FindAllStraightFlush();
             Console.ReadKey();
@@ -24,32 +24,32 @@ namespace Nicomputer.PokerBot
         {
             int num = GenerateAllCombinations(52, combinations);
             Console.WriteLine(String.Empty);
-            Console.WriteLine(String.Format("Done. {0} combinations have been generated.", num));
+            Console.WriteLine($"Done. {num} combinations have been generated.");
         }
 
         private static void FindAllStraightFlush()
         {
-            int num = 0;
-            using (StreamReader sr = new StreamReader(@"poker-all-7-hands.txt"))
+            var num = 0;
+            using (var sr = new StreamReader(@"poker-all-7-hands.txt"))
             {
                 while (sr.Peek() >= 0)
                 {
-                    long hand = Convert.ToInt64(sr.ReadLine());
+                    var hand = Convert.ToInt64(sr.ReadLine());
                     if (CardsAnalyzer.IsStraightFlush(hand))
                     {
                         num++;
                     }
                 }
             }
-            Console.WriteLine(String.Format("Done. {0} straight flush have been found.", num));
+            Console.WriteLine($"Done. {num} straight flush have been found.");
         }
 
         public static int GenerateAllCombinations(int numCards, int combinations)
         {
-            MaskBits mask = new MaskBits(numCards, combinations);
-            int totalCombinations = BinaryOperations.GetNumberOfCombinations(52ul, 7ul);
-            int numCombinations = 0;
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"poker-all-"+combinations+"-hands.txt"))
+            var mask = new MaskBits(numCards, combinations);
+            var totalCombinations = BinaryOperations.GetNumberOfCombinations(52ul, 7ul);
+            var numCombinations = 0;
+            using (var file = new StreamWriter(@"poker-all-"+combinations+"-hands.txt"))
             {
                 while (!mask.IsParsingComplete)
                 {

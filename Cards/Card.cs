@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Nicomputer.PokerBot.Cards
@@ -11,20 +9,73 @@ namespace Nicomputer.PokerBot.Cards
     /// </summary>
     public class Card : IComparable<Card>
     {
-
-        
-
-        // Represent the value of the bit in the 52 cards bits sequence (see CardUnitTests for example)
+        /// <summary>
+        /// Represent the value of the bit in the 52 cards bits sequence (see CardUnitTests for example)
+        /// </summary>
         public ulong AbsoluteValue { get; set; }
-        // 2 = 2, 3= 3, ..., T = 10, J = 11, Q = 12, K = 13, A = 14
+         
+        /// <summary>
+        /// 2 = 2, 3= 3, ..., T = 10, J = 11, Q = 12, K = 13, A = 14
+        /// </summary>
         public int RelativeValue { get; set; }
-        public Deck52Cards.SuitName Suit { get; set; }
+        public SuitName Suit { get; set; }
+        public enum CardName : long
+        {
+            Two = 0x0001, // 0 0000 0000 0001
+            Three = 0x0002, // 0 0000 0000 0010 
+            Four = 0x0004, // 0 0000 0000 0100
+            Five = 0x0008, // 0 0000 0000 1000
+            Six = 0x0010, // 0 0000 0001 0000
+            Seven = 0x0020, // 0 0000 0010 0000
+            Eight = 0x0040, // 0 0000 0100 0000
+            Nine = 0x0080, // 0 0000 1000 0000
+            Ten = 0x0100, // 0 0001 0000 0000
+            Jack = 0x0200, // 0 0010 0000 0000
+            Queen = 0x0400, // 0 0100 0000 0000
+            King = 0x0800, // 0 1000 0000 0000
+            Ace = 0x1000  // 1 0000 0000 0000
+        };
+        public enum SuitName
+        {
+            Clubs = 0,
+            Diamonds = 13,
+            Spades = 26,
+            Hearts = 39
+        };
 
         /// <summary>
         /// Return the short name of the card
         /// <example>Method will return the string "As" for the As of spade</example>
         /// </summary>
         public override string ToString()
+        {
+            var shortName = GetValueShortName();
+            shortName += GetSuitShortName();
+            return shortName;
+        }
+
+        private string GetSuitShortName()
+        {
+            var shortName = String.Empty;
+            switch (Suit)
+            {
+                case SuitName.Clubs:
+                    shortName = "c";
+                    break;
+                case SuitName.Diamonds:
+                    shortName = "d";
+                    break;
+                case SuitName.Hearts:
+                    shortName = "h";
+                    break;
+                case SuitName.Spades:
+                    shortName = "s";
+                    break;
+            }
+            return shortName;
+        }
+
+        private string GetValueShortName()
         {
             string shortName;
             switch (RelativeValue)
@@ -48,26 +99,9 @@ namespace Nicomputer.PokerBot.Cards
                     shortName = RelativeValue.ToString();
                     break;
             }
-
-            switch (Suit)
-            {
-                case Deck52Cards.SuitName.Clubs:
-                    shortName += "c";
-                    break;
-                case Deck52Cards.SuitName.Diamonds:
-                    shortName += "d";
-                    break;
-                case Deck52Cards.SuitName.Hearts:
-                    shortName += "h";
-                    break;
-                case Deck52Cards.SuitName.Spades:
-                    shortName += "s";
-                    break;
-            }
-
             return shortName;
-
         }
+
         /// <summary>
         /// Instanciate a Card object from its abbreviated form (the abbreviated form is case insensitive)
         /// i.e. Qs, QS, qS or qs for the Queen of Spades
@@ -75,17 +109,17 @@ namespace Nicomputer.PokerBot.Cards
         /// <param name="abbr"></param>
         public Card(string abbr)
         {
-            abbr = abbr.ToUpper().Trim();
-            Regex regex = new Regex("^[2-9TJQKA][CDHS]$");
+            var abbreviation = abbr.ToUpper(CultureInfo.InvariantCulture).Trim();
+            var regex = new Regex("^[2-9TJQKA][CDHS]$");
 
-            if (regex.IsMatch(abbr))
+            if (regex.IsMatch(abbreviation))
             {
                 SetValue(abbr.Substring(0, 1));
                 SetFamily(abbr.Substring(1, 1));
             }
         }
 
-        public Card(int relativeValue, Deck52Cards.SuitName suit)
+        public Card(int relativeValue, SuitName suit)
         {
             RelativeValue = relativeValue;
             AbsoluteValue = Convert.ToUInt64(Math.Pow(2, relativeValue - 2));
@@ -100,7 +134,7 @@ namespace Nicomputer.PokerBot.Cards
         /// <param name="relativeValue"></param>
         private void SetValue(string relativeValue)
         {
-            switch (relativeValue.ToUpper())
+            switch (relativeValue.ToUpper(CultureInfo.InvariantCulture))
             {
                 case "T":
                     AbsoluteValue = Convert.ToUInt64(Math.Pow(2,8));
@@ -135,22 +169,22 @@ namespace Nicomputer.PokerBot.Cards
 
         private void SetFamily(string familyAbbr)
         {
-            switch (familyAbbr.ToUpper())
+            switch (familyAbbr.ToUpper(CultureInfo.InvariantCulture))
             {
                 case "C":
-                    Suit = Deck52Cards.SuitName.Clubs;
+                    Suit = SuitName.Clubs;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 case "D":
-                    Suit = Deck52Cards.SuitName.Diamonds;
+                    Suit = SuitName.Diamonds;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 case "H":
-                    Suit = Deck52Cards.SuitName.Hearts;
+                    Suit = SuitName.Hearts;
                     AbsoluteValue <<= (int)Suit;
                     break;
                 case "S":
-                    Suit = Deck52Cards.SuitName.Spades;
+                    Suit = SuitName.Spades;
                     AbsoluteValue <<= (int)Suit;
                     break;
             }
@@ -164,16 +198,7 @@ namespace Nicomputer.PokerBot.Cards
         public override bool Equals(Object o)
         {
             var c = o as Card;
-            if (c == null)
-            {
-                return false;
-            }
-            if (c.RelativeValue == RelativeValue && c.Suit == Suit)
-            {
-                return true;
-            }
-            return false;
+            return (c?.RelativeValue == RelativeValue && c?.Suit == Suit);
         }
-
     }
 }

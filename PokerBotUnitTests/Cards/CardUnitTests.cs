@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.Cards;
 
-namespace Nicomputer.PokerBot.CardsUnitTests
+namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
     public class CardUnitTests
@@ -128,7 +126,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(result, card.AbsoluteValue);
             Assert.AreEqual(11, card.RelativeValue);
 
-            card = new Card(11, Deck52Cards.SuitName.Hearts);
+            card = new Card(11, Card.SuitName.Hearts);
             Assert.AreEqual(result, card.AbsoluteValue);
             Assert.AreEqual(11, card.RelativeValue);
         }
@@ -143,7 +141,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
             Assert.AreEqual(result, card.AbsoluteValue);
             Assert.AreEqual(10, card.RelativeValue);
 
-            card = new Card(10, Deck52Cards.SuitName.Hearts);
+            card = new Card(10, Card.SuitName.Hearts);
             Assert.AreEqual(result, card.AbsoluteValue);
             Assert.AreEqual(10, card.RelativeValue);
         }

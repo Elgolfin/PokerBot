@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.Cards;
-using Nicomputer.PokerBot.PokerGame;
 
-namespace Nicomputer.PokerBot.CardsUnitTests
+namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
     public class Deck52CardsUnitTests
@@ -21,7 +19,7 @@ namespace Nicomputer.PokerBot.CardsUnitTests
         public void TestDeck52Cards_Deal_1()
         {
             Deck52Cards deck = new Deck52Cards();
-            Card card = deck.Deal();
+            deck.Deal();
             Assert.AreEqual(51, deck.GetCards().Count);
         }
 

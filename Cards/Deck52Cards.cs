@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Nicomputer.PokerBot.Cards.Suits;
 
 namespace Nicomputer.PokerBot.Cards
@@ -27,30 +24,6 @@ namespace Nicomputer.PokerBot.Cards
             InitDeck();
         }
 
-        public enum CardName : ulong
-        {
-            _2 = 0x0001,        // 0 0000 0000 0001
-            _3 = 0x0002,        // 0 0000 0000 0010 
-            _4 = 0x0004,        // 0 0000 0000 0100
-            _5 = 0x0008,        // 0 0000 0000 1000
-            _6 = 0x0010,        // 0 0000 0001 0000
-            _7 = 0x0020,        // 0 0000 0010 0000
-            _8 = 0x0040,        // 0 0000 0100 0000
-            _9 = 0x0080,        // 0 0000 1000 0000
-            _10 = 0x0100,       // 0 0001 0000 0000
-            _Jack = 0x0200,     // 0 0010 0000 0000
-            _Queen = 0x0400,    // 0 0100 0000 0000
-            _King = 0x0800,     // 0 1000 0000 0000
-            _Ace = 0x1000       // 1 0000 0000 0000
-        };
-        public enum SuitName : int
-        {
-            Clubs = 0,   
-            Diamonds = 13,
-            Spades = 26,
-            Hearts = 39
-        };
-
         public List<Card> GetCards()
         {
             return _cards;
@@ -59,7 +32,7 @@ namespace Nicomputer.PokerBot.Cards
         /// <summary>
         /// 
         /// </summary>
-        static Random r = new Random();
+        private static readonly Random Rand = new Random();
         /// <summary>
         /// Shuffle the deck
         /// Based on Fisher-Yates Shuffle
@@ -70,7 +43,7 @@ namespace Nicomputer.PokerBot.Cards
             InitDeck();
             for (int n = _cards.Count - 1; n > 0; --n)
             {
-                int k = r.Next(n + 1);
+                int k = Rand.Next(n + 1);
                 Card temp = _cards[n];
                 _cards[n] = _cards[k];
                 _cards[k] = temp;
@@ -104,13 +77,13 @@ namespace Nicomputer.PokerBot.Cards
         private void InitDeck()
         {
             _cards = new List<Card>(52);
-            InitFamilyCards(SuitName.Clubs);
-            InitFamilyCards(SuitName.Diamonds);
-            InitFamilyCards(SuitName.Hearts);
-            InitFamilyCards(SuitName.Spades);
+            InitFamilyCards(Card.SuitName.Clubs);
+            InitFamilyCards(Card.SuitName.Diamonds);
+            InitFamilyCards(Card.SuitName.Hearts);
+            InitFamilyCards(Card.SuitName.Spades);
         }
 
-        private void InitFamilyCards(SuitName family)
+        private void InitFamilyCards(Card.SuitName family)
         {
             for (int i = 2; i <= 14; i++)
             {
