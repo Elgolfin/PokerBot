@@ -9,19 +9,20 @@ PokerBot - Roadmap
 ## 0.2.0 (Doing Now)
 
 * Handle a Table (SB, BB, Dealer, Player position turn after turn, Empty Seat, etc.)
+* Handle cards dealing (pre-flop, flop, turn, river, showdown) (each player on the table could play regardless of their hands, position, bets)
 
 ## 0.4.0
 
-* Handle cards dealing (pre-flop, flop, turn, river, showdown) (each player on the table could play regardless of their hands, position, bets)
+* Handle players action
 
 ## 0.6.0
 
-* Handle players action
+* Implement basic Console I/O Interface
 
 ## 0.8.0
 
-* Implement basic UI interface (based on the one I did a couple of years ago) 
+* Implement basic AI (Basic Interface + **The Rock** AI) 
 
 ## 1.0.0
 
-* Implement basic AI (Basic Interface + **The Rock** AI)
+* Implement basic UI interface (based on the one I did a couple of years ago)
