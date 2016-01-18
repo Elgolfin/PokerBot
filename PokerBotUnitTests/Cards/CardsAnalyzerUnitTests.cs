@@ -2,10 +2,10 @@
 using Nicomputer.PokerBot.Cards;
 using Nicomputer.PokerBot.Cards.Suits;
 
-namespace Nicomputer.PokerBot.UnitTests.PokerGame
+namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
-    public class PokerHandsUnitTests
+    public class CardsAnalyzerUnitTests
     {
 
         [TestCategory("Count Cards")]
