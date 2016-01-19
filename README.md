@@ -14,7 +14,7 @@ TBD
 
 ## Tests
 
-Unit Tests direclty accessible within the solution
+Unit Tests direclty accessible within the solution [here](https://github.com/Elgolfin/PokerBot/tree/master/PokerBotUnitTests)
 
 ## Contributing
 
