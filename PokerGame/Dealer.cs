@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Runtime.InteropServices;
-using Nicomputer.PokerBot.Cards;
+﻿using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.PokerGame
 {
@@ -39,7 +37,7 @@ namespace Nicomputer.PokerBot.PokerGame
             {
                 if (isFirstCard)
                 {
-                    seat.Hand = new Hand {};
+                    seat.Hand = new Hand();
                     seat.Hand.FirstCard = Deck.Deal();
                 }
                 else
