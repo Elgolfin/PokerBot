@@ -1,4 +1,6 @@
-﻿using Nicomputer.PokerBot.Cards;
+﻿using System.Linq;
+using System.Runtime.InteropServices;
+using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.PokerGame
 {
@@ -13,30 +15,36 @@ namespace Nicomputer.PokerBot.PokerGame
             Table = t;
         }
 
+        public void ShuffleDeck()
+        {
+            Deck.Shuffle();
+        }
+
         /// <summary>
         /// 
         /// </summary>
         public void DealHands()
         {
-            Deck.Shuffle();
-
             // Dealer... deals
-            // TODO Button must be the last the receive cards
-            // First Card
-            for (int i = 0; i < Table.Seats.Count; i++)
+            // ... First Card
+            DealHandCard(true);
+            // ... Second Card
+            DealHandCard(false);
+        }
+
+        private void DealHandCard(bool isFirstCard)
+        {
+            var occupiedSeats = Table.GetOccupiedSeats();
+            foreach (var seat in occupiedSeats)
             {
-                if (Table.Seats[i] != null && !Table.Seats[i].IsEmpty)
+                if (isFirstCard)
                 {
-                    Table.Seats[i].Hand = new Hand();
-                    Table.Seats[i].Hand.FirstCard = Deck.Deal();
+                    seat.Hand = new Hand {};
+                    seat.Hand.FirstCard = Deck.Deal();
                 }
-            }
-            // Second Card
-            for (int i = 0; i < Table.Seats.Count; i++)
-            {
-                if (Table.Seats[i] != null && !Table.Seats[i].IsEmpty)
+                else
                 {
-                    Table.Seats[i].Hand.SecondCard = Deck.Deal();
+                    seat.Hand.SecondCard = Deck.Deal();
                 }
             }
         }
@@ -44,7 +52,7 @@ namespace Nicomputer.PokerBot.PokerGame
         private void DealBoardCards(int numCards)
         {
             Deck.Burn();
-            for (int i = 0; i < numCards; i++)
+            for (var i = 0; i < numCards; i++)
             {
                 Table.Board.Add(Deck.Deal());
             }

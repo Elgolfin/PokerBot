@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Nicomputer.PokerBot.PokerGame;
 using Nicomputer.PokerBot.UnitTests.Common;
@@ -39,7 +40,7 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
             table.Close();
             Assert.AreEqual(9, table.Capacity);
             Assert.AreEqual(0, table.NumberOfPlayers);
-            Assert.AreEqual(0, table.OccupiedSeats);
+            Assert.AreEqual(0, table.NumberOfOccupiedSeats);
             Assert.AreEqual(9, table.Seats.Count);
             Assert.AreEqual(true, table.Dealer == null);
             Assert.AreEqual(false, table.IsOpened);
@@ -87,10 +88,10 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
         public void Table_WithEmptySeat_AddPlayer_Is_Ok()
         {
             var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 2);
-            Assert.AreEqual(2, table.OccupiedSeats);
+            Assert.AreEqual(2, table.NumberOfOccupiedSeats);
             Assert.AreEqual(2, table.NumberOfPlayers);
             table.AddPlayer(new Player { Name = "Miles Starck" });
-            Assert.AreEqual(3, table.OccupiedSeats);
+            Assert.AreEqual(3, table.NumberOfOccupiedSeats);
             Assert.AreEqual(3, table.NumberOfPlayers);
         }
         [TestMethod]
@@ -99,7 +100,7 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
         public void Table_Full_AddPlayer_Is_Not_Ok()
         {
             var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 9);
-            Assert.AreEqual(9, table.OccupiedSeats);
+            Assert.AreEqual(9, table.NumberOfOccupiedSeats);
             Assert.AreEqual(9, table.NumberOfPlayers);
             table.AddPlayer(new Player { Name = "Miles Starck" });
         }
@@ -110,12 +111,29 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
         {
             Assert.AreEqual(capacity, table.Capacity);
             Assert.AreEqual(numOfPlayers, table.NumberOfPlayers);
-            Assert.AreEqual(numOfPlayers, table.OccupiedSeats);
+            Assert.AreEqual(numOfPlayers, table.NumberOfOccupiedSeats);
             Assert.AreEqual(capacity, table.Seats.Count);
             Assert.AreEqual(true, table.Dealer != null);
             Assert.AreEqual(true, table.IsOpened);
             Assert.AreEqual(0, table.Board.Count);
             Assert.AreEqual(1, table.Turn);
+        }
+
+
+        [TestMethod]
+        [TestCategory("Table - Positions")]
+        public void OccupiedSeats_Table_Of_9_Players()
+        {
+            var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 9);
+            var occupiedSeats = table.GetOccupiedSeats();
+            Assert.AreEqual(9, occupiedSeats.Count);
+            var firstToPlay = table.Seats[table.FirstToPlay].Player;
+            Assert.AreEqual(firstToPlay, occupiedSeats[0].Player);
+            table.UpdatePositions();
+            occupiedSeats = table.GetOccupiedSeats();
+            var nextFirstToPlay = table.Seats[table.FirstToPlay].Player;
+            Assert.AreEqual(nextFirstToPlay, occupiedSeats[0].Player);
+            Assert.AreNotEqual(firstToPlay, nextFirstToPlay);
         }
     }
 }

@@ -16,6 +16,7 @@ namespace Nicomputer.PokerBot.PokerGame
         public int ButtonPosition { get; private set; }
         public int SmallBlindPosition { get; private set; }
         public int BigBlindPosition { get; private set; }
+        public int FirstToPlay { get; private set; }
 
 
         public Dealer Dealer { get; set; }
@@ -23,10 +24,10 @@ namespace Nicomputer.PokerBot.PokerGame
         public int NumberOfPlayers {
             get { return Players.Count; }
         }
-        public int OccupiedSeats
+        public int NumberOfOccupiedSeats
         {
-            get { return (from seat in Seats where seat.IsEmpty == false select seat).Count(); }
-        }
+            get { return (from seat in Seats where !seat.IsEmpty select seat).Count(); }
+        } 
 
         public Table(int capacity)
         {
@@ -56,6 +57,7 @@ namespace Nicomputer.PokerBot.PokerGame
             ButtonPosition = FindPosition(startingPosition);
             SmallBlindPosition = (NumberOfPlayers > 2) ? FindPosition(ButtonPosition + 1) : ButtonPosition;
             BigBlindPosition = FindPosition(SmallBlindPosition + 1);
+            FirstToPlay = FindPosition(BigBlindPosition + 1);
         }
 
         public void UpdatePositions()
@@ -113,6 +115,26 @@ namespace Nicomputer.PokerBot.PokerGame
         {
             return (from seat in Seats where seat.IsEmpty select seat).FirstOrDefault();
         }
+
+
+        /// <summary>
+        /// Get the list of seats occupied by a player in the order of play
+        /// </summary>
+        /// <returns></returns>
+        public List<Seat> GetOccupiedSeats()
+        {
+            var currentIdx = FirstToPlay;
+            var occupiedSeats = new List<Seat>(NumberOfOccupiedSeats);
+            for (var i = 0; i < Capacity; i++)
+            {
+                if (Seats[currentIdx] != null && !Seats[currentIdx].IsEmpty)
+                {
+                    occupiedSeats.Add(Seats[currentIdx]);
+                }
+                currentIdx = (++currentIdx) == Capacity ? 0 : currentIdx;
+            }
+            return occupiedSeats;
+        } 
 
         public void UpdateTurn()
         {
