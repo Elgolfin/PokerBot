@@ -125,15 +125,46 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
         public void OccupiedSeats_Table_Of_9_Players()
         {
             var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 9);
-            var occupiedSeats = table.GetOccupiedSeats();
+            var occupiedSeats = table.GetOccupiedSeatsOrderByPlayPreFlop();
             Assert.AreEqual(9, occupiedSeats.Count);
-            var firstToPlay = table.Seats[table.FirstToPlay].Player;
-            Assert.AreEqual(firstToPlay, occupiedSeats[0].Player);
+            var firstToPlayPreFlop = table.Seats[table.FirstToPlayPreFlopPosition].Player;
+            var firstToPlayPostFlop = table.Seats[table.FirstToPlayPostFlopPosition].Player;
+            Assert.AreEqual(firstToPlayPreFlop, occupiedSeats[0].Player);
+            occupiedSeats = table.GetOccupiedSeatsOrderByPlayPostFlop();
+            Assert.AreEqual(firstToPlayPostFlop, occupiedSeats[0].Player);
             table.UpdatePositions();
-            occupiedSeats = table.GetOccupiedSeats();
-            var nextFirstToPlay = table.Seats[table.FirstToPlay].Player;
-            Assert.AreEqual(nextFirstToPlay, occupiedSeats[0].Player);
-            Assert.AreNotEqual(firstToPlay, nextFirstToPlay);
+            occupiedSeats = table.GetOccupiedSeatsOrderByPlayPreFlop();
+            var nextFirstToPlayPreFlop = table.Seats[table.FirstToPlayPreFlopPosition].Player;
+            var nextFirstToPlayPostFlop = table.Seats[table.FirstToPlayPostFlopPosition].Player;
+            Assert.AreEqual(nextFirstToPlayPreFlop, occupiedSeats[0].Player);
+            Assert.AreNotEqual(firstToPlayPreFlop, nextFirstToPlayPreFlop);
+            occupiedSeats = table.GetOccupiedSeatsOrderByPlayPostFlop();
+            Assert.AreEqual(nextFirstToPlayPostFlop, occupiedSeats[0].Player);
+            Assert.AreNotEqual(firstToPlayPostFlop, nextFirstToPlayPostFlop);
+        }
+
+
+        [TestMethod]
+        [TestCategory("Table - Positions")]
+        public void OccupiedSeats_Table_Of_2_Players()
+        {
+            var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 2);
+            var occupiedSeats = table.GetOccupiedSeatsOrderByPlayPreFlop();
+            Assert.AreEqual(2, occupiedSeats.Count);
+            var firstToPlayPreFlop = table.Seats[table.FirstToPlayPreFlopPosition].Player;
+            var firstToPlayPostFlop = table.Seats[table.FirstToPlayPostFlopPosition].Player;
+            Assert.AreEqual(firstToPlayPreFlop, occupiedSeats[0].Player);
+            occupiedSeats = table.GetOccupiedSeatsOrderByPlayPostFlop();
+            Assert.AreEqual(firstToPlayPostFlop, occupiedSeats[0].Player);
+            table.UpdatePositions();
+            occupiedSeats = table.GetOccupiedSeatsOrderByPlayPreFlop();
+            var nextFirstToPlayPreFlop = table.Seats[table.FirstToPlayPreFlopPosition].Player;
+            var nextFirstToPlayPostFlop = table.Seats[table.FirstToPlayPostFlopPosition].Player;
+            Assert.AreEqual(nextFirstToPlayPreFlop, occupiedSeats[0].Player);
+            Assert.AreNotEqual(firstToPlayPreFlop, nextFirstToPlayPreFlop);
+            occupiedSeats = table.GetOccupiedSeatsOrderByPlayPostFlop();
+            Assert.AreEqual(nextFirstToPlayPostFlop, occupiedSeats[0].Player);
+            Assert.AreNotEqual(firstToPlayPostFlop, nextFirstToPlayPostFlop);
         }
     }
 }

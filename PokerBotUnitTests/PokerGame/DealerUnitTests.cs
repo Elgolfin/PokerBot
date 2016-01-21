@@ -3,8 +3,6 @@ using Nicomputer.PokerBot.UnitTests.Common;
 
 namespace Nicomputer.PokerBot.UnitTests.PokerGame
 {
-    // TODO add more unit tests when dealing hands (by comparing the first deck card with the first card of the first player to have been dealed
-    // Table of 2, Table of 3, Table of 6 with some empty seats, etc.
     [TestClass]
     public class DealerUnitTests
     {
@@ -22,8 +20,44 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
                 Assert.AreEqual(true, table.Seats[i].Hand.FirstCard != null);
                 Assert.AreEqual(true, table.Seats[i].Hand.SecondCard != null);
             }
-            Assert.AreEqual(table.Seats[table.FirstToPlay].Hand.FirstCard, firstDealedCard);
-            Assert.AreEqual(table.Seats[table.BigBlindPosition].Hand.SecondCard, lastDealedCard);
+            Assert.AreEqual(table.Seats[table.SmallBlindPosition].Hand.FirstCard, firstDealedCard);
+            Assert.AreEqual(table.Seats[table.ButtonPosition].Hand.SecondCard, lastDealedCard);
+        }
+
+        [TestMethod]
+        public void Dealer_Deals_Hands_Table_6()
+        {
+            var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 6);
+            table.Dealer.ShuffleDeck();
+            var firstDealedCard = table.Dealer.Deck.GetCards()[0];
+            var lastDealedCard = table.Dealer.Deck.GetCards()[11];
+            table.Dealer.DealHands();
+            Assert.AreEqual(52 - 6 * 2, table.Dealer.Deck.GetCards().Count);
+            for (int i = 0; i < table.NumberOfPlayers; i++)
+            {
+                Assert.AreEqual(true, table.Seats[i].Hand.FirstCard != null);
+                Assert.AreEqual(true, table.Seats[i].Hand.SecondCard != null);
+            }
+            Assert.AreEqual(table.Seats[table.SmallBlindPosition].Hand.FirstCard, firstDealedCard);
+            Assert.AreEqual(table.Seats[table.ButtonPosition].Hand.SecondCard, lastDealedCard);
+        }
+
+        [TestMethod]
+        public void Dealer_Deals_Hands_Table_2()
+        {
+            var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 2);
+            table.Dealer.ShuffleDeck();
+            var firstDealedCard = table.Dealer.Deck.GetCards()[0];
+            var lastDealedCard = table.Dealer.Deck.GetCards()[3];
+            table.Dealer.DealHands();
+            Assert.AreEqual(52 - 2 * 2, table.Dealer.Deck.GetCards().Count);
+            for (int i = 0; i < table.NumberOfPlayers; i++)
+            {
+                Assert.AreEqual(true, table.Seats[i].Hand.FirstCard != null);
+                Assert.AreEqual(true, table.Seats[i].Hand.SecondCard != null);
+            }
+            Assert.AreEqual(table.Seats[table.BigBlindPosition].Hand.FirstCard, firstDealedCard);
+            Assert.AreEqual(table.Seats[table.ButtonPosition].Hand.SecondCard, lastDealedCard);
         }
 
         [TestMethod]

@@ -16,7 +16,8 @@ namespace Nicomputer.PokerBot.PokerGame
         public int ButtonPosition { get; private set; }
         public int SmallBlindPosition { get; private set; }
         public int BigBlindPosition { get; private set; }
-        public int FirstToPlay { get; private set; }
+        public int FirstToPlayPreFlopPosition { get; private set; }
+        public int FirstToPlayPostFlopPosition { get; private set; }
 
 
         public Dealer Dealer { get; set; }
@@ -52,12 +53,17 @@ namespace Nicomputer.PokerBot.PokerGame
             IsOpened = true;
         }
 
+        /// <summary>
+        /// TODO http://www.homepokertourney.com/button.htm
+        /// </summary>
+        /// <param name="startingPosition"></param>
         private void InitializePositions(int startingPosition = 0)
         {
             ButtonPosition = FindPosition(startingPosition);
             SmallBlindPosition = (NumberOfPlayers > 2) ? FindPosition(ButtonPosition + 1) : ButtonPosition;
             BigBlindPosition = FindPosition(SmallBlindPosition + 1);
-            FirstToPlay = FindPosition(BigBlindPosition + 1);
+            FirstToPlayPreFlopPosition = FindPosition(BigBlindPosition + 1);
+            FirstToPlayPostFlopPosition = FindPosition(ButtonPosition + 1);
         }
 
         public void UpdatePositions()
@@ -118,12 +124,36 @@ namespace Nicomputer.PokerBot.PokerGame
 
 
         /// <summary>
-        /// Get the list of seats occupied by a player in the order of play
+        /// Get the list of seats occupied by a player in the order of play (pre-flop)
         /// </summary>
         /// <returns></returns>
-        public List<Seat> GetOccupiedSeats()
+        public List<Seat> GetOccupiedSeatsOrderByPlayPreFlop()
         {
-            var currentIdx = FirstToPlay;
+            return GetOccupiedSeats(FirstToPlayPreFlopPosition);
+        }
+
+        /// <summary>
+        /// Get the list of seats occupied by a player in the order of play (pre-flop)
+        /// </summary>
+        /// <returns></returns>
+        public List<Seat> GetOccupiedSeatsOrderByPlayPostFlop()
+        {
+            return GetOccupiedSeats(FirstToPlayPostFlopPosition);
+        }
+
+        /// <summary>
+        /// Get the list of occupied seats (an occupied seat is a seat with a player)
+        /// The first player to be dealt a card or to play (after pre-flop) is the small blind and so fhe first seat of the returned list of seats
+        /// </summary>
+        /// <returns></returns>
+        public List<Seat> GetOccupiedSeatsOrderByToBeDealt()
+        {
+            return (NumberOfPlayers > 2) ? GetOccupiedSeats(SmallBlindPosition) : GetOccupiedSeats(BigBlindPosition);
+        }
+
+        public List<Seat> GetOccupiedSeats(int firstToRetrieve)
+        {
+            var currentIdx = firstToRetrieve;
             var occupiedSeats = new List<Seat>(NumberOfOccupiedSeats);
             for (var i = 0; i < Capacity; i++)
             {
@@ -134,7 +164,7 @@ namespace Nicomputer.PokerBot.PokerGame
                 currentIdx = (++currentIdx) == Capacity ? 0 : currentIdx;
             }
             return occupiedSeats;
-        } 
+        }
 
         public void UpdateTurn()
         {

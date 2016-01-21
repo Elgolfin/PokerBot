@@ -32,7 +32,7 @@ namespace Nicomputer.PokerBot.PokerGame
 
         private void DealHandCard(bool isFirstCard)
         {
-            var occupiedSeats = Table.GetOccupiedSeats();
+            var occupiedSeats = Table.GetOccupiedSeatsOrderByToBeDealt();
             foreach (var seat in occupiedSeats)
             {
                 if (isFirstCard)
