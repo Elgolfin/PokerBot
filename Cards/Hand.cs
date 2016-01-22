@@ -362,5 +362,10 @@ namespace Nicomputer.PokerBot.Cards
             return LongName;
         }
 
+        public long ToLong()
+        {
+            return Convert.ToInt64(FirstCard.AbsoluteValue | SecondCard.AbsoluteValue);
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Nicomputer.PokerBot.PokerGame
 {
@@ -6,6 +7,7 @@ namespace Nicomputer.PokerBot.PokerGame
     {
         public Table Table;
         public Round CurrentRound;
+        public Queue<Seat> ActiveSeats;
 
         [Flags]
         public enum Round
@@ -35,8 +37,10 @@ namespace Nicomputer.PokerBot.PokerGame
             CurrentRound = Round.PreFlop;
             SetPositions();
             DealHands();
+            ActiveSeats = Table.GetQueueOfSeatsOrderByPlayPreFlop();
             //TODO BettingRounds(Round.PreFlop)
             DealFlop();
+            ActiveSeats = Table.GetQueueOfSeatsOrderByPlayPostFlop();
             //TODO BettingRounds(Round.Flop)
             DealTurn();
             //TODO BettingRounds(Round.Turn)
@@ -67,7 +71,6 @@ namespace Nicomputer.PokerBot.PokerGame
             switch (rnd)
             {
                 case Round.PreFlop:
-                    i = 1;
                     break;
                 case Round.Flop:
                     i = 2;
@@ -106,6 +109,13 @@ namespace Nicomputer.PokerBot.PokerGame
         public void Showdown()
         {
             //TODO implement this
+            
+        }
+
+        public List<Player> GetWinnerHands()
+        {
+
+            return new List<Player>();
         }
 
         public void EndPlayAndCleanup()

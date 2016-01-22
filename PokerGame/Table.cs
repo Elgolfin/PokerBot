@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Nicomputer.PokerBot.Cards;
@@ -130,6 +131,26 @@ namespace Nicomputer.PokerBot.PokerGame
         public List<Seat> GetOccupiedSeatsOrderByPlayPreFlop()
         {
             return GetOccupiedSeats(FirstToPlayPreFlopPosition);
+        }
+
+        public Queue<Seat> GetQueueOfSeatsOrderByPlay(int firstToPlay)
+        {
+            var queue = new Queue<Seat>();
+            foreach (var seat in GetOccupiedSeats(firstToPlay))
+            {
+                queue.Enqueue(seat);
+            }
+            return queue;
+        }
+
+        public Queue<Seat> GetQueueOfSeatsOrderByPlayPreFlop()
+        {
+            return GetQueueOfSeatsOrderByPlay(FirstToPlayPreFlopPosition);
+        }
+
+        public Queue<Seat> GetQueueOfSeatsOrderByPlayPostFlop()
+        {
+            return GetQueueOfSeatsOrderByPlay(FirstToPlayPostFlopPosition);
         }
 
         /// <summary>

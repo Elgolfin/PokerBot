@@ -45,6 +45,7 @@
     <Compile Include="Card.cs" />
     <Compile Include="Hand.cs" />
     <Compile Include="CardsAnalyzer.cs" />
+    <Compile Include="HandAnalyzer.cs" />
     <Compile Include="Helper\BinaryOperations.cs" />
     <Compile Include="Suits\AbstractSuit.cs" />
     <Compile Include="Deck52Cards.cs" />

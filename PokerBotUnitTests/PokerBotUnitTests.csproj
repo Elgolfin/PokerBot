@@ -58,6 +58,7 @@
     <Compile Include="Common\PokerGameUnitTestsHelper.cs" />
     <Compile Include="Cards\CardsAnalyzerUnitTests.cs" />
     <Compile Include="PokerGame\HandPlayEngineUnitTests.cs" />
+    <Compile Include="PokerGame\Actions\PlayerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Cards\BinaryOperationsUnitTests.cs" />
     <Compile Include="Cards\MaskBitsUnitTests.cs" />

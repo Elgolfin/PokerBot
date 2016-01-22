@@ -18,6 +18,7 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
             Assert.AreEqual("John Doe", player.Name);
             Assert.AreEqual("Johnny", player.DisplayName);
             Assert.AreEqual("Connor", player.NickName);
+            Assert.AreEqual(player.Name, player.ToString());
         }
     }
 }
