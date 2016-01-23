@@ -43,10 +43,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
-    <Compile Include="Hand.cs" />
+    <Compile Include="Hands\PokerHandType.cs" />
+    <Compile Include="Hands\Straight.cs" />
+    <Compile Include="Hands\ThreeOfAKind.cs" />
+    <Compile Include="Hands\FullHouse.cs" />
+    <Compile Include="Hands\Flush.cs" />
+    <Compile Include="Hands\TwoPairs.cs" />
+    <Compile Include="Hands\OnePair.cs" />
+    <Compile Include="Hands\HighCard.cs" />
+    <Compile Include="Hands\FourOfAKind.cs" />
+    <Compile Include="HoleCards.cs" />
     <Compile Include="CardsAnalyzer.cs" />
-    <Compile Include="HandAnalyzer.cs" />
+    <Compile Include="Hands\PokerHandAnalyzer.cs" />
     <Compile Include="Helper\BinaryOperations.cs" />
+    <Compile Include="Hands\PokerHand.cs" />
+    <Compile Include="Hands\StraightFlush.cs" />
     <Compile Include="Suits\AbstractSuit.cs" />
     <Compile Include="Deck52Cards.cs" />
     <Compile Include="Suits\Club.cs" />

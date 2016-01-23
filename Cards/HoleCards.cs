@@ -5,7 +5,7 @@ using System.Linq;
 namespace Nicomputer.PokerBot.Cards
 {
 
-    public class Hand
+    public class HoleCards
     {
         private readonly int _billChenDefaultValue = -99;
 
@@ -305,24 +305,24 @@ namespace Nicomputer.PokerBot.Cards
             }
         }
 
-        public Hand()
+        public HoleCards()
         {
             
         }
 
-        public Hand(Card firstCard, Card secondCard)
+        public HoleCards(Card firstCard, Card secondCard)
         {
             FirstCard = firstCard;
             SecondCard = secondCard;
         }
 
-        public Hand(string firstCard, string secondCard)
+        public HoleCards(string firstCard, string secondCard)
         {
             FirstCard = new Card(firstCard);
             SecondCard = new Card(secondCard);
         }
 
-        public Hand(string shortName)
+        public HoleCards(string shortName)
         {
             string s = "h";
             if (shortName.ToUpper(CultureInfo.InvariantCulture).Length < 3)

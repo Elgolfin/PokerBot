@@ -37,7 +37,7 @@ namespace Nicomputer.PokerBot.PokerGame
             {
                 if (isFirstCard)
                 {
-                    seat.Hand = new Hand();
+                    seat.Hand = new HoleCards();
                     seat.Hand.FirstCard = Deck.Deal();
                 }
                 else

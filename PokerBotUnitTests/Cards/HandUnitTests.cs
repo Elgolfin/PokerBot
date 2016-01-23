@@ -13,7 +13,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         {
             var card1 = new Card("Th");
             var card2 = new Card("As");
-            var hand = new Hand(card1, card2);
+            var hand = new HoleCards(card1, card2);
             Assert.AreEqual("Th", hand.FirstCard.ToString());
             Assert.AreEqual("As", hand.SecondCard.ToString());
         }
@@ -22,7 +22,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Initialize_Hand_With_CardShortnames()
         {
-            var hand = new Hand("Ks", "Ah");
+            var hand = new HoleCards("Ks", "Ah");
             Assert.AreEqual("Ks", hand.FirstCard.ToString());
             Assert.AreEqual("Ah", hand.SecondCard.ToString());
 
@@ -32,7 +32,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Initialize_Hand_With_Shortname()
         {
-            var hand = new Hand("AK");
+            var hand = new HoleCards("AK");
             Assert.AreEqual("Ac", hand.FirstCard.ToString());
             Assert.AreEqual("Kh", hand.SecondCard.ToString());
             Assert.AreEqual(false,hand.SameSuit);
@@ -43,7 +43,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Initialize_Hand_With_Shortname_Suited()
         {
-            var hand = new Hand("AKs");
+            var hand = new HoleCards("AKs");
             Assert.AreEqual("Ah", hand.FirstCard.ToString());
             Assert.AreEqual("Kh", hand.SecondCard.ToString());
             Assert.AreEqual(true, hand.SameSuit);
@@ -54,7 +54,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_2h3h_Shortname_Is_32s()
         {
-            var hand = new Hand("2h", "3h");
+            var hand = new HoleCards("2h", "3h");
             Assert.AreEqual("32s", hand.ShortName);
         }
 
@@ -62,7 +62,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_3hAd_Shortname_Is_A3()
         {
-            var hand = new Hand("3h", "Ad");
+            var hand = new HoleCards("3h", "Ad");
             Assert.AreEqual("A3", hand.ShortName);
         }
 
@@ -70,7 +70,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_JhAd_Shortname_Is_AdJh()
         {
-            var hand = new Hand("Jh", "Ad");
+            var hand = new HoleCards("Jh", "Ad");
             Assert.AreEqual("AdJh", hand.LongName);
         }
 
@@ -78,7 +78,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_ThTc_Is_Pair()
         {
-            var hand = new Hand("Th", "Tc");
+            var hand = new HoleCards("Th", "Tc");
             Assert.AreEqual(true, hand.Pair);
         }
 
@@ -86,7 +86,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_5h2c_Is_NotPair()
         {
-            var hand = new Hand("5h", "2c");
+            var hand = new HoleCards("5h", "2c");
             Assert.AreEqual(false, hand.Pair);
         }
 
@@ -94,7 +94,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void EmptyHand()
         {
-            var hand = new Hand();
+            var hand = new HoleCards();
             Assert.AreEqual(null, hand.FirstCard);
             Assert.AreEqual(null, hand.SecondCard);
         }
@@ -103,7 +103,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_7dKc_LowCard_Is_7d()
         {
-            var hand = new Hand("7d","Kc");
+            var hand = new HoleCards("7d","Kc");
             Assert.AreEqual("7d", hand.LowCard.ToString());
         }
 
@@ -111,7 +111,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_7d7c_LowCard_Is_7d()
         {
-            var hand = new Hand("7d", "7c");
+            var hand = new HoleCards("7d", "7c");
             Assert.AreEqual("7c", hand.LowCard.ToString());
         }
 
@@ -138,7 +138,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("22", 5);
             foreach (var kvp in pairs)
             {
-                Assert.AreEqual(kvp.Value, new Hand(kvp.Key).BillChenValue);
+                Assert.AreEqual(kvp.Value, new HoleCards(kvp.Key).BillChenValue);
             }
         }
         [TestMethod]
@@ -175,7 +175,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("2As", 7);
             foreach (var kvp in pairs)
             {
-                Assert.AreEqual(kvp.Value, new Hand(kvp.Key).BillChenValue);
+                Assert.AreEqual(kvp.Value, new HoleCards(kvp.Key).BillChenValue);
             }
         }
 
@@ -183,7 +183,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void BillChenValue_AA_Is_20()
         {
-            var hand = new Hand(new Card(14, Card.SuitName.Hearts), new Card(14, Card.SuitName.Diamonds));
+            var hand = new HoleCards(new Card(14, Card.SuitName.Hearts), new Card(14, Card.SuitName.Diamonds));
             Assert.AreEqual(20, hand.BillChenValue);
         }
 
@@ -191,7 +191,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void BillChenValue_27_Is_Minus1()
         {
-            var hand = new Hand("27");
+            var hand = new HoleCards("27");
             Assert.AreEqual(-1, hand.BillChenValue);
         }
 
@@ -199,7 +199,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void BillChenValue_37_Is_0()
         {
-            var hand = new Hand("37");
+            var hand = new HoleCards("37");
             Assert.AreEqual(0, hand.BillChenValue);
         }
 
@@ -215,7 +215,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("AKs", 12);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(1, hand.BillChenGroupValue);
             }
@@ -233,7 +233,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("TT", 10);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(2, hand.BillChenGroupValue);
             }
@@ -252,7 +252,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("99", 9);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(3, hand.BillChenGroupValue);
             }
@@ -273,7 +273,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("88", 8);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(4, hand.BillChenGroupValue);
             }
@@ -304,7 +304,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("66", 6);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(5, hand.BillChenGroupValue);
             }
@@ -326,7 +326,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("54s", 6);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(6, hand.BillChenGroupValue);
             }
@@ -356,7 +356,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("22", 5);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(7, hand.BillChenGroupValue);
             }
@@ -386,7 +386,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
 
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(8, hand.BillChenGroupValue);
             }
@@ -409,7 +409,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("A2", 5);
             foreach (var kvp in pairs)
             {
-                var hand = new Hand(kvp.Key);
+                var hand = new HoleCards(kvp.Key);
                 Assert.AreEqual(kvp.Value, hand.BillChenValue);
                 Assert.AreEqual(9, hand.BillChenGroupValue);
             }
@@ -420,7 +420,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Initialize_Hand_Two_Times()
         {
-            var hand = new Hand("AA");
+            var hand = new HoleCards("AA");
             Assert.AreEqual(20, hand.BillChenValue);
             hand.FirstCard = new Card(7, Card.SuitName.Clubs);
             hand.SecondCard = new Card(2, Card.SuitName.Diamonds);
@@ -432,7 +432,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         [TestCategory("Hand")]
         public void Hand_ToString_Is_LongName()
         {
-            var hand = new Hand("Ah", "Ad");
+            var hand = new HoleCards("Ah", "Ad");
             Assert.AreEqual("AhAd", hand.ToString());
         }
 

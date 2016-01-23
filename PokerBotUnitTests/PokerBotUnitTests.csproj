@@ -57,6 +57,16 @@
   <ItemGroup>
     <Compile Include="Common\PokerGameUnitTestsHelper.cs" />
     <Compile Include="Cards\CardsAnalyzerUnitTests.cs" />
+    <Compile Include="Hands\ThreeOfAKindUnitTests.cs" />
+    <Compile Include="Hands\OnePairUnitTests.cs" />
+    <Compile Include="Hands\StraightUnitTests.cs" />
+    <Compile Include="Hands\TwoPairsUnitTests.cs" />
+    <Compile Include="Hands\HighCardUnitTests.cs" />
+    <Compile Include="Hands\FullHouseUnitTests.cs" />
+    <Compile Include="Hands\FlushUnitTests.cs" />
+    <Compile Include="Hands\FourOfAKindUnitTests.cs" />
+    <Compile Include="Hands\StraightFlushUnitTests.cs" />
+    <Compile Include="Hands\PokerHandComparaisonUnitTests.cs" />
     <Compile Include="PokerGame\HandPlayEngineUnitTests.cs" />
     <Compile Include="PokerGame\Actions\PlayerAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

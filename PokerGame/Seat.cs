@@ -5,7 +5,7 @@ namespace Nicomputer.PokerBot.PokerGame
     public class Seat
     {
         public Player Player;
-        public Hand Hand;
+        public HoleCards Hand;
         public int Number;
 
         public Seat(int number, Player player)

@@ -183,6 +183,15 @@ namespace Nicomputer.PokerBot.Cards.Helper
             }
             return ulMask;
         }
+        public long ToInt64()
+        {
+            ulong ulMask = 0x0;
+            foreach (var ul in _mask)
+            {
+                ulMask |= ul;
+            }
+            return Convert.ToInt64(ulMask);
+        }
 
         public override string ToString()
         {
