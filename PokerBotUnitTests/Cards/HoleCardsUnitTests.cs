@@ -5,10 +5,10 @@ using Nicomputer.PokerBot.Cards;
 namespace Nicomputer.PokerBot.UnitTests.Cards
 {
     [TestClass]
-    public class HandUnitTests
+    public class HoleCardsUnitTests
     {
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Initialize_Hand_With_CardObjects()
         {
             var card1 = new Card("Th");
@@ -19,7 +19,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Initialize_Hand_With_CardShortnames()
         {
             var hand = new HoleCards("Ks", "Ah");
@@ -29,7 +29,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Initialize_Hand_With_Shortname()
         {
             var hand = new HoleCards("AK");
@@ -40,7 +40,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Initialize_Hand_With_Shortname_Suited()
         {
             var hand = new HoleCards("AKs");
@@ -51,7 +51,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_2h3h_Shortname_Is_32s()
         {
             var hand = new HoleCards("2h", "3h");
@@ -59,7 +59,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_3hAd_Shortname_Is_A3()
         {
             var hand = new HoleCards("3h", "Ad");
@@ -67,7 +67,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_JhAd_Shortname_Is_AdJh()
         {
             var hand = new HoleCards("Jh", "Ad");
@@ -75,7 +75,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_ThTc_Is_Pair()
         {
             var hand = new HoleCards("Th", "Tc");
@@ -83,7 +83,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_5h2c_Is_NotPair()
         {
             var hand = new HoleCards("5h", "2c");
@@ -91,7 +91,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void EmptyHand()
         {
             var hand = new HoleCards();
@@ -100,7 +100,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_7dKc_LowCard_Is_7d()
         {
             var hand = new HoleCards("7d","Kc");
@@ -108,7 +108,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_7d7c_LowCard_Is_7d()
         {
             var hand = new HoleCards("7d", "7c");
@@ -118,7 +118,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
 
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenValue_Pairs()
         {
 
@@ -142,7 +142,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             }
         }
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenValue_Straight_1()
         {
 
@@ -180,7 +180,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenValue_AA_Is_20()
         {
             var hand = new HoleCards(new Card(14, Card.SuitName.Hearts), new Card(14, Card.SuitName.Diamonds));
@@ -188,7 +188,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenValue_27_Is_Minus1()
         {
             var hand = new HoleCards("27");
@@ -196,7 +196,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenValue_37_Is_0()
         {
             var hand = new HoleCards("37");
@@ -204,7 +204,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_1()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -222,7 +222,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_2()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -240,7 +240,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_3()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -259,7 +259,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_4()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -280,7 +280,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_5()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -311,7 +311,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_6()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -333,7 +333,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_7()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -363,7 +363,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_8()
         {
 
@@ -393,7 +393,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
         }
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void BillChenGroupValue_9()
         {
 
@@ -417,7 +417,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
 
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Initialize_Hand_Two_Times()
         {
             var hand = new HoleCards("AA");
@@ -429,7 +429,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
 
 
         [TestMethod]
-        [TestCategory("Hand")]
+        [TestCategory("HoleCards")]
         public void Hand_ToString_Is_LongName()
         {
             var hand = new HoleCards("Ah", "Ad");

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using Nicomputer.PokerBot.Cards.Helper;
 
@@ -7,7 +6,6 @@ namespace Nicomputer.PokerBot.Cards.Hands
 {
     public class PokerHandAnalyzer
     {
-        public Strength HandStrength;
         private static readonly List<PokerHandType> PokerHandsTypes = new List<PokerHandType>()
         {
             new StraightFlush(),
@@ -35,20 +33,47 @@ namespace Nicomputer.PokerBot.Cards.Hands
         }
         public PokerHandAnalyzer()
         {
-            Initialize();
+            
         }
 
-        private static void Initialize()
-        {
-            var mask = new MaskBits(52, 7);
-            while (!mask.IsParsingComplete)
-            {
-                var ph = new PokerHand(mask.ToInt64());
-                AnalyzePokerHand(ph);
-                AllHands.Add(mask.ToUint64(), ph);
-                mask.Decrement();
-            }
+        //private static void Initialize()
+        //{
+        //    var mask = new MaskBits(52, 7);
+        //    while (!mask.IsParsingComplete)
+        //    {
+        //        var ph = new PokerHand(mask.ToInt64());
+        //        AnalyzePokerHand(ph);
+        //        AllHands.Add(mask.ToUint64(), ph);
+        //        mask.Decrement();
+        //    }
 
+        //}
+
+        public void AddPokerHand(PokerHand ph)
+        {
+            if (!AllHands.ContainsKey(ph.ToLong()))
+            {
+                AnalyzePokerHand(ph);
+                AllHands.Add(ph.ToLong(), ph);
+            }
+        }
+        public void AddPokerHand(long hand)
+        {
+            if (!AllHands.ContainsKey(hand))
+            {
+                var ph = new PokerHand(hand);
+                AnalyzePokerHand(ph);
+                AllHands.Add(ph.ToLong(), ph);
+            }
+        }
+
+        public PokerHand GetPokerHand(long hand)
+        {
+            if (!AllHands.ContainsKey(hand))
+            {
+                AddPokerHand(hand);
+            }
+            return AllHands[hand] as PokerHand;
         }
 
         // TODO Set Kickers in each PokerHandType class
@@ -61,6 +86,11 @@ namespace Nicomputer.PokerBot.Cards.Hands
                     break;
                 }
             }
+        }
+
+        public int Count()
+        {
+            return AllHands.Count;
         }
     }
 }

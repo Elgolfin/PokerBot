@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nicomputer.PokerBot.Cards.Hands
 {
     public class PokerHand : IComparable<PokerHand>
     {
-        protected readonly HoleCards Hand;
+        protected readonly HoleCards HoleCards;
         private readonly long _pokerHand;
         public List<Card> Board { get; set; }
         public PokerHandAnalyzer.Strength Strength;
@@ -20,11 +17,11 @@ namespace Nicomputer.PokerBot.Cards.Hands
             Kickers = new List<Card>();
         }
 
-        public PokerHand(HoleCards hand, List<Card> board)
+        public PokerHand(HoleCards holeCards, List<Card> board)
         {
-            Hand = hand;
+            HoleCards = holeCards;
             Board = board;
-            _pokerHand = hand.ToLong();
+            _pokerHand = holeCards.ToLong();
             foreach (var card in Board)
             {
                 _pokerHand |= Convert.ToInt64(card.AbsoluteValue);
