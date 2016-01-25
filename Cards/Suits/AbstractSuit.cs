@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nicomputer.PokerBot.Cards.Suits
 {
@@ -40,7 +36,7 @@ namespace Nicomputer.PokerBot.Cards.Suits
 
         public long ToLong()
         {
-            long result = Cards & Mask;
+            var result = Cards & Mask;
             result = result >> Shift;
             return result;
         }

@@ -15,8 +15,10 @@
             {
                 result = true;
                 pokerHand.Strength = Strength;
-                // TODO Set the Kickers
-                // 3 Kickers: Excluding the pair, 3x High Card to Low Card
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[0]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[1]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[2]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[3]));
             }
             return result;
 

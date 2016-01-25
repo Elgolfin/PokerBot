@@ -40,6 +40,29 @@ namespace Nicomputer.PokerBot.Cards
             _lowCard = null;
         }
 
+        public HoleCards(Card firstCard, Card secondCard)
+        {
+            FirstCard = firstCard;
+            SecondCard = secondCard;
+        }
+
+        public HoleCards(string firstCard, string secondCard)
+        {
+            FirstCard = new Card(firstCard);
+            SecondCard = new Card(secondCard);
+        }
+
+        public HoleCards(string shortName)
+        {
+            var s = "h";
+            if (shortName.ToUpper(CultureInfo.InvariantCulture).Length < 3)
+            {
+                s = "c";
+            }
+            FirstCard = new Card(shortName.Substring(0, 1) + s);
+            SecondCard = new Card(shortName.Substring(1, 1) + "h");
+        }
+
         private int _billChenValue;
         private int _billChenGroupValue;
 
@@ -308,29 +331,6 @@ namespace Nicomputer.PokerBot.Cards
         public HoleCards()
         {
             
-        }
-
-        public HoleCards(Card firstCard, Card secondCard)
-        {
-            FirstCard = firstCard;
-            SecondCard = secondCard;
-        }
-
-        public HoleCards(string firstCard, string secondCard)
-        {
-            FirstCard = new Card(firstCard);
-            SecondCard = new Card(secondCard);
-        }
-
-        public HoleCards(string shortName)
-        {
-            string s = "h";
-            if (shortName.ToUpper(CultureInfo.InvariantCulture).Length < 3)
-            {
-                s = "c";
-            }
-            FirstCard = new Card(shortName.Substring(0, 1) + s);
-            SecondCard = new Card(shortName.Substring(1, 1) + "h");
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Nicomputer.PokerBot.Cards.Suits;
 
 namespace Nicomputer.PokerBot.Cards
 {
@@ -12,28 +13,28 @@ namespace Nicomputer.PokerBot.Cards
         /// <summary>
         /// Represent the value of the bit in the 52 cards bits sequence (see CardUnitTests for example)
         /// </summary>
-        public ulong AbsoluteValue { get; set; }
+        public ulong AbsoluteValue { get; private set; }
          
         /// <summary>
         /// 2 = 2, 3= 3, ..., T = 10, J = 11, Q = 12, K = 13, A = 14
         /// </summary>
-        public int RelativeValue { get; set; }
-        public SuitName Suit { get; set; }
+        public int RelativeValue { get; private set; }
+        public SuitName Suit { get; private set; }
         public enum CardName : long
         {
-            Two = 0x0001, // 0 0000 0000 0001
+            Two = 0x0001,   // 0 0000 0000 0001
             Three = 0x0002, // 0 0000 0000 0010 
-            Four = 0x0004, // 0 0000 0000 0100
-            Five = 0x0008, // 0 0000 0000 1000
-            Six = 0x0010, // 0 0000 0001 0000
+            Four = 0x0004,  // 0 0000 0000 0100
+            Five = 0x0008,  // 0 0000 0000 1000
+            Six = 0x0010,   // 0 0000 0001 0000
             Seven = 0x0020, // 0 0000 0010 0000
             Eight = 0x0040, // 0 0000 0100 0000
-            Nine = 0x0080, // 0 0000 1000 0000
-            Ten = 0x0100, // 0 0001 0000 0000
-            Jack = 0x0200, // 0 0010 0000 0000
+            Nine = 0x0080,  // 0 0000 1000 0000
+            Ten = 0x0100,   // 0 0001 0000 0000
+            Jack = 0x0200,  // 0 0010 0000 0000
             Queen = 0x0400, // 0 0100 0000 0000
-            King = 0x0800, // 0 1000 0000 0000
-            Ace = 0x1000  // 1 0000 0000 0000
+            King = 0x0800,  // 0 1000 0000 0000
+            Ace = 0x1000    // 1 0000 0000 0000
         };
         public enum SuitName
         {
@@ -42,6 +43,93 @@ namespace Nicomputer.PokerBot.Cards
             Spades = 26,
             Hearts = 39
         };
+
+        /// <summary>
+        /// Instanciate a Card object from its abbreviated form (the abbreviated form is case insensitive)
+        /// i.e. Qs, QS, qS or qs for the Queen of Spades
+        /// </summary>
+        /// <param name="abbr"></param>
+        public Card(string abbr)
+        {
+            var abbreviation = abbr.ToUpper(CultureInfo.InvariantCulture).Trim();
+            var regex = new Regex("^[2-9TJQKA][CDHS]$");
+
+            if (regex.IsMatch(abbreviation))
+            {
+                SetValue(abbr.Substring(0, 1));
+                SetFamily(abbr.Substring(1, 1));
+            }
+        }
+
+        public Card(int relativeValue, SuitName suit)
+        {
+            RelativeValue = relativeValue;
+            AbsoluteValue = Convert.ToUInt64(Math.Pow(2, relativeValue - 2));
+            Suit = suit;
+            AbsoluteValue <<= (int)Suit;
+        }
+
+        public Card(long absoluteValue)
+        {
+            if (CardsAnalyzer.CountSetBits(absoluteValue) == 1)
+            {
+                SetFamily(absoluteValue);
+                SetRelativeValue(absoluteValue);
+            }
+        }
+
+        private void SetRelativeValue(long absoluteValue)
+        {
+            var relativeValue = 1;
+            AbstractSuit suit;
+            switch (Suit)
+            {
+                case SuitName.Diamonds:
+                    suit = new Diamond(absoluteValue);
+                    break;
+                case SuitName.Spades:
+                    suit = new Spade(absoluteValue);
+                    break;
+                case SuitName.Hearts:
+                    suit = new Heart(absoluteValue);
+                    break;
+                default:
+                    suit = new Club(absoluteValue);
+                    break;
+            }
+
+            var tmp = suit.ToLong();
+            while (tmp >= 1)
+            {
+                relativeValue++;
+                tmp /= 2;
+            }
+            RelativeValue = relativeValue;
+        }
+
+        private void SetFamily(long absoluteValue)
+        {
+            var clubs = new Club(absoluteValue);
+            var diamonds = new Diamond(absoluteValue);
+            var spades = new Spade(absoluteValue);
+            var hearts = new Heart(absoluteValue);
+            if (clubs.ToLong() > 0)
+            {
+                Suit = SuitName.Clubs;
+            }
+            if (diamonds.ToLong() > 0)
+            {
+                Suit = SuitName.Diamonds;
+            }
+            if (spades.ToLong() > 0)
+            {
+                Suit = SuitName.Spades;
+            }
+            if (hearts.ToLong() > 0)
+            {
+                Suit = SuitName.Hearts;
+            }
+        }
 
         /// <summary>
         /// Return the short name of the card
@@ -100,31 +188,6 @@ namespace Nicomputer.PokerBot.Cards
                     break;
             }
             return shortName;
-        }
-
-        /// <summary>
-        /// Instanciate a Card object from its abbreviated form (the abbreviated form is case insensitive)
-        /// i.e. Qs, QS, qS or qs for the Queen of Spades
-        /// </summary>
-        /// <param name="abbr"></param>
-        public Card(string abbr)
-        {
-            var abbreviation = abbr.ToUpper(CultureInfo.InvariantCulture).Trim();
-            var regex = new Regex("^[2-9TJQKA][CDHS]$");
-
-            if (regex.IsMatch(abbreviation))
-            {
-                SetValue(abbr.Substring(0, 1));
-                SetFamily(abbr.Substring(1, 1));
-            }
-        }
-
-        public Card(int relativeValue, SuitName suit)
-        {
-            RelativeValue = relativeValue;
-            AbsoluteValue = Convert.ToUInt64(Math.Pow(2, relativeValue - 2));
-            Suit = suit;
-            AbsoluteValue <<= (int)Suit;
         }
 
         /// <summary>

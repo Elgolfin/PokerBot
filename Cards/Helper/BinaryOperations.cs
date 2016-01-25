@@ -112,6 +112,20 @@ namespace Nicomputer.PokerBot.Cards.Helper
             return reversed;
         }
 
+        public static long GetTheMostRightSetBit(long bits)
+        {
+            long mask = 0x1000;
+            while (mask > 0)
+            {
+                if ((mask & bits) > 0)
+                {
+                    break;
+                }
+                mask >>= 1;
+            }
+            return mask;
+        }
+
     }
 
     public class MaskBits

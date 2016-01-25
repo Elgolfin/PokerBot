@@ -15,7 +15,8 @@
             {
                 result = true;
                 pokerHand.Strength = Strength;
-                // TODO Set the Kickers
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[0]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[1]));
             }
             return result;
 

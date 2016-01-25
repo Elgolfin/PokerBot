@@ -17,8 +17,12 @@ namespace Nicomputer.PokerBot.Cards.Hands
         public override bool Parse(PokerHand pokerHand)
         {
             pokerHand.Strength = Strength;
-            // TODO Set the Kickers
-            // 5 Kickers: High Card to Low Card
+            CardsAnalyzer.SetHighCardsKickers(pokerHand.ToLong());
+            pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[0]));
+            pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[1]));
+            pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[2]));
+            pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[3]));
+            pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[4]));
             return true;
         }
 

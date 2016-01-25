@@ -273,5 +273,66 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             Assert.AreEqual(false, card1.Equals(null));
         }
 
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void Card_New_AbsoluteValue_Clubs()
+        {
+            long absValue = 0x1;
+            for (var i = 2; i <= 14; i++)
+            {
+                var card1 = new Card(absValue);
+                var card2 = new Card(i, Card.SuitName.Clubs);
+                Assert.IsTrue(card1.Equals(card2), $"{card2} is expected");
+                absValue <<= 1;
+            }
+            
+        }
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void Card_New_AbsoluteValue_Diamonds()
+        {
+            long absValue = 0x2000;
+            for (var i = 2; i <= 14; i++)
+            {
+                var card1 = new Card(absValue);
+                var card2 = new Card(i, Card.SuitName.Diamonds);
+                Assert.IsTrue(card1.Equals(card2), $"{card2} is expected");
+                absValue <<= 1;
+            }
+
+        }
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void Card_New_AbsoluteValue_Spades()
+        {
+            long absValue = 0x4000000;
+            for (var i = 2; i <= 14; i++)
+            {
+                var card1 = new Card(absValue);
+                var card2 = new Card(i, Card.SuitName.Spades);
+                Assert.IsTrue(card1.Equals(card2), $"{card2} is expected");
+                absValue <<= 1;
+            }
+
+        }
+
+        [TestCategory("Card")]
+        [TestMethod]
+        public void Card_New_AbsoluteValue_Hearts()
+        {
+            long absValue = 0x8000000000;
+            for (var i = 2; i <= 14; i++)
+            {
+                var card1 = new Card(absValue);
+                var card2 = new Card(i, Card.SuitName.Hearts);
+                Assert.IsTrue(card1.Equals(card2), $"{card2} is expected");
+                absValue <<= 1;
+            }
+
+        }
+
     }
 }

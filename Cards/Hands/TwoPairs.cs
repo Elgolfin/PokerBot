@@ -15,8 +15,9 @@
             {
                 result = true;
                 pokerHand.Strength = Strength;
-                // TODO Set the Kickers
-                // 1 Kickers: Excluding the two pairs, High Card remaining
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[0]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[1]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[2]));
             }
             return result;
 

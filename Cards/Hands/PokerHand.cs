@@ -29,6 +29,11 @@ namespace Nicomputer.PokerBot.Cards.Hands
             Kickers = new List<Card>();
         }
 
+        /// <summary>
+        /// Better hand (current instance) returns -1, same returns 0, othersie -1
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(PokerHand other)
         {
             var result = Strength.CompareTo(other.Strength);
@@ -38,7 +43,7 @@ namespace Nicomputer.PokerBot.Cards.Hands
             }
             for (var i = 0; i < Kickers.Count; i++)
             {
-                result = Kickers[i].CompareTo(other.Kickers[i]);
+                result = Kickers[i].CompareTo(other.Kickers[i]) * -1;
                 if (result != 0)
                 {
                     break;

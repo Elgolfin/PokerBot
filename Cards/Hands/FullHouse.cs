@@ -15,8 +15,8 @@
             {
                 result = true;
                 pokerHand.Strength = Strength;
-                // TODO Set the Kickers
-                // 2 Kickers: Card of Three of a kind, Card of Pair
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[0]));
+                pokerHand.Kickers.Add(new Card(CardsAnalyzer.Kickers[1]));
             }
             return result;
 
