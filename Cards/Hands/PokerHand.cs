@@ -53,9 +53,25 @@ namespace Nicomputer.PokerBot.Cards.Hands
             return result;
         }
 
+        public override bool Equals(object o)
+        {
+            var ph = o as PokerHand;
+            return ph?.CompareTo(this) == 0;
+        }
+
+        public override int GetHashCode()
+        {
+            return Convert.ToInt32(_pokerHand);
+        }
+
         public long ToLong()
         {
             return _pokerHand;
+        }
+
+        public override string ToString()
+        {
+            return $"{HoleCards} {Strength}";
         }
 
     }

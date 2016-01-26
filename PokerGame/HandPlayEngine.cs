@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Nicomputer.PokerBot.Cards.Hands;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nicomputer.PokerBot.PokerGame
 {
@@ -8,6 +11,8 @@ namespace Nicomputer.PokerBot.PokerGame
         public Table Table;
         public Round CurrentRound;
         public Queue<Seat> ActiveSeats;
+        public Dictionary<Player, PokerHand> LastHandResults;
+        public Dictionary<Player, PokerHand> LastHandWinners;
 
         [Flags]
         public enum Round
@@ -60,6 +65,7 @@ namespace Nicomputer.PokerBot.PokerGame
 
         public void DealHands()
         {
+            Table.Dealer.ShuffleDeck();
             Table.Dealer.DealHands();
         }
 
@@ -112,14 +118,42 @@ namespace Nicomputer.PokerBot.PokerGame
             
         }
 
-        public List<Player> GetWinnerHands()
+        private void SetHandResults()
         {
-
-            return new List<Player>();
+            var phh = new Hashtable();
+            var phs = new List<PokerHand>();
+            LastHandResults = new Dictionary<Player, PokerHand>(Table.NumberOfPlayers);
+            LastHandWinners = new Dictionary<Player, PokerHand>();
+            var pht = new PokerHandAnalyzer();
+            foreach (var seat in Table.GetOccupiedSeats(Table.ButtonPosition))
+            {
+                var ph = new PokerHand(seat.Hand, Table.Board);
+                pht.AddPokerHand(ph);
+                phs.Add(ph);
+                phh.Add(ph.ToLong(),seat.Player);
+            }
+            phs.Sort();
+            foreach (var ph in phs)
+            {
+                LastHandResults.Add((Player)phh[ph.ToLong()], ph);
+                if (LastHandWinners.Count <= 0)
+                {
+                    LastHandWinners.Add((Player) phh[ph.ToLong()], ph);
+                }
+                else
+                {
+                    if (LastHandWinners.Values.ToList()[0].Equals(ph))
+                    {
+                        LastHandWinners.Add((Player)phh[ph.ToLong()], ph);
+                    }
+                }
+                
+            }
         }
 
         public void EndPlayAndCleanup()
         {
+            SetHandResults();
             Table.UpdateTurn();
         }
     }

@@ -189,6 +189,7 @@ namespace Nicomputer.PokerBot.PokerGame
 
         public void UpdateTurn()
         {
+            Board = new List<Card>(5);
             Turn++;
         }
     }

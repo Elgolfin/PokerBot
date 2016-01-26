@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections;
-using Nicomputer.PokerBot.Cards.Helper;
 
 namespace Nicomputer.PokerBot.Cards.Hands
 {
@@ -31,23 +30,6 @@ namespace Nicomputer.PokerBot.Cards.Hands
             OnePair = 8,
             HighCard = 9
         }
-        public PokerHandAnalyzer()
-        {
-            
-        }
-
-        //private static void Initialize()
-        //{
-        //    var mask = new MaskBits(52, 7);
-        //    while (!mask.IsParsingComplete)
-        //    {
-        //        var ph = new PokerHand(mask.ToInt64());
-        //        AnalyzePokerHand(ph);
-        //        AllHands.Add(mask.ToUint64(), ph);
-        //        mask.Decrement();
-        //    }
-
-        //}
 
         public void AddPokerHand(PokerHand ph)
         {
@@ -75,8 +57,15 @@ namespace Nicomputer.PokerBot.Cards.Hands
             }
             return AllHands[hand] as PokerHand;
         }
+        public PokerHand GetPokerHand(PokerHand ph)
+        {
+            if (!AllHands.ContainsKey(ph.ToLong()))
+            {
+                AddPokerHand(ph);
+            }
+            return AllHands[ph.ToLong()] as PokerHand;
+        }
 
-        // TODO Set Kickers in each PokerHandType class
         private static void AnalyzePokerHand(PokerHand ph)
         {
             foreach (var pht in PokerHandsTypes)
