@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="CardsCollection.cs" />
     <Compile Include="Hands\PokerHandType.cs" />
     <Compile Include="Hands\Straight.cs" />
     <Compile Include="Hands\ThreeOfAKind.cs" />

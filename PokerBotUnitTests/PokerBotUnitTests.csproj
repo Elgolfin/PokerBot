@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Cards\CardsCollectionUnitTests.cs" />
     <Compile Include="Common\PokerGameUnitTestsHelper.cs" />
     <Compile Include="Cards\CardsAnalyzerUnitTests.cs" />
     <Compile Include="Hands\ThreeOfAKindUnitTests.cs" />

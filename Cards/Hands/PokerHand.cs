@@ -7,7 +7,7 @@ namespace Nicomputer.PokerBot.Cards.Hands
     {
         protected readonly HoleCards HoleCards;
         private readonly long _pokerHand;
-        public List<Card> Board { get; set; }
+        public CardsCollection Board { get; set; }
         public PokerHandAnalyzer.Strength Strength;
         public List<Card> Kickers { get; private set; }
 
@@ -17,7 +17,7 @@ namespace Nicomputer.PokerBot.Cards.Hands
             Kickers = new List<Card>();
         }
 
-        public PokerHand(HoleCards holeCards, List<Card> board)
+        public PokerHand(HoleCards holeCards, CardsCollection board)
         {
             HoleCards = holeCards;
             Board = board;

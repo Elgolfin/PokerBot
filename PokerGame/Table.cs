@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Nicomputer.PokerBot.Cards;
@@ -20,9 +19,10 @@ namespace Nicomputer.PokerBot.PokerGame
         public int FirstToPlayPreFlopPosition { get; private set; }
         public int FirstToPlayPostFlopPosition { get; private set; }
 
+        private const int NumberOfBoardCards = 5;
 
         public Dealer Dealer { get; set; }
-        public List<Card> Board { get; set; }
+        public CardsCollection Board { get; set; }
         public int NumberOfPlayers {
             get { return Players.Count; }
         }
@@ -40,7 +40,7 @@ namespace Nicomputer.PokerBot.PokerGame
             {
                 Seats.Add(new Seat(i));
             }
-            Board = new List<Card>(5);
+            Board = new CardsCollection(NumberOfBoardCards);
             Turn = 0;
         }
 
@@ -100,7 +100,7 @@ namespace Nicomputer.PokerBot.PokerGame
                 seat.RemovePlayer();
             }
             Players = new List<Player>(Capacity);
-            Board = new List<Card>(5);
+            Board = new CardsCollection(NumberOfBoardCards);
             IsOpened = false;
         }
 
@@ -189,7 +189,7 @@ namespace Nicomputer.PokerBot.PokerGame
 
         public void UpdateTurn()
         {
-            Board = new List<Card>(5);
+            Board = new CardsCollection(NumberOfBoardCards);
             Turn++;
         }
     }

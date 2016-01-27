@@ -18,7 +18,7 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
 
             // 0000 0000 0000/0000 0000.0000 0/000.0000 0000.00/00 0000.0000 000/0.0000 0111.1111
             var ph = new PokerHand(new HoleCards(new Card("2c"), new Card("3c")),
-                new List<Card>() {new Card("4c"), new Card("5c"), new Card("6c"), new Card("7c"), new Card("8c")});
+                new CardsCollection() {new Card("4c"), new Card("5c"), new Card("6c"), new Card("7c"), new Card("8c")});
             pha.AddPokerHand(ph);
             Assert.AreEqual(PokerHandAnalyzer.Strength.StraightFlush, pha.GetPokerHand(0x7FL).Strength);
 
@@ -34,10 +34,10 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
         {
             var pha = new PokerHandAnalyzer();
             var ph1 = new PokerHand(new HoleCards(new Card("Ah"), new Card("4s")),
-                new List<Card>() {new Card("As"), new Card("3c"), new Card("8h"), new Card("4h"), new Card("6s")});
+                new CardsCollection() {new Card("As"), new Card("3c"), new Card("8h"), new Card("4h"), new Card("6s")});
             pha.AddPokerHand(ph1);
             var ph2 = new PokerHand(new HoleCards(new Card("Qs"), new Card("6c")),
-                new List<Card>() { new Card("As"), new Card("3c"), new Card("8h"), new Card("4h"), new Card("6s") });
+                new CardsCollection() { new Card("As"), new Card("3c"), new Card("8h"), new Card("4h"), new Card("6s") });
             pha.AddPokerHand(ph2);
             Assert.AreEqual(PokerHandAnalyzer.Strength.TwoPairs, pha.GetPokerHand(ph1.ToLong()).Strength);
             Assert.AreEqual(PokerHandAnalyzer.Strength.OnePair, pha.GetPokerHand(ph2.ToLong()).Strength);
