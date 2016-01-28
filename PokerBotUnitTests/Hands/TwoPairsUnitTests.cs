@@ -39,6 +39,7 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
             Assert.AreEqual("Tc", ph.Kickers[2].ToString());
         }
 
+        //
         [TestMethod]
         public void TwoPairs_With_Kickers_2()
         {
