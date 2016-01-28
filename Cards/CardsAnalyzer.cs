@@ -205,6 +205,8 @@ namespace Nicomputer.PokerBot.Cards
 
         /// <summary>
         /// numCardsSet1 must be greater or equal to numCardsSet2
+        /// Works only for (numCardsSet1 = 2 and numCardsSet2 = 2) = 2 or (numCardsSet1 = 3 and numCardsSet2 = 2)
+        /// Kickers are always from the Clubs suit
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="numCardsSet1"></param>
@@ -224,24 +226,20 @@ namespace Nicomputer.PokerBot.Cards
             {
                 foreach (var entry in CardsCount)
                 {
-                    var entryCanBeUsedForRemainingKicker = true;
                     if (set1 == 0 && entry.Value == numCardsSet1)
                     {
                         set1 = entry.Key;
                         Kickers[0] = set1;
-                        entryCanBeUsedForRemainingKicker = false;
                         continue;
                     }
                     if (set2 == 0 && entry.Value == numCardsSet2)
                     {
                         set2 = entry.Key;
-                        Kickers[1] = set1;
-                        entryCanBeUsedForRemainingKicker = false;
+                        Kickers[1] = set2;
                         continue;
                     }
 
-                    if (entry.Value > 0 && remainingKickers > 0 && remainingKickerHasNotBeenSet &&
-                        entryCanBeUsedForRemainingKicker)
+                    if (entry.Value > 0 && remainingKickers > 0 && remainingKickerHasNotBeenSet)
                     {
                         Kickers[2] = entry.Key;
                         remainingKickerHasNotBeenSet = false;
