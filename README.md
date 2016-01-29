@@ -18,23 +18,23 @@ using Nicomputer.PokerBot.Cards;
 using Nicomputer.PokerBot.Cards.Hands;
 
 var hands = new List<PokerHand>();
-var pha = new PokerHandAnalyzer();
+var analyzer = new PokerHandAnalyzer();
 var myHand = new PokerHand(new HoleCards("Qs", "Qc"), new CardsCollection("Kh Ks 7d Ad Th"));
-hands.Add(pha.GetPokerHand(myHand));
+hands.Add(analyzer.GetPokerHand(myHand));
 Console.WriteLine($"{myHand}"); // Displays: Hole Cards[QsQc] and Board[Kh Ks 7d Ad Th]. Best Poker Hand is TwoPairs.
 ```
 
 #### Comparing two poker hands
 ```
 myHand = new PokerHand(new HoleCards("As", "Ac"), new CardsCollection("Kh Ks 7d Jd Th"));
-hands.Add(pha.GetPokerHand(myHand));
+hands.Add(analyzer.GetPokerHand(myHand));
 Console.WriteLine(hands[0].CompareTo(hands[1])); // Displays: 1
 ```
 
 #### Sorting two or more poker hands
 ```
 myHand = new PokerHand(new HoleCards("As", "Ah"), new CardsCollection("Ad Kh Th Jh Qh"));
-hands.Add(pha.GetPokerHand(myHand));
+hands.Add(analyzer.GetPokerHand(myHand));
 foreach (var hand in hands)
 {
 	Console.WriteLine(hand);
