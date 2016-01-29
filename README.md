@@ -10,7 +10,52 @@ TBD
 
 ## Usage
 
-TBD
+### How to use the Poker Hand Analyzer
+
+#### Analyzing a poker hand
+```
+using Nicomputer.PokerBot.Cards;
+using Nicomputer.PokerBot.Cards.Hands;
+
+var hands = new List<PokerHand>();
+var pha = new PokerHandAnalyzer();
+var myHand = new PokerHand(new HoleCards("Qs", "Qc"), new CardsCollection("Kh Ks 7d Ad Th"));
+hands.Add(pha.GetPokerHand(myHand));
+Console.WriteLine($"{myHand}"); // Displays: Hole Cards[QsQc] and Board[Kh Ks 7d Ad Th]. Best Poker Hand is TwoPairs.
+```
+
+#### Comparing two poker hands
+```
+myHand = new PokerHand(new HoleCards("As", "Ac"), new CardsCollection("Kh Ks 7d Jd Th"));
+hands.Add(pha.GetPokerHand(myHand));
+Console.WriteLine(hands[0].CompareTo(hands[1])); // Displays: 1
+```
+
+#### Sorting two or more poker hands
+```
+myHand = new PokerHand(new HoleCards("As", "Ah"), new CardsCollection("Ad Kh Th Jh Qh"));
+hands.Add(pha.GetPokerHand(myHand));
+foreach (var hand in hands)
+{
+	Console.WriteLine(hand);
+}
+// Displays:
+// Hole Cards[QsQc] and Board[Kh Ks 7d Ad Th]. Best Poker Hand is TwoPairs.
+// Hole Cards[AsAc] and Board[Kh Ks 7d Jd Th]. Best Poker Hand is TwoPairs.
+// Hole Cards[AsAh] and Board[Ad Kh Th Jh Qh]. Best Poker Hand is StraightFlush.
+
+hands.Sort();
+foreach (var hand in hands)
+{
+	Console.WriteLine(hand);
+}
+// Displays:
+// Hole Cards[AsAh] and Board[Ad Kh Th Jh Qh]. Best Poker Hand is StraightFlush.
+// Hole Cards[AsAc] and Board[Kh Ks 7d Jd Th]. Best Poker Hand is TwoPairs.
+// Hole Cards[QsQc] and Board[Kh Ks 7d Ad Th]. Best Poker Hand is TwoPairs.
+```
+
+
 
 ## Tests
 

@@ -9,12 +9,12 @@ namespace Nicomputer.PokerBot.Cards.Hands
         private readonly long _pokerHand;
         public CardsCollection Board { get; set; }
         public PokerHandAnalyzer.Strength Strength;
-        public List<Card> Kickers { get; private set; }
+        public CardsCollection Kickers { get; private set; }
 
         public PokerHand(long hand)
         {
             _pokerHand = hand;
-            Kickers = new List<Card>();
+            Kickers = new CardsCollection();
         }
 
         public PokerHand(HoleCards holeCards, CardsCollection board)
@@ -26,7 +26,7 @@ namespace Nicomputer.PokerBot.Cards.Hands
             {
                 _pokerHand |= Convert.ToInt64(card.AbsoluteValue);
             }
-            Kickers = new List<Card>();
+            Kickers = new CardsCollection();
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Nicomputer.PokerBot.Cards.Hands
 
         public override string ToString()
         {
-            return $"{HoleCards} {Strength}";
+            return $"Hole Cards[{HoleCards}] and Board[{Board}]. Best Poker Hand is {Strength}.";
         }
 
     }

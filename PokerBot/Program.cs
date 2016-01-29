@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 using Nicomputer.PokerBot.Cards.Helper;
 using Nicomputer.PokerBot.Cards;
 using System.IO;
+using Nicomputer.PokerBot.Cards.Hands;
 
 namespace Nicomputer.PokerBot
 {
@@ -14,9 +16,32 @@ namespace Nicomputer.PokerBot
         public static void Main(string[] args)
         {
             //GenerateAllHandsInAFile(2);
-            var totalCombinations = BinaryOperations.GetNumberOfCombinations(13UL, 2UL);
-            Console.WriteLine(String.Format("Done. {0} combinations have been generated.", totalCombinations));
+            //var totalCombinations = BinaryOperations.GetNumberOfCombinations(13UL, 2UL);
+            //Console.WriteLine(String.Format("Done. {0} combinations have been generated.", totalCombinations));
             //FindAllStraightFlush();
+            var hands = new List<PokerHand>();
+            var pha = new PokerHandAnalyzer();
+            var myHand = new PokerHand(new HoleCards("Qs", "Qc"), new CardsCollection("Kh Ks 7d Ad Th"));
+            hands.Add(pha.GetPokerHand(myHand));
+            Console.WriteLine($"{myHand}");
+
+            myHand = new PokerHand(new HoleCards("As", "Ac"), new CardsCollection("Kh Ks 7d Jd Th"));
+            hands.Add(pha.GetPokerHand(myHand));
+            Console.WriteLine(hands[0].CompareTo(hands[1]));
+
+            myHand = new PokerHand(new HoleCards("As", "Ah"), new CardsCollection("Ad Kh Th Jh Qh"));
+            hands.Add(pha.GetPokerHand(myHand));
+            foreach (var hand in hands)
+            {
+                Console.WriteLine(hand);
+            }
+            hands.Sort();
+            foreach (var hand in hands)
+            {
+                Console.WriteLine(hand);
+            }
+
+
             Console.ReadKey();
         }
 

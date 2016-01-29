@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Nicomputer.PokerBot.Cards
@@ -32,6 +32,16 @@ namespace Nicomputer.PokerBot.Cards
                 _cards.Add(new Card(card));
             }
 
+        }
+
+
+
+        public Card this[int index]
+        {
+            get
+            {
+                return this.Skip(index).FirstOrDefault();
+            }
         }
 
         public void Add(Card card)
