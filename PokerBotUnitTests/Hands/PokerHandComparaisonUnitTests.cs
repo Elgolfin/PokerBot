@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Nicomputer.PokerBot.Cards.Hands;
 
 namespace Nicomputer.PokerBot.UnitTests.Hands
@@ -7,10 +7,10 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
     // - same strentgh same kickers 
     // - same strentgh different kickers 
     // - different strentgh
-    [TestClass]
+    
     public class PokerHandComparaisonUnitTests
     {
-        [TestMethod]
+        [Fact]
         public void StraightFlush_Is_Better_Than_FourOfAKind()
         {
             const long straightFlushHand = 0x000000000040201F;   // 00000000 0000//0000 0000.0000 0/000.0000 0000.00/00 0100.0000 001/0.0000 0001.1111
@@ -24,14 +24,14 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
             var ph2 = new PokerHand(fourOfAKindHand);
             pht2.Parse(ph2);
 
-            Assert.AreEqual(-1, ph1.CompareTo(ph2));
-            Assert.AreEqual(1, ph2.CompareTo(ph1));
+            Assert.Equal(-1, ph1.CompareTo(ph2));
+            Assert.Equal(1, ph2.CompareTo(ph1));
             ph2 = new PokerHand(straightFlushHand);
             pht1.Parse(ph2);
-            Assert.AreEqual(0, ph1.CompareTo(ph2));
+            Assert.Equal(0, ph1.CompareTo(ph2));
         }
 
-        [TestMethod]
+        [Fact]
         public void StraightFlush_7_Is_Better_Than_StraightFlush_6()
         {
             const long straightFlushHand1 = 0x000000000000301F;     // 00000000 0000//0000 0000.0000 0/000.0000 0000.00/00 0000.0000 001/1.0000 0001.1111
@@ -44,13 +44,13 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
             var ph2 = new PokerHand(straightFlushHand2);
             pht1.Parse(ph2);
 
-            Assert.AreEqual(1, ph1.CompareTo(ph2));
-            Assert.AreEqual(-1, ph2.CompareTo(ph1));
+            Assert.Equal(1, ph1.CompareTo(ph2));
+            Assert.Equal(-1, ph2.CompareTo(ph1));
             ph2 = new PokerHand(straightFlushHand1);
             pht1.Parse(ph2);
-            Assert.AreEqual(0, ph1.CompareTo(ph2));
+            Assert.Equal(0, ph1.CompareTo(ph2));
         }
-        [TestMethod]
+        [Fact]
         public void StraightFlush_6_Is_Better_Than_StraightFlush_5()
         {
 
@@ -64,11 +64,11 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
             var ph2 = new PokerHand(straightFlushHand2);
             pht1.Parse(ph2);
 
-            Assert.AreEqual(1, ph1.CompareTo(ph2));
-            Assert.AreEqual(-1, ph2.CompareTo(ph1));
+            Assert.Equal(1, ph1.CompareTo(ph2));
+            Assert.Equal(-1, ph2.CompareTo(ph1));
             ph2 = new PokerHand(straightFlushHand1);
             pht1.Parse(ph2);
-            Assert.AreEqual(0, ph1.CompareTo(ph2));
+            Assert.Equal(0, ph1.CompareTo(ph2));
         }
     }
 }

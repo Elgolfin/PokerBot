@@ -1,44 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Nicomputer.PokerBot.Cards.Hands;
+using Xunit;
 using Nicomputer.PokerBot.PokerGame;
 using Nicomputer.PokerBot.UnitTests.Common;
 
 namespace Nicomputer.PokerBot.UnitTests.PokerGame
 {
-    [TestClass]
+    
     public class HandPlayEngineUnitTests
     {
-        [TestMethod]
-        [TestCategory("Hand Play Engine")]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Fact]
+        [Trait("Category", "Hand Play Engine")]
         public void Table_Is_Not_Opened()
         {
             var table = new Table(9);
-            var hpEngine = new HandPlayEngine(table);
-            hpEngine.Run();
+            Assert.Throws<InvalidOperationException>(() => new HandPlayEngine(table));
         }
 
-        [TestMethod]
-        [TestCategory("Hand Play Engine")]
+        [Fact]
+        [Trait("Category", "Hand Play Engine")]
         public void Table_Is_Opened()
         {
             var table = PokerGameUnitTestsHelper.CreateAndOpenTable(9, 9);
             var hpEngine = new HandPlayEngine(table);
-            Assert.AreEqual(1, table.Turn);
+            Assert.Equal(1, table.Turn);
             hpEngine.Run();
-            Assert.AreEqual(2, table.Turn);
-            Assert.AreEqual(0, table.ButtonPosition);
-            Assert.AreEqual(1, table.SmallBlindPosition);
-            Assert.AreEqual(2, table.BigBlindPosition);
+            Assert.Equal(2, table.Turn);
+            Assert.Equal(0, table.ButtonPosition);
+            Assert.Equal(1, table.SmallBlindPosition);
+            Assert.Equal(2, table.BigBlindPosition);
             AssertWinners(hpEngine);
             hpEngine.Run();
-            Assert.AreEqual(3, table.Turn);
-            Assert.AreEqual(1, table.ButtonPosition);
-            Assert.AreEqual(2, table.SmallBlindPosition);
-            Assert.AreEqual(3, table.BigBlindPosition);
+            Assert.Equal(3, table.Turn);
+            Assert.Equal(1, table.ButtonPosition);
+            Assert.Equal(2, table.SmallBlindPosition);
+            Assert.Equal(3, table.BigBlindPosition);
             AssertWinners(hpEngine);
         }
 
@@ -53,7 +48,7 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
                     continue;
                 }
                 var currentStrength = (int) ph.Strength;
-                Assert.IsTrue(currentStrength >= previousStrength);
+                Assert.True(currentStrength >= previousStrength);
             }
         }
     }

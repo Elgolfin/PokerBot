@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Nicomputer.PokerBot.Cards.Hands;
 
 namespace Nicomputer.PokerBot.UnitTests.Hands
 {
-    [TestClass]
+    
     public class HighCardUnitTests
     {
-        [TestMethod]
+        [Fact]
         public void HighCardUnitTests_1()
         {
             var highCardsHands = new Dictionary<long, string>()
@@ -22,8 +22,8 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
             foreach (var hand in highCardsHands)
             {
                 var ph = new PokerHand(hand.Key);
-                Assert.IsTrue(pht.Parse(ph), hand.Value);
-                Assert.AreEqual(PokerHandAnalyzer.Strength.HighCard, ph.Strength);
+                Assert.True(pht.Parse(ph), hand.Value);
+                Assert.Equal(PokerHandAnalyzer.Strength.HighCard, ph.Strength);
             }
         }
     }

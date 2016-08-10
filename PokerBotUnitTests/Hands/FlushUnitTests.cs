@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Nicomputer.PokerBot.Cards.Hands;
 
 namespace Nicomputer.PokerBot.UnitTests.Hands
 {
-    [TestClass]
+    
     public class FlushUnitTests
     {
-        [TestMethod]
+        [Fact]
         public void FlushUnitTests_1()
         {
             var flushHands = new Dictionary<long, string>()
@@ -22,8 +22,8 @@ namespace Nicomputer.PokerBot.UnitTests.Hands
             foreach (var hand in flushHands)
             {
                 var ph = new PokerHand(hand.Key);
-                Assert.IsTrue(pht.Parse(ph), hand.Value);
-                Assert.AreEqual(PokerHandAnalyzer.Strength.Flush, ph.Strength);
+                Assert.True(pht.Parse(ph), hand.Value);
+                Assert.Equal(PokerHandAnalyzer.Strength.Flush, ph.Strength);
             }
         }
     }

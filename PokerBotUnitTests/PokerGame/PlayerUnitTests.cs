@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Nicomputer.PokerBot.PokerGame;
 
 namespace Nicomputer.PokerBot.UnitTests.PokerGame
 {
-    [TestClass]
+    
     public class PlayerUnitTests
     {
-        [TestMethod]
+        [Fact]
         public void Player_Constructor()
         {
             var player = new Player
@@ -15,10 +15,10 @@ namespace Nicomputer.PokerBot.UnitTests.PokerGame
                 DisplayName = "Johnny",
                 NickName = "Connor"
             };
-            Assert.AreEqual("John Doe", player.Name);
-            Assert.AreEqual("Johnny", player.DisplayName);
-            Assert.AreEqual("Connor", player.NickName);
-            Assert.AreEqual(player.Name, player.ToString());
+            Assert.Equal("John Doe", player.Name);
+            Assert.Equal("Johnny", player.DisplayName);
+            Assert.Equal("Connor", player.NickName);
+            Assert.Equal(player.Name, player.ToString());
         }
     }
 }

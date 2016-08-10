@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.UnitTests.Cards
 {
-    [TestClass]
+    
     public class CardsCollectionUnitTests
     {
-        [TestMethod]
+        [Fact]
         public void CardsCollection_ToString()
         {
             var cards = new CardsCollection()
@@ -17,13 +17,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
                 new Card("Ts"),
                 new Card("Jc")
             };
-            Assert.AreEqual("Ah 2s 7d Ts Jc", cards.ToString());
+            Assert.Equal("Ah 2s 7d Ts Jc", cards.ToString());
             cards.Add(new Card("Ac"));
-            Assert.AreEqual("Ah 2s 7d Ts Jc Ac", cards.ToString());
+            Assert.Equal("Ah 2s 7d Ts Jc Ac", cards.ToString());
         }
 
 
-        [TestMethod]
+        [Fact]
         public void CardsCollection_Sort()
         {
             var cards = new CardsCollection()
@@ -36,25 +36,25 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
                 new Card("Jc")
             };
             cards.Sort();
-            Assert.AreEqual("Ah Qd Jc Ts 7d 2s", cards.ToString());
+            Assert.Equal("Ah Qd Jc Ts 7d 2s", cards.ToString());
         }
 
-        [TestMethod]
+        [Fact]
         public void Initialize_With_String()
         {
             var cards = new CardsCollection("Ah 2s 7d Ts Jc");
-            Assert.AreEqual(5, cards.Count);
-            Assert.AreEqual("Ah 2s 7d Ts Jc", cards.ToString());
+            Assert.Equal(5, cards.Count);
+            Assert.Equal("Ah 2s 7d Ts Jc", cards.ToString());
         }
 
-        [TestMethod]
+        [Fact]
         public void Initialize_With_Capacity()
         {
             var cards = new CardsCollection(5);
-            Assert.AreEqual(0, cards.Count);
+            Assert.Equal(0, cards.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Iterate_CardsCollection()
         {
             var cards = new CardsCollection()
@@ -72,7 +72,7 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             {
                 cpt++;
             }
-            Assert.AreEqual(cpt, cards.Count);
+            Assert.Equal(cpt, cards.Count);
         }
     }
 }

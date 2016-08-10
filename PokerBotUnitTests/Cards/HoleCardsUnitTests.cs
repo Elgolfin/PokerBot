@@ -1,124 +1,124 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Nicomputer.PokerBot.Cards;
 
 namespace Nicomputer.PokerBot.UnitTests.Cards
 {
-    [TestClass]
+    
     public class HoleCardsUnitTests
     {
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Initialize_Hand_With_CardObjects()
         {
             var card1 = new Card("Th");
             var card2 = new Card("As");
             var hand = new HoleCards(card1, card2);
-            Assert.AreEqual("Th", hand.FirstCard.ToString());
-            Assert.AreEqual("As", hand.SecondCard.ToString());
+            Assert.Equal("Th", hand.FirstCard.ToString());
+            Assert.Equal("As", hand.SecondCard.ToString());
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Initialize_Hand_With_CardShortnames()
         {
             var hand = new HoleCards("Ks", "Ah");
-            Assert.AreEqual("Ks", hand.FirstCard.ToString());
-            Assert.AreEqual("Ah", hand.SecondCard.ToString());
+            Assert.Equal("Ks", hand.FirstCard.ToString());
+            Assert.Equal("Ah", hand.SecondCard.ToString());
 
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Initialize_Hand_With_Shortname()
         {
             var hand = new HoleCards("AK");
-            Assert.AreEqual("Ac", hand.FirstCard.ToString());
-            Assert.AreEqual("Kh", hand.SecondCard.ToString());
-            Assert.AreEqual(false,hand.SameSuit);
+            Assert.Equal("Ac", hand.FirstCard.ToString());
+            Assert.Equal("Kh", hand.SecondCard.ToString());
+            Assert.Equal(false,hand.SameSuit);
 
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Initialize_Hand_With_Shortname_Suited()
         {
             var hand = new HoleCards("AKs");
-            Assert.AreEqual("Ah", hand.FirstCard.ToString());
-            Assert.AreEqual("Kh", hand.SecondCard.ToString());
-            Assert.AreEqual(true, hand.SameSuit);
+            Assert.Equal("Ah", hand.FirstCard.ToString());
+            Assert.Equal("Kh", hand.SecondCard.ToString());
+            Assert.Equal(true, hand.SameSuit);
 
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_2h3h_Shortname_Is_32s()
         {
             var hand = new HoleCards("2h", "3h");
-            Assert.AreEqual("32s", hand.ShortName);
+            Assert.Equal("32s", hand.ShortName);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_3hAd_Shortname_Is_A3()
         {
             var hand = new HoleCards("3h", "Ad");
-            Assert.AreEqual("A3", hand.ShortName);
+            Assert.Equal("A3", hand.ShortName);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_JhAd_Shortname_Is_AdJh()
         {
             var hand = new HoleCards("Jh", "Ad");
-            Assert.AreEqual("AdJh", hand.LongName);
+            Assert.Equal("AdJh", hand.LongName);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_ThTc_Is_Pair()
         {
             var hand = new HoleCards("Th", "Tc");
-            Assert.AreEqual(true, hand.Pair);
+            Assert.Equal(true, hand.Pair);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_5h2c_Is_NotPair()
         {
             var hand = new HoleCards("5h", "2c");
-            Assert.AreEqual(false, hand.Pair);
+            Assert.Equal(false, hand.Pair);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void EmptyHand()
         {
             var hand = new HoleCards();
-            Assert.AreEqual(null, hand.FirstCard);
-            Assert.AreEqual(null, hand.SecondCard);
+            Assert.Equal(null, hand.FirstCard);
+            Assert.Equal(null, hand.SecondCard);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_7dKc_LowCard_Is_7d()
         {
             var hand = new HoleCards("7d","Kc");
-            Assert.AreEqual("7d", hand.LowCard.ToString());
+            Assert.Equal("7d", hand.LowCard.ToString());
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_7d7c_LowCard_Is_7d()
         {
             var hand = new HoleCards("7d", "7c");
-            Assert.AreEqual("7c", hand.LowCard.ToString());
+            Assert.Equal("7c", hand.LowCard.ToString());
         }
 
 
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenValue_Pairs()
         {
 
@@ -138,11 +138,11 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("22", 5);
             foreach (var kvp in pairs)
             {
-                Assert.AreEqual(kvp.Value, new HoleCards(kvp.Key).BillChenValue);
+                Assert.Equal(kvp.Value, new HoleCards(kvp.Key).BillChenValue);
             }
         }
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenValue_Straight_1()
         {
 
@@ -175,36 +175,36 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             pairs.Add("2As", 7);
             foreach (var kvp in pairs)
             {
-                Assert.AreEqual(kvp.Value, new HoleCards(kvp.Key).BillChenValue);
+                Assert.Equal(kvp.Value, new HoleCards(kvp.Key).BillChenValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenValue_AA_Is_20()
         {
             var hand = new HoleCards(new Card(14, Card.SuitName.Hearts), new Card(14, Card.SuitName.Diamonds));
-            Assert.AreEqual(20, hand.BillChenValue);
+            Assert.Equal(20, hand.BillChenValue);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenValue_27_Is_Minus1()
         {
             var hand = new HoleCards("27");
-            Assert.AreEqual(-1, hand.BillChenValue);
+            Assert.Equal(-1, hand.BillChenValue);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenValue_37_Is_0()
         {
             var hand = new HoleCards("37");
-            Assert.AreEqual(0, hand.BillChenValue);
+            Assert.Equal(0, hand.BillChenValue);
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_1()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -216,13 +216,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(1, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(1, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_2()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -234,13 +234,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(2, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(2, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_3()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -253,13 +253,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(3, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(3, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_4()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -274,13 +274,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(4, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(4, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_5()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -305,13 +305,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(5, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(5, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_6()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -327,13 +327,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(6, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(6, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_7()
         {
             Dictionary<string, int> pairs = new Dictionary<string, int>();
@@ -357,13 +357,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(7, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(7, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_8()
         {
 
@@ -387,13 +387,13 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(8, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(8, hand.BillChenGroupValue);
             }
         }
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void BillChenGroupValue_9()
         {
 
@@ -410,30 +410,30 @@ namespace Nicomputer.PokerBot.UnitTests.Cards
             foreach (var kvp in pairs)
             {
                 var hand = new HoleCards(kvp.Key);
-                Assert.AreEqual(kvp.Value, hand.BillChenValue);
-                Assert.AreEqual(9, hand.BillChenGroupValue);
+                Assert.Equal(kvp.Value, hand.BillChenValue);
+                Assert.Equal(9, hand.BillChenGroupValue);
             }
         }
 
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Initialize_Hand_Two_Times()
         {
             var hand = new HoleCards("AA");
-            Assert.AreEqual(20, hand.BillChenValue);
+            Assert.Equal(20, hand.BillChenValue);
             hand.FirstCard = new Card(7, Card.SuitName.Clubs);
             hand.SecondCard = new Card(2, Card.SuitName.Diamonds);
-            Assert.AreEqual(-1, hand.BillChenValue);
+            Assert.Equal(-1, hand.BillChenValue);
         }
 
 
-        [TestMethod]
-        [TestCategory("HoleCards")]
+        [Fact]
+        [Trait("Category", "HoleCards")]
         public void Hand_ToString_Is_LongName()
         {
             var hand = new HoleCards("Ah", "Ad");
-            Assert.AreEqual("AhAd", hand.ToString());
+            Assert.Equal("AhAd", hand.ToString());
         }
 
     }

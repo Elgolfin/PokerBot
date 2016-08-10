@@ -1,27 +1,27 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 using Nicomputer.PokerBot.PokerGame;
 
 namespace Nicomputer.PokerBot.UnitTests.PokerGame
 {
-    [TestClass]
+    
     public class SeatUnitTests
     {
-        [TestMethod]
+        [Fact]
         public void Seat_Initialize()
         {
             var seat = new Seat(12, new Player { Name = "John Doe" });
-            Assert.AreEqual("John Doe", seat.Player.Name);
-            Assert.AreEqual(12, seat.Number);
-            Assert.AreEqual(false, seat.IsEmpty);
+            Assert.Equal("John Doe", seat.Player.Name);
+            Assert.Equal(12, seat.Number);
+            Assert.Equal(false, seat.IsEmpty);
         }
 
-        [TestMethod]
+        [Fact]
         public void Seat_RemovePlayer_Seat_Is_Empty()
         {
             var seat = new Seat(12, new Player { Name = "John Doe" });
-            Assert.AreEqual(false, seat.IsEmpty);
+            Assert.Equal(false, seat.IsEmpty);
             seat.RemovePlayer();
-            Assert.AreEqual(true, seat.IsEmpty);
+            Assert.Equal(true, seat.IsEmpty);
         }
     }
 }
