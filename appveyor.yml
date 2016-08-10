@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.4.{build}
 skip_tags: true
 configuration: Debug
 assembly_info:
@@ -9,12 +9,14 @@ assembly_info:
   assembly_informational_version: '{version}'
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: v7h9p7gDilhyGpr7m50dmxp8Kvcasz0vB
+    secure: 37SvEFjD0LFNdyErhEekH8/pfPhJWAhAVaIjAvjINKvpLDLsMdoYdVW8azHbMxIF
 before_build:
-  - nuget restore PokerBot.sln"
+  - nuget restore PokerBot.sln
 build:
   project: .\PokerBot.sln
   verbosity: minimal
 test_script:
 - ps: >-
     ./packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -register:user -target:./packages/xunit.runner.console.2.1.0/tools/xunit.console.exe "-targetargs:""./PokerBotUnitTests/bin/Debug/Nicomputer.PokerBot.UnitTests.dll"" -noshadow -appveyor -parallel none -xml results.xml" -filter:"+[Nicomputer.PokerBot.*]*" -output:opencoverCoverage.xml
+
+    ./packages/coveralls.net.0.6.0/tools/csmacnz.Coveralls.exe --opencover -i ./opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
