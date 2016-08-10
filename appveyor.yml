@@ -17,6 +17,6 @@ build:
   verbosity: minimal
 test_script:
 - ps: >-
-    ./packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -register:user -target:./packages/xunit.runner.console.2.1.0/tools/xunit.console.exe "-targetargs:""./PokerBotUnitTests/bin/Debug/Nicomputer.PokerBot.UnitTests.dll"" -noshadow -appveyor -parallel none -xml results.xml" -filter:"+[Nicomputer.PokerBot.*]*" -output:opencoverCoverage.xml
+    ./packages/OpenCover.4.6.519/tools/OpenCover.Console.exe -register:user -target:./packages/xunit.runner.console.2.1.0/tools/xunit.console.exe "-targetargs:""./PokerBotUnitTests/bin/Debug/Nicomputer.PokerBot.UnitTests.dll"" -noshadow -appveyor -parallel none -xml results.xml" -filter:"+[Nicomputer.PokerBot.*]* -[Nicomputer.PokerBot.UnitTests.*]*" -output:opencoverCoverage.xml
 
     ./packages/coveralls.net.0.6.0/tools/csmacnz.Coveralls.exe --opencover -i ./opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID

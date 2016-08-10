@@ -22,6 +22,10 @@ build/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# Code Coverage Results
+results.xml
+opencoverCoverage.xml
+
 *_i.c
 *_p.c
 *.ilk
