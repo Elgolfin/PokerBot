@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/n1iwqupmc7rrr94t?svg=true)](https://ci.appveyor.com/project/Elgolfin/pokerbot)
-[![Coverage Status](https://coveralls.io/repos/github/Elgolfin/PokerBot/badge.svg?branch=)](https://coveralls.io/github/Elgolfin/PokerBot?branch=)
+[![Coverage Status](https://coveralls.io/repos/github/Elgolfin/PokerBot/badge.svg?branch=master)](https://coveralls.io/github/Elgolfin/PokerBot?branch=master)
 
 PokerBot
 ========
